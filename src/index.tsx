@@ -1,14 +1,17 @@
 import React from "react";
 import ReactDOM from "react-dom";
-
-import Store from "./Data/State";
+import "./index.css";
 import App from "./App";
-import Methods from "./Data/Methods";
+import { BrowserRouter as Router } from "react-router-dom";
 ReactDOM.render(
-  <Store>
-    <Methods>
+  <React.StrictMode>
+    <Router>
       <App />
-    </Methods>
-  </Store>,
+    </Router>
+  </React.StrictMode>,
   document.getElementById("root")
 );
+
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
