@@ -7,6 +7,7 @@ import FormSignUp from "./Components/FormSignup.component";
 import PageNotFound from "./Pages/404.page";
 import ForgotPassword from "./Pages/ForgotPassword.pages";
 import Feed from "./Pages/Feed.pages";
+import Map from "./Pages/Map.pages";
 function App() {
   return (
     <div className="App">
@@ -16,6 +17,7 @@ function App() {
         <Route component={FormSignUp} path="/signup" />
         <Route component={ForgotPassword} path="/forgot" />
         <Route component={Feed} path="/feed" />
+        <Route component={Map} path="/map" />
         <Route component={PageNotFound} path="*" />
       </Switch>
     </div>

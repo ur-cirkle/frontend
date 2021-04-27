@@ -20,6 +20,9 @@ const PageNotFound: React.FC = () => {
         <li>
           <Link to="/feed">Feed</Link>
         </li>
+        <li>
+          <Link to="/map">Map</Link>
+        </li>
       </ul>
     </div>
   );
