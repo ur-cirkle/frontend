@@ -4,7 +4,7 @@ import React, { Dispatch, SetStateAction, useReducer, useState } from "react";
 import { FormLoginProps } from "../Interfaces/Login.interfaces";
 import { isEmail, isUsername } from "../Utils/Verification.utils";
 
-const FormLogin: React.FC<FormLoginProps> = ({ handleSubmit }) => {
+const FormLogin: React.FC<FormLoginProps> = ({ onLogin }) => {
   //- Context Reducer Function
   const contextReducer = (
     state: { value: string; type: string; error: boolean },
@@ -15,6 +15,7 @@ const FormLogin: React.FC<FormLoginProps> = ({ handleSubmit }) => {
     } else if (isUsername(value)) {
       return { value: value, type: "username", error: false };
     } else {
+      console.log(isUsername(value));
       return { value: value, type: "", error: true };
     }
   };
@@ -24,43 +25,46 @@ const FormLogin: React.FC<FormLoginProps> = ({ handleSubmit }) => {
     type: "",
     error: false,
   });
-
+  const [password, setPassword] = useState("");
   //-  Show Password
   const [showPassword, setShowPassword]: [
     boolean,
     Dispatch<SetStateAction<boolean>>
   ] = useState<boolean>(false);
-
+  const [validCredentials, setValidCredentials] = useState(true);
   return (
-    <div className="">
-      <form>
-        <label>
-          <input
-            type="text"
-            placeholder={"Username/Email"}
-            value={context.value}
-            onChange={(event) => contextDispatcher(event.target.value)}
-          />
-        </label>
-        <label>
-          <input
-            type={showPassword ? "text" : "password"}
-            placeholder={"Password"}
-          />
-        </label>
+    <div>
+      <label>
+        <input
+          type="text"
+          placeholder={"Username/Email"}
+          value={context.value}
+          onChange={(event) => contextDispatcher(event.target.value)}
+        />
+      </label>
+      <label>
+        <input
+          type={showPassword ? "text" : "password"}
+          placeholder={"Password"}
+          value={password}
+          onChange={({ target }) => setPassword(target.value)}
+        />
+      </label>
 
-        <label>
-          Show Password
-          <input
-            type="checkbox"
-            checked={showPassword}
-            onChange={() => setShowPassword(!showPassword)}
-          />
-        </label>
+      <label>
+        Show Password
+        <input
+          type="checkbox"
+          checked={showPassword}
+          onChange={() => setShowPassword(!showPassword)}
+        />
+      </label>
 
-        {context.error && <p>Enter Valid Email/Username</p>}
-        <button>Login</button>
-      </form>
+      {context.error && <p>Enter Valid Email/Username</p>}
+      {!validCredentials && <p>Invalid credentials</p>}
+      <button onClick={() => onLogin(password, context, setValidCredentials)}>
+        Login
+      </button>
     </div>
   );
 };

@@ -10,7 +10,7 @@ import * as d3 from "d3-ease";
 import { viewportObj } from "../Interfaces/Map.interfaces";
 import axios from "axios";
 import MapBox from "../Components/MapBox.component";
-
+import moment from "moment-timezone";
 const Map: React.FC = () => {
   //** Search Text
   const [searchText, setSearchText] = useState("");
@@ -47,10 +47,12 @@ const Map: React.FC = () => {
         autocomplete: true,
       },
       cancelToken: new axios.CancelToken((c) => (cancel = c)),
-    }).then(({ data }) => {
-      console.log(data);
-      setSuggestions(data.features);
-    });
+    })
+      .then(({ data }) => {
+        console.log(data);
+        setSuggestions(data.features);
+      })
+      .catch((e) => console.log(e));
     return () => cancel();
   }, [searchText]);
   return (
@@ -86,7 +88,7 @@ const Map: React.FC = () => {
                     latitude: center.lat,
                     longitude: center.lng,
                     zoom,
-                    transitionDuration: "auto",
+                    transitionDuration: 5000,
                   });
                 } else {
                   setViewport({
@@ -99,6 +101,7 @@ const Map: React.FC = () => {
               }}
             >
               {suggestion.place_name}
+              {"-----"}
             </button>
           ))}
         </div>

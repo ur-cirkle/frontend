@@ -16,3 +16,5 @@ export interface errorsReducerProps {
     equal: boolean;
   };
 }
+
+export interface credentialsObj {}

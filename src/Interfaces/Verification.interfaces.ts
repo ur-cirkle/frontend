@@ -1,12 +1,16 @@
 export interface credentials {
   username: string;
   password: string;
+  confirmPassword: string;
   email: string;
   TAC: boolean;
+  type: string;
+  timezone: string;
+  dob: string;
 }
 export interface usernameErrors {
-  length: boolean;
   syntax: boolean;
+  start: boolean;
 }
 export interface passwordErrors {
   length: boolean;

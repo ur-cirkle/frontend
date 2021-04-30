@@ -1,5 +1,13 @@
-import React, { useEffect, useReducer, useState } from "react";
+import React, {
+  SetStateAction,
+  useEffect,
+  useReducer,
+  useState,
+  Dispatch,
+} from "react";
 import { Link } from "react-router-dom";
+import moment from "moment-timezone";
+import { credentials } from "../Interfaces/Verification.interfaces";
 import { errorsReducerProps } from "../Interfaces/Signup.interfaces";
 import {
   isAgeValid,
@@ -7,9 +15,18 @@ import {
   isPasswordRT,
   isUsernameRT,
 } from "../Utils/Verification.utils";
-export interface FormSignUpProps {}
+export interface FormSignUpProps {
+  onSignup: Function;
+  isUsernameAvailable: (
+    username: string,
+    setFunc: Dispatch<SetStateAction<boolean>>
+  ) => any;
+}
 
-const FormSignUp: React.FC<FormSignUpProps> = () => {
+const FormSignUp: React.FC<FormSignUpProps> = ({
+  onSignup,
+  isUsernameAvailable,
+}) => {
   //-UserAge Reducer Function
   const userAgeReducer = (
     state: {
@@ -21,10 +38,6 @@ const FormSignUp: React.FC<FormSignUpProps> = () => {
     return { dob: dob, isValid: isAgeValid(dob, 18) };
   };
   //- UserAge useReducer
-  const [userAge, userAgeDispatcher] = useReducer(userAgeReducer, {
-    dob: "",
-    isValid: false,
-  });
   const [showPassword, setShowPassword] = useState(false);
   //- Errors Reducer Function
   const errorReducer = (
@@ -32,14 +45,16 @@ const FormSignUp: React.FC<FormSignUpProps> = () => {
     action: { type: string; payLoadValue: string; secondaryValue?: string }
   ) => {
     switch (action.type) {
-      case "USERNAME":
-        return { ...state, username: isUsernameRT(action.payLoadValue) };
-      case "PASSWORD":
+      case "username":
+        return {
+          ...state,
+          username: isUsernameRT(action.payLoadValue),
+        };
+      case "password":
         return { ...state, password: isPasswordRT(action.payLoadValue) };
-      case "EMAIL":
+      case "email":
         return { ...state, email: { syntax: !isEmail(action.payLoadValue) } };
-      case "CONFIRM PASSWORD":
-        console.log(action.payLoadValue, action.secondaryValue);
+      case "confirmPassword":
         if (action.payLoadValue === action.secondaryValue) {
           return { ...state, confirmPassword: { equal: false } };
         }
@@ -52,7 +67,7 @@ const FormSignUp: React.FC<FormSignUpProps> = () => {
   //- Errors useReducer
   const [errors, errorDispatcher] = useReducer(errorReducer, {
     username: {
-      length: true,
+      start: true,
       syntax: true,
     },
     password: {
@@ -68,52 +83,27 @@ const FormSignUp: React.FC<FormSignUpProps> = () => {
       equal: true,
     },
   });
+  const [isUNAvailable, setIsUNAvailable] = useState(false);
+  const [isVBTNClick, setISVBTNClick] = useState(false);
   //- Credentials Reducer Function
   const credentialsReducer = (
-    state: {
-      username: string;
-      password: string;
-      confirmPassword: string;
-      email: string;
-      TAC: boolean;
-      type: string;
-    },
+    state: credentials,
     action: {
       type: string;
       payLoadValue: string;
     }
   ) => {
-    switch (action.type) {
-      case "USERNAME":
-        errorDispatcher({
-          type: "USERNAME",
-          payLoadValue: action.payLoadValue,
-        });
-        return { ...state, username: action.payLoadValue };
-      case "PASSWORD":
-        errorDispatcher({
-          type: "PASSWORD",
-          payLoadValue: action.payLoadValue,
-        });
-        return { ...state, password: action.payLoadValue };
-      case "CONFIRM PASSWORD":
-        errorDispatcher({
-          type: "CONFIRM PASSWORD",
-          payLoadValue: action.payLoadValue,
-          secondaryValue: state.password,
-        });
-        return { ...state, confirmPassword: action.payLoadValue };
-      case "EMAIL":
-        errorDispatcher({ type: "EMAIL", payLoadValue: action.payLoadValue });
-        return { ...state, email: action.payLoadValue };
-      case "TAC":
-        return { ...state, TAC: Boolean(Number(action.payLoadValue)) };
-      case "TYPE":
-        return { ...state, type: action.payLoadValue };
-      default:
-        return state;
+    if (action.type === "TAC") {
+      return { ...state, TAC: Boolean(Number(action.payLoadValue)) };
     }
+    errorDispatcher({
+      type: action.type,
+      payLoadValue: action.payLoadValue,
+      secondaryValue: state.password,
+    });
+    return { ...state, [action.type]: action.payLoadValue };
   };
+
   //- Credentials useReducer
   const [credentials, credentialsDispatcher] = useReducer(credentialsReducer, {
     username: "",
@@ -121,39 +111,53 @@ const FormSignUp: React.FC<FormSignUpProps> = () => {
     confirmPassword: "",
     email: "",
     TAC: false,
-    type: "personal",
+    type: "P",
+    timezone: moment.tz.guess(),
+    dob: "",
   });
-
   return (
-    <form className="">
+    <div className="">
       <label>
         <input
           type="text"
           placeholder="username"
           value={credentials.username}
-          onChange={({ target }) =>
+          onChange={({ target }) => {
             credentialsDispatcher({
-              type: "USERNAME",
+              type: "username",
               payLoadValue: target.value,
-            })
-          }
+            });
+          }}
         />
       </label>
+      <button
+        onClick={() => {
+          isUsernameAvailable(credentials.username, setIsUNAvailable);
+          setISVBTNClick(true);
+        }}
+      >
+        Check Availability
+      </button>
       {errors.username.syntax && (
         <p>
-          Username should only contain letters, numbers, underscores and dashes
+          Username should only contain letters, numbers,dots, underscores and
+          dashes
         </p>
       )}
-      {errors.username.length && (
-        <p>Username should contain at least 5 characters</p>
-      )}
+      {isVBTNClick &&
+        (isUNAvailable ? (
+          <p>Username Available</p>
+        ) : (
+          <p>Username Not Available</p>
+        ))}
+      {errors.username.start && <p>Username should with letters only</p>}
       <label>
         <input
           type="text"
           placeholder="example@example.com"
           value={credentials.email}
           onChange={({ target }) =>
-            credentialsDispatcher({ type: "EMAIL", payLoadValue: target.value })
+            credentialsDispatcher({ type: "email", payLoadValue: target.value })
           }
         />
       </label>
@@ -165,7 +169,7 @@ const FormSignUp: React.FC<FormSignUpProps> = () => {
           value={credentials.password}
           onChange={({ target }) =>
             credentialsDispatcher({
-              type: "PASSWORD",
+              type: "password",
               payLoadValue: target.value,
             })
           }
@@ -190,7 +194,7 @@ const FormSignUp: React.FC<FormSignUpProps> = () => {
           value={credentials.confirmPassword}
           onChange={({ target }) =>
             credentialsDispatcher({
-              type: "CONFIRM PASSWORD",
+              type: "confirmPassword",
               payLoadValue: target.value,
             })
           }
@@ -227,8 +231,10 @@ const FormSignUp: React.FC<FormSignUpProps> = () => {
           type="date"
           name=""
           id=""
-          value={userAge.dob}
-          onChange={({ target }) => userAgeDispatcher(target.value)}
+          value={credentials.dob}
+          onChange={({ target }) =>
+            credentialsDispatcher({ type: "dob", payLoadValue: target.value })
+          }
         />
       </label>
       <label>
@@ -237,9 +243,9 @@ const FormSignUp: React.FC<FormSignUpProps> = () => {
           type="radio"
           name="acc_type"
           id=""
-          checked={credentials.type === "personal"}
+          checked={credentials.type === "P"}
           onChange={() =>
-            credentialsDispatcher({ type: "TYPE", payLoadValue: "personal" })
+            credentialsDispatcher({ type: "type", payLoadValue: "P" })
           }
         />
       </label>
@@ -249,15 +255,15 @@ const FormSignUp: React.FC<FormSignUpProps> = () => {
           type="radio"
           name="acc_type"
           id=""
-          checked={credentials.type === "community"}
+          checked={credentials.type === "C"}
           onChange={() =>
-            credentialsDispatcher({ type: "TYPE", payLoadValue: "community" })
+            credentialsDispatcher({ type: "type", payLoadValue: "C" })
           }
         />
       </label>
-      <button>Signup</button>
+      <button onClick={() => onSignup(credentials)}>Signup</button>
       <Link to="/signin">Sign In</Link>
-    </form>
+    </div>
   );
 };
 
