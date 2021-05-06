@@ -15,7 +15,6 @@ const FormLogin: React.FC<FormLoginProps> = ({ onLogin }) => {
     } else if (isUsername(value)) {
       return { value: value, type: "username", error: false };
     } else {
-      console.log(isUsername(value));
       return { value: value, type: "", error: true };
     }
   };

@@ -26,7 +26,6 @@ const Feed: React.FC<FeedProps> = () => {
   const observable: any = useRef();
   const lastPBRef = useCallback(
     (node) => {
-      console.log("dsajksj", isLoading);
       if (isLoading) return;
       if (observable.current) observable.current.disconnect();
       observable.current = new IntersectionObserver((entries) => {
@@ -35,7 +34,6 @@ const Feed: React.FC<FeedProps> = () => {
         }
       });
       if (node) observable.current.observe(node);
-      console.log(deckNumber);
     },
     [isLoading]
   );
@@ -67,6 +65,7 @@ const Feed: React.FC<FeedProps> = () => {
         return 0;
       })}
       {isLoading && <p>Loading...</p>}
+      {err && <p>Loading...</p>}
     </div>
   );
 };

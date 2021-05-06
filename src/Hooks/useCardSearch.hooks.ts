@@ -25,7 +25,6 @@ const useCardSearch = (cardPackNumber: number): [boolean, [], boolean] => {
       }`,
     })
       .then(({ data }: { data: { results: [] } }) => {
-        console.log(data);
         setCards((prevCards: []) => [
           ...Array.from(new Set([...prevCards, ...data.results])),
         ]);

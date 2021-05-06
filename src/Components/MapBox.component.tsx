@@ -1,11 +1,4 @@
-import React, {
-  useState,
-  useEffect,
-  Dispatch,
-  SetStateAction,
-  useRef,
-  Ref,
-} from "react";
+import React, { useState, useEffect, Dispatch, SetStateAction } from "react";
 import useSupercluster from "use-supercluster";
 import ReactMapGL, {
   Marker,
@@ -14,7 +7,7 @@ import ReactMapGL, {
   Popup,
 } from "react-map-gl";
 import { default as cities } from "./in.json";
-import * as d3 from "d3-ease";
+
 import { viewportObj } from "../Interfaces/Map.interfaces";
 import { uid } from "uid";
 export interface MapBoxProps {

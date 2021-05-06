@@ -1,22 +1,15 @@
-import React, {
-  SetStateAction,
-  useEffect,
-  useReducer,
-  useState,
-  Dispatch,
-} from "react";
+import React, { SetStateAction, useReducer, useState, Dispatch } from "react";
 import { Link } from "react-router-dom";
 import moment from "moment-timezone";
 import { credentials } from "../Interfaces/Verification.interfaces";
 import { errorsReducerProps } from "../Interfaces/Signup.interfaces";
 import {
-  isAgeValid,
   isEmail,
   isPasswordRT,
   isUsernameRT,
 } from "../Utils/Verification.utils";
 export interface FormSignUpProps {
-  onSignup: Function;
+  onCredentialsFilled: Function;
   isUsernameAvailable: (
     username: string,
     setFunc: Dispatch<SetStateAction<boolean>>
@@ -24,20 +17,9 @@ export interface FormSignUpProps {
 }
 
 const FormSignUp: React.FC<FormSignUpProps> = ({
-  onSignup,
+  onCredentialsFilled,
   isUsernameAvailable,
 }) => {
-  //-UserAge Reducer Function
-  const userAgeReducer = (
-    state: {
-      dob: string;
-      isValid: boolean;
-    },
-    dob: string
-  ) => {
-    return { dob: dob, isValid: isAgeValid(dob, 18) };
-  };
-  //- UserAge useReducer
   const [showPassword, setShowPassword] = useState(false);
   //- Errors Reducer Function
   const errorReducer = (
@@ -111,7 +93,7 @@ const FormSignUp: React.FC<FormSignUpProps> = ({
     confirmPassword: "",
     email: "",
     TAC: false,
-    type: "P",
+    type: "personal",
     timezone: moment.tz.guess(),
     dob: "",
   });
@@ -243,9 +225,9 @@ const FormSignUp: React.FC<FormSignUpProps> = ({
           type="radio"
           name="acc_type"
           id=""
-          checked={credentials.type === "P"}
+          checked={credentials.type === "personal"}
           onChange={() =>
-            credentialsDispatcher({ type: "type", payLoadValue: "P" })
+            credentialsDispatcher({ type: "type", payLoadValue: "personal" })
           }
         />
       </label>
@@ -255,13 +237,13 @@ const FormSignUp: React.FC<FormSignUpProps> = ({
           type="radio"
           name="acc_type"
           id=""
-          checked={credentials.type === "C"}
+          checked={credentials.type === "community"}
           onChange={() =>
-            credentialsDispatcher({ type: "type", payLoadValue: "C" })
+            credentialsDispatcher({ type: "type", payLoadValue: "community" })
           }
         />
       </label>
-      <button onClick={() => onSignup(credentials)}>Signup</button>
+      <button onClick={() => onCredentialsFilled(credentials)}>Signup</button>
       <Link to="/signin">Sign In</Link>
     </div>
   );

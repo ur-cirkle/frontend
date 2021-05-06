@@ -10,7 +10,6 @@ import * as d3 from "d3-ease";
 import { viewportObj } from "../Interfaces/Map.interfaces";
 import axios from "axios";
 import MapBox from "../Components/MapBox.component";
-import moment from "moment-timezone";
 const Map: React.FC = () => {
   //** Search Text
   const [searchText, setSearchText] = useState("");
@@ -49,7 +48,6 @@ const Map: React.FC = () => {
       cancelToken: new axios.CancelToken((c) => (cancel = c)),
     })
       .then(({ data }) => {
-        console.log(data);
         setSuggestions(data.features);
       })
       .catch((e) => console.log(e));
@@ -101,7 +99,6 @@ const Map: React.FC = () => {
               }}
             >
               {suggestion.place_name}
-              {"-----"}
             </button>
           ))}
         </div>

@@ -1,12 +1,16 @@
 import axios from "axios";
-import React, { useContext, Dispatch, SetStateAction } from "react";
+import React, { useContext, Dispatch, SetStateAction, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import FormLogin from "../Components/FormLogin.component";
 import { UserContext } from "../Contexts/UserContext";
+import { CurrentJwtContext } from "../Contexts/CurrentJwtContext";
+import { JwtTokens } from "../Contexts/JwtTokensContext";
 export interface LoginProps {}
 
 const Login: React.FC<LoginProps> = () => {
-  const { setUser } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
+  const { setCurrentJwt } = useContext(CurrentJwtContext);
+  const { jwtTokens, setJwtTokens } = useContext(JwtTokens);
   const history = useHistory();
   const onLogin = (
     password: string,
@@ -26,14 +30,22 @@ const Login: React.FC<LoginProps> = () => {
         "Content-Type": "application/json",
       },
     }).then(({ data }) => {
-      const { user, err } = data;
+      const { user, err, token } = data;
       if (err) return setValidCredentials(false);
       setUser(user);
-
+      setCurrentJwt(token);
+      setJwtTokens({
+        ...jwtTokens,
+        [user.username]: token,
+      });
       history.push("/");
       return;
     });
   };
+  useEffect(() => {
+    if (user && user.userid) return history.push("/");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
   return <FormLogin onLogin={onLogin} />;
 };
 

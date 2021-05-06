@@ -14,7 +14,6 @@ const CardDir: React.FC = () => {
   const observable: any = useRef();
   const lastCardRef = useCallback(
     (node) => {
-      console.log("dsajksj", isLoading);
       if (isLoading) return;
       if (observable.current) observable.current.disconnect();
       observable.current = new IntersectionObserver((entries) => {

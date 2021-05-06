@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Dispatch, SetStateAction } from "react";
+import { useState, useEffect, Dispatch, SetStateAction } from "react";
 
 import axios from "axios";
 const useFeed = (deckNumber: number): [boolean, [], boolean] => {
@@ -14,7 +14,6 @@ const useFeed = (deckNumber: number): [boolean, [], boolean] => {
   ] = useState<boolean>(true);
   //* Cards
   const [pbs, setPBS]: [[], Function] = useState([]);
-  const [tempPBS, setTempPBS]: [Array<object>, Function] = useState([]);
   //* Runs When User watches Last Card from currenlty loaded cards;
   useEffect(() => {
     setIsLoading(true);

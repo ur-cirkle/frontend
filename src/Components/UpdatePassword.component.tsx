@@ -13,7 +13,6 @@ const UpdatePassword: React.FC<UpdatePasswordProps> = () => {
       case "PASSWORD":
         return { ...state, password: isPasswordRT(action.payLoadValue) };
       case "CONFIRM PASSWORD":
-        console.log(action.payLoadValue, action.secondaryValue);
         if (action.payLoadValue === action.secondaryValue) {
           return { ...state, confirmPassword: { equal: false } };
         }
