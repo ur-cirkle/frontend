@@ -26,6 +26,7 @@
     "moment-timezone": "^0.5.33",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-image-crop": "^8.6.9",
     "react-map-gl": "^6.1.12",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
@@ -61,5 +62,7 @@
       "last 1 safari version"
     ]
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@types/react-image-crop": "^8.1.2"
+  }
 }

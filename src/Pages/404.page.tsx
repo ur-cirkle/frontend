@@ -37,6 +37,9 @@ const PageNotFound: React.FC = () => {
         <li>
           <Link to="/new/blog">Add Blog</Link>
         </li>
+        <li>
+          <Link to="/img">img</Link>
+        </li>
       </ul>
       <button
         onClick={() => {

@@ -85,3 +85,10 @@ h1 {
   margin: 0.3rem;
   cursor: pointer;
 }
+.ReactCrop__crop-selection {
+  border-radius: 10px !important;
+}
+.fimg {
+  height: 100px;
+  width: 100px;
+}

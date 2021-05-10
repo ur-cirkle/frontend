@@ -6,12 +6,15 @@ export const getCurrentUser = (
   setCurrentJwt: Function,
   setUser: Function
 ) => {
+  console.log(currentJwt);
   if (Object.keys(jwtTokens).length === 0) {
-    if (currentJwt && currentJwt.length > 5) {
+    if (currentJwt === null) {
+      console.log("heh");
       localStorage.setItem(
         "the-cirkle-current-jwt-token",
         JSON.stringify(null)
       );
+      setUser({});
     }
     return history.push("/signup");
   }

@@ -6,7 +6,7 @@ import React, {
   useRef,
   useCallback,
 } from "react";
-import Blog from "../Components/Blog.component";
+import Blog from "../Components/Feed/Blog.component";
 import Post from "../Components/Post.component";
 import useFeed from "../Hooks/useFeed.hooks";
 import { BlogProps, PostProps } from "../Interfaces/Feed.interfaces";

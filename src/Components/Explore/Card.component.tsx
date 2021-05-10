@@ -1,5 +1,5 @@
 import React from "react";
-import { CardProps } from "../Interfaces/Card.interfaces.js";
+import { CardProps } from "../../Interfaces/Card.interfaces.js";
 
 const Card: React.FC<CardProps> = ({ cardRef, cardUser, index }) => {
   let imgUrl = "http://placeimg.com/100/100/animals";

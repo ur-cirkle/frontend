@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction, useState } from "react";
-import { BlogProps } from "../Interfaces/Feed.interfaces";
+import { BlogProps } from "../../Interfaces/Feed.interfaces";
 interface BlogCProps {
   blog: BlogProps;
   blogRef?: React.RefCallback<HTMLDivElement>;

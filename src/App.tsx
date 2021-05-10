@@ -17,6 +17,8 @@ import useLocalStorage from "./Hooks/useLocalStorage.hooks";
 import { getCurrentUser } from "./Utils/getCurrentUser.utils";
 import InterestSelection from "./Components/InterestSelection.component";
 import AddBlog from "./Pages/AddBlog.pages";
+import Blog from "./Pages/Blog.pages";
+import ImageEditor from "./Pages/ImageEditor.pages";
 
 function App() {
   const [user, setUser] = useState({
@@ -47,6 +49,8 @@ function App() {
               <Route component={ForgotPassword} path="/forgot" />
               <Route component={Feed} path="/feed" />
               <Route component={AddBlog} path="/new/blog" />
+              <Route component={Blog} path="/:user/blogs/:blogid" />
+              <Route component={ImageEditor} path="/img" />
               <Route component={Map} path="/map" />
               <Route component={PageNotFound} path="*" />
             </Switch>

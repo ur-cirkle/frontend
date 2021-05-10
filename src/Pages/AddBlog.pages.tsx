@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useState } from "react";
-import BlogEditor from "../Components/BlogEditor.component";
+import BlogEditor from "../Components/AddBlog/BlogEditor.component";
 import { UserContext } from "../Contexts/UserContext";
 import io from "socket.io-client";
 let socket: any;
