@@ -14,7 +14,10 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
     if (e.target.files && e.target.files.length > 0) {
       const reader = new FileReader();
       reader.addEventListener("load", () => {
-        setImg({ type: "ORIGINAL", payLoadValue: reader.result as string });
+        setImg({
+          type: "ORIGINAL",
+          payLoadValue: reader.result as string,
+        });
         const img = new Image();
         img.src = reader.result as string;
         setCurrentEditing("Crop");

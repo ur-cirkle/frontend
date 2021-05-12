@@ -10,7 +10,7 @@ import React, {
 import Crop from "../Components/ImageEditor/Crop.components";
 import Filter from "../Components/ImageEditor/Filter.components";
 import ImageUpload from "../Components/ImageEditor/ImageUpload.components";
-import { filterState } from "../Interfaces/ImageEditor.intrefaces";
+import { hextoRGB } from "../Utils/Color.utils";
 export interface ImageEditorProps {}
 export interface cropProp {
   unit?: any;
@@ -50,25 +50,6 @@ const ImageEditor: React.FC<ImageEditorProps> = () => {
     original: "",
     edited: "",
     currentEditing: "",
-  });
-
-  const filterReducer = (
-    state: filterState,
-    action: { type: string; value: string }
-  ) => {
-    return state;
-  };
-  const [filter, setFilter] = useReducer(filterReducer, {
-    blur: 0,
-    brightness: 1,
-    contrast: 1,
-    dropShadow: 0,
-    grayScale: 0,
-    hueRotate: 0,
-    invert: 0,
-    opacity: 1,
-    saturation: 1,
-    sepia: 0,
   });
 
   return (

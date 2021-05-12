@@ -1,3 +1,6 @@
+* {
+  --color: rgba(3, 189, 158, 0.3);
+}
 .cards {
   height: 100%;
   overflow: scroll;
@@ -88,7 +91,88 @@ h1 {
 .ReactCrop__crop-selection {
   border-radius: 10px !important;
 }
+canvas {
+  transform: scale(0.7);
+}
+.filter {
+  display: flex;
+}
 .fimg {
+  height: 100%;
+  width: auto;
+  border-radius: 1rem;
+}
+.img_sepia {
+  filter: sepia(1);
+}
+.filters_gallery {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+.filters_gallery div {
+  border: 3px solid #333;
+  margin: 1rem;
+  border-radius: 1rem;
   height: 100px;
-  width: 100px;
+  width: auto;
+  text-align: center;
+}
+.img_blur {
+  filter: blur(2px);
+}
+.img_invert {
+  filter: invert();
+}
+.img_contrast {
+  filter: contrast(200%);
+}
+.img_saturation {
+  filter: saturate(100);
+}
+.img_hueRotate {
+  filter: hue-rotate(180deg);
+}
+.img_grayscale {
+  filter: grayscale(1);
+}
+#img_selected {
+  border-color: #42cafd;
+}
+
+.flex_left_items {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.slider_container,
+.slider {
+  display: flex;
+  justify-content: center;
+}
+.tint {
+  position: relative;
+  margin-bottom: 20px;
+  cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.2) 3px 5px 5px;
+}
+
+.tint:before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--color);
+  transition: all 0.3s linear;
+}
+
+.color_container {
+  display: flex;
+}
+.rgba_number {
+  width: 50px;
 }
