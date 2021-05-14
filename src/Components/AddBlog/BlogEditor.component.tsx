@@ -5,38 +5,49 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 const editorConfiguration = {
   toolbar: {
     items: [
-      "heading",
-      "|",
-      "bold",
-      "italic",
-      "strikethrough",
-      "underline",
-      "|",
       "bulletedList",
       "numberedList",
       "|",
       "outdent",
       "indent",
-      "alignment",
-      "|",
-      "blockQuote",
-      "codeBlock",
-      "code",
-      "link",
       "|",
       "undo",
       "redo",
+      "superscript",
+      "subscript",
+      "strikethrough",
+      "specialCharacters",
+      "link",
       "|",
       "fontColor",
       "fontSize",
-      "fontFamily",
-      "fontBackgroundColor",
-      "|",
-      "superscript",
-      "subscript",
-      "|",
-      "specialCharacters",
+      "alignment",
+      "bold",
+      "underline",
+      "italic",
+      "horizontalLine",
     ],
+    link: {
+      defaultProtocol: "https://",
+      decorators: {
+        addTargetToExternalLinks: {
+          mode: "automatic",
+          callback: (url: string) => /^(https?:)?\/\//.test(url),
+          attributes: {
+            target: "_blank",
+            rel: "noopener noreferrer",
+          },
+        },
+        openInNewTab: {
+          mode: "manual",
+          label: "Open in a new tab",
+          attributes: {
+            target: "_blank",
+            rel: "noopener noreferrer",
+          },
+        },
+      },
+    },
   },
   language: "en",
   licenseKey: "",
@@ -63,7 +74,12 @@ const BlogEditor: React.FC<BlogEditorProps> = ({
         config={editorConfiguration}
         onChange={(event: any, editor: any) => {
           const data = editor.getData();
-          setCharCount(editor.plugins.get("WordCount").characters);
+          setCharCount(editor.plugins.get("WordCount").words);
+          console.log(
+            editor,
+
+            data
+          );
           setBlog(data);
         }}
       />

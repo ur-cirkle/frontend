@@ -12,6 +12,7 @@ import Filter from "../Components/ImageEditor/Filter.components";
 import ImageUpload from "../Components/ImageEditor/ImageUpload.components";
 import { hextoRGB } from "../Utils/Color.utils";
 export interface ImageEditorProps {}
+
 export interface cropProp {
   unit?: any;
   width?: number | undefined;
@@ -21,7 +22,6 @@ export interface cropProp {
   y?: number | undefined;
 }
 const ImageEditor: React.FC<ImageEditorProps> = () => {
-  const [counter, setCounter] = useState(0);
   const [currentEditing, setCurrentEditing] = useState("Image Upload");
   const imgsReducer = (
     state: {
