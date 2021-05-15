@@ -3,7 +3,7 @@ import Crop from "../Components/ImageEditor/Crop.components";
 import Filter from "../Components/ImageEditor/Filter.components";
 import ImageUpload from "../Components/ImageEditor/ImageUpload.components";
 import { state } from "../Interfaces/ImageEditor.intrefaces";
-export interface ImageEditorProps {}
+
 export interface cropProp {
   unit?: any;
   width?: number | undefined;
@@ -13,7 +13,7 @@ export interface cropProp {
   y?: number | undefined;
 }
 
-const ImageEditor: React.FC<ImageEditorProps> = () => {
+const ImageEditor: React.FC = () => {
   const [index, setIndex] = useState(0);
   const [counter, setCounter] = useState(0);
   const [currentEditing, setCurrentEditing] = useState("Image Upload");
