@@ -1,16 +1,8 @@
-import React, {
-  useEffect,
-  useRef,
-  useState,
-  useCallback,
-  SetStateAction,
-  Dispatch,
-  useReducer,
-} from "react";
+import React, { useEffect, useState, useReducer } from "react";
 import Crop from "../Components/ImageEditor/Crop.components";
 import Filter from "../Components/ImageEditor/Filter.components";
 import ImageUpload from "../Components/ImageEditor/ImageUpload.components";
-import { hextoRGB } from "../Utils/Color.utils";
+import { state } from "../Interfaces/ImageEditor.intrefaces";
 export interface ImageEditorProps {}
 export interface cropProp {
   unit?: any;
@@ -19,39 +11,11 @@ export interface cropProp {
   aspect?: any;
   x?: number | undefined;
   y?: number | undefined;
-  
 }
-type state = [
-  {
-    original: string;
-    edited: string;
-    currentEditing: string;
-  },
-  {
-    original: string;
-    edited: string;
-    currentEditing: string;
-  },
-  {
-    original: string;
-    edited: string;
-    currentEditing: string;
-  },
-  {
-    original: string;
-    edited: string;
-    currentEditing: string;
-  },
-  {
-    original: string;
-    edited: string;
-    currentEditing: string;
-  }
-];
 
 const ImageEditor: React.FC<ImageEditorProps> = () => {
   const [index, setIndex] = useState(0);
-  const [counter,setCounter] = useState(0);
+  const [counter, setCounter] = useState(0);
   const [currentEditing, setCurrentEditing] = useState("Image Upload");
   const imgsReducer = (
     state: state,
@@ -86,7 +50,7 @@ const ImageEditor: React.FC<ImageEditorProps> = () => {
         return state;
     }
   };
-  
+
   const [imgs, setImg] = useReducer(imgsReducer, [
     {
       original: "",
@@ -115,10 +79,10 @@ const ImageEditor: React.FC<ImageEditorProps> = () => {
     },
   ]);
   useEffect(() => {
-    setCounter(counter+1)
-    
-  }, [imgs[index].original]);
-  console.log(imgs,index)
+    setCounter(counter + 1);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <div className="App">
       <p>{counter}</p>
@@ -140,13 +104,27 @@ const ImageEditor: React.FC<ImageEditorProps> = () => {
           imgs={imgs[index]}
           setCurrentEditing={setCurrentEditing}
           index={index}
-          
-
         />
       )}
-      <button onClick={()=>{setIndex(index + 1)}}> NEXT</button>
-      <button onClick={()=>{setIndex(index - 1)}}> Previous</button>
-   
+      {currentEditing !== "Image Upload" && (
+        <>
+          {" "}
+          <button
+            onClick={() => {
+              setIndex(index + 1);
+            }}
+          >
+            NEXT
+          </button>
+          <button
+            onClick={() => {
+              setIndex(index - 1);
+            }}
+          >
+            Previous
+          </button>
+        </>
+      )}
     </div>
   );
 };
