@@ -43,3 +43,10 @@ const CardDir: React.FC = () => {
 };
 
 export default CardDir;
+
+
+
+
+
+
+

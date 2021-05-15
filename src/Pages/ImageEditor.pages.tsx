@@ -144,6 +144,7 @@ const ImageEditor: React.FC<ImageEditorProps> = () => {
 
         />
       )}
+      <button onClick={()=>{setCounter(counter+1)}}>load </button>
       <button onClick={()=>{setIndex(index + 1)}}> NEXT</button>
       <button onClick={()=>{setIndex(index - 1)}}> Previous</button>
    

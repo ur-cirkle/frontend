@@ -10,6 +10,8 @@ import React, {
 import { cropProp } from "../../Pages/ImageEditor.pages";
 import ReactCrop from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
+import Rotate from "./rotate.components";
+
 export interface CropProps {
   imgs: {
     original: string;
@@ -48,7 +50,6 @@ const Crop: React.FC<CropProps> = ({ imgs, setImg, setCurrentEditing ,index}) =>
 
     const image = new Image();
     image.src = imgs.original;
-console.log(imgs.original,"wefref")
     const canvas = previewCanvasRef.current;
     const crop: any = completedCrop;
 
@@ -68,20 +69,7 @@ console.log(imgs.original,"wefref")
     ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
     ctx.imageSmoothingQuality = "high";
 
-    // ctx.drawImage(
-    //   image,
-    //   crop.x * scaleX,
-    //   crop.y * scaleY,
-    //   crop.width * scaleX,
-    //   crop.height * scaleY,
-    //   0,
-    //   0,
-    //   crop.width,
-    //   crop.height
-    // );
-    ctx.translate(crop.width/2,crop.height/2)
-    ctx.rotate(Math.PI / 4)
-    ctx.translate(-crop.width/2,-crop.height/2)
+    
     ctx.drawImage(
       image,
       crop.x * scaleX,
@@ -94,7 +82,7 @@ console.log(imgs.original,"wefref")
       crop.height
     );
 
-    setImg({ type: "EDITED", payLoadValue: canvas.toDataURL() ,index});
+    setImg({ type: "CURRENT_EDITING", payLoadValue: canvas.toDataURL() ,index});
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [completedCrop]);
@@ -159,12 +147,14 @@ console.log(imgs.original,"wefref")
       >
         Change Image
       </button>
+      <Rotate imgs={imgs} setImg={setImg} index={index} />
       <button
         onClick={() => {
           if (imgs.currentEditing === "data:,") return alert("Not Valid");
-          console.log(imgs.currentEditing)
+          // console.log(imgs.currentEditing)
+          console.log(12)
           setImg({ type: "EDITED", payLoadValue: imgs.currentEditing,index });
-          setCurrentEditing("Filter");
+          // setCurrentEditing("Filter");
           window.history.pushState({}, "Image Editor:Filter", "/img/filter");
         }}
       >
