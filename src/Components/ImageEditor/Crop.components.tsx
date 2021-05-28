@@ -46,6 +46,7 @@ const Crop: React.FC<CropProps> = ({ imgs, setImg, setCurrentEditing ,index}) =>
 
   const [completedCrop, setCompletedCrop] = useState<any>(null);
   const [CompleteRotate, setCompleteRotate] = useState<any>(null);
+  const [Completeflip, setCompleteflip] = useState<any>(null);
   
   useEffect(() => {
     console.log(123)
@@ -54,7 +55,7 @@ const Crop: React.FC<CropProps> = ({ imgs, setImg, setCurrentEditing ,index}) =>
     }
     console.log(CompleteRotate)
     const image = new Image();
-    image.src = imgs.original;
+    image.src = imgs.edited;
     
     const canvasRotate = previewCanvasRef1.current;
     const ctxRotate: any = canvasRotate.getContext("2d");
@@ -85,8 +86,31 @@ const Crop: React.FC<CropProps> = ({ imgs, setImg, setCurrentEditing ,index}) =>
   }, [CompleteRotate]);
 
 useEffect(() => {
+
+  if (!Completeflip ||  !previewCanvasRef2.current) {
+    return;
+  }
+  console.log(456)
+
+  const image = new Image();
+  image.src = imgs.edited;
+  const canvasFlip = previewCanvasRef2.current;
+  const ctxFlip: any = canvasFlip.getContext("2d");
+  canvasFlip.width=image.width
+  canvasFlip.height=image.height
+  if(Completeflip%2===0){
+    console.log(1234)
+    ctxFlip.scale(1,1);
+    ctxFlip.drawImage(image,0,0,image.width,image.height);
+  }
+  if(Completeflip%2!==0){    
+    ctxFlip.scale(-1,1);
+    ctxFlip.drawImage(image,-image.width,0,image.width,image.height);
+  }
   
-}, []);
+
+  
+}, [Completeflip]);
 
   useEffect(() => {
     if (!completedCrop || !previewCanvasRef.current) {
@@ -167,13 +191,8 @@ useEffect(() => {
           height: Math.round(completedCrop?.height ?? 0)
         }}
       />
-      <canvas
-        ref={previewCanvasRef1}
-        // Rounding is important so the canvas width and height matches/is a multiple for sharpness.
-        // style={{ display: "none" }}
-      />
-      <img src={imgs.edited} alt="123"></img>
-    <button onClick={()=>{setCompleteRotate(CompleteRotate+1)}}>rotate</button>
+      
+
 
       <button
         onClick={() => onRatioChange(1 / 1)}
@@ -204,19 +223,30 @@ useEffect(() => {
                         >
                           Change Image  
                         </button>
-                        {/* <Rotate imgs={imgs} setImg={setImg} index={index} /> */}
                         <button
                           onClick={() => {
                             if (imgs.currentEditing === "data:,") return alert("Not Valid");
-          // console.log(imgs.currentEditing)
-          console.log(12)
           setImg({ type: "EDITED", payLoadValue: imgs.currentEditing,index });
+          
           // setCurrentEditing("Filter");
           // window.history.pushState({}, "Image Editor:Filter", "/img/filter");
         }}
       >
         ✔️
       </button>
+      <canvas
+        ref={previewCanvasRef1}
+        // Rounding is important so the canvas width and height matches/is a multiple for sharpness.
+        // style={{ display: "none" }}
+      />
+    <button onClick={()=>{setCompleteRotate(CompleteRotate+1)}}>rotate</button>
+
+    <canvas
+        ref={previewCanvasRef2}
+        // Rounding is important so the canvas width and height matches/is a multiple for sharpness.
+        // style={{ display: "none" }}
+      />
+    <button onClick={()=>{setCompleteflip(Completeflip+1)}}>flip</button>
     </>
   );
 };

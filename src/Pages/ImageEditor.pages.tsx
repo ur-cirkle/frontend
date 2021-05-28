@@ -83,6 +83,7 @@ const ImageEditor: React.FC = () => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  console.log(imgs)
   return (
     <div className="App">
       <p>{counter}</p>
