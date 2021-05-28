@@ -34,13 +34,11 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   const onSelectFile = async (e: any) => {
     let files = e.target.files;
     let readers = [];
+    console.log(files)
     if (!files.length) return;
 
     for (let i = 0; i < files.length; i++) {
       readers.push(a(files[i]));
-
-
-
     }
 
 

@@ -144,9 +144,21 @@ const ImageEditor: React.FC<ImageEditorProps> = () => {
 
         />
       )}
+
+{/* 
+
+      <img src={imgs[0].original} onClick={()=>{setIndex(0)}} alt="upload"></img>
+      <img src={imgs[1].original} onClick={()=>{setIndex(1)}}alt="upload"></img>
+      <img src={imgs[2].original} onClick={()=>{setIndex(2)}}alt="upload"></img>
+      <img src={imgs[3].original} onClick={()=>{setIndex(3)}}alt="upload"></img>
+      <img src={imgs[4].original} onClick={()=>{setIndex(4)}}alt="upload"></img>
+ */}
+
+
       <button onClick={()=>{setCounter(counter+1)}}>load </button>
-      <button onClick={()=>{setIndex(index + 1)}}> NEXT</button>
-      <button onClick={()=>{setIndex(index - 1)}}> Previous</button>
+      <button onClick={()=>{setIndex(index+1)}}> next </button>
+      <button onClick={()=>{setIndex(index-1)}}>prev </button>
+
    
     </div>
   );

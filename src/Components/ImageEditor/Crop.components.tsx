@@ -10,7 +10,7 @@ import React, {
 import { cropProp } from "../../Pages/ImageEditor.pages";
 import ReactCrop from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
-import Rotate from "./rotate.components";
+// import Rotate from "./rotate.components";
 
 export interface CropProps {
   imgs: {
@@ -36,13 +36,57 @@ const Crop: React.FC<CropProps> = ({ imgs, setImg, setCurrentEditing ,index}) =>
   ] = useState<cropProp>({ unit: "%", width: 30, aspect: 1 / 1 });
   const imgRef = useRef<HTMLImageElement | null>(null);
 
-  const [dataURI, setDataURI] = useState(null);
   const previewCanvasRef = useRef<HTMLCanvasElement | null>(null);
+  const previewCanvasRef1 = useRef<HTMLCanvasElement | null>(null);
+  
   const onLoad = useCallback((img: HTMLImageElement) => {
     imgRef.current = img;
   }, []);
 
   const [completedCrop, setCompletedCrop] = useState<any>(null);
+  const [CompleteRotate, setCompleteRotate] = useState<any>(null);
+  
+  useEffect(() => {
+    console.log(123)
+    if (!CompleteRotate ||  !previewCanvasRef1.current) {
+      return;
+    }
+    console.log(CompleteRotate)
+    const image = new Image();
+    image.src = imgs.original;
+    
+    const canvasRotate = previewCanvasRef1.current;
+    const ctxRotate: any = canvasRotate.getContext("2d");
+    if(CompleteRotate%2===0){
+      canvasRotate.width = image.width;
+      canvasRotate.height = image.height;
+      
+      ctxRotate.translate(canvasRotate.width / 2,canvasRotate.height / 2);
+      ctxRotate.rotate(Math.PI*(CompleteRotate/2));
+      console.log(Math.PI*(CompleteRotate/2));
+      ctxRotate.drawImage(image, -image.width / 2, -image.height / 2);
+      console.log(canvasRotate.toDataURL(),61);
+
+    }
+    if(CompleteRotate%2!==0){
+      canvasRotate.width = image.height;
+      canvasRotate.height = image.width;
+      
+      ctxRotate.translate(canvasRotate.width / 2,canvasRotate.height / 2);
+      ctxRotate.rotate(Math.PI*(CompleteRotate/2));
+      console.log(Math.PI*(CompleteRotate/2));
+      ctxRotate.drawImage(image, -image.width / 2, -image.height / 2);
+      console.log(canvasRotate.toDataURL(),61);
+
+    }
+   
+
+  }, [CompleteRotate]);
+
+useEffect(() => {
+  
+}, []);
+
   useEffect(() => {
     if (!completedCrop || !previewCanvasRef.current) {
       return;
@@ -82,6 +126,7 @@ const Crop: React.FC<CropProps> = ({ imgs, setImg, setCurrentEditing ,index}) =>
       crop.height
     );
 
+
     setImg({ type: "CURRENT_EDITING", payLoadValue: canvas.toDataURL() ,index});
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -116,7 +161,18 @@ const Crop: React.FC<CropProps> = ({ imgs, setImg, setCurrentEditing ,index}) =>
         ref={previewCanvasRef}
         // Rounding is important so the canvas width and height matches/is a multiple for sharpness.
         // style={{ display: "none" }}
+        style={{
+          width: Math.round(completedCrop?.width ?? 0),
+          height: Math.round(completedCrop?.height ?? 0)
+        }}
       />
+      <canvas
+        ref={previewCanvasRef1}
+        // Rounding is important so the canvas width and height matches/is a multiple for sharpness.
+        // style={{ display: "none" }}
+      />
+      <img src={imgs.edited} alt="123"></img>
+    <button onClick={()=>{setCompleteRotate(CompleteRotate+1)}}>rotate</button>
 
       <button
         onClick={() => onRatioChange(1 / 1)}
@@ -141,21 +197,21 @@ const Crop: React.FC<CropProps> = ({ imgs, setImg, setCurrentEditing ,index}) =>
       <button
         onClick={() => {
           setImg({ type: "ORIGINAL", payLoadValue: "" ,index});
-          setCurrentEditing("Image Upload");
-          window.history.pushState({}, "Image Editor : Crop", "/img");
-        }}
-      >
-        Change Image
-      </button>
-      <Rotate imgs={imgs} setImg={setImg} index={index} />
-      <button
-        onClick={() => {
-          if (imgs.currentEditing === "data:,") return alert("Not Valid");
+                            setCurrentEditing("Image Upload");
+                            window.history.pushState({}, "Image Editor : Crop", "/img");
+                          }}
+                        >
+                          Change Image  
+                        </button>
+                        {/* <Rotate imgs={imgs} setImg={setImg} index={index} /> */}
+                        <button
+                          onClick={() => {
+                            if (imgs.currentEditing === "data:,") return alert("Not Valid");
           // console.log(imgs.currentEditing)
           console.log(12)
           setImg({ type: "EDITED", payLoadValue: imgs.currentEditing,index });
           // setCurrentEditing("Filter");
-          window.history.pushState({}, "Image Editor:Filter", "/img/filter");
+          // window.history.pushState({}, "Image Editor:Filter", "/img/filter");
         }}
       >
         ✔️

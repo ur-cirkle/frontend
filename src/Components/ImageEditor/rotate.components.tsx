@@ -6,32 +6,47 @@ export interface RotateProps {
 }
 
 const Rotate: React.FC<RotateProps> = ({ imgs, setImg, index }) => {
-  const canvas = useRef<HTMLCanvasElement | null>(null);
-  const onRotate = () => {
-    if (!canvas.current) return;
+  const canvas1 = useRef<HTMLCanvasElement | null>(null);
+  const onRotate = () => {                                                                         
+    if (!canvas1.current) return;
     let currentImg: string| null = "";
     if (imgs.edited) currentImg= imgs.edited;
 
-    const ctx = canvas.current.getContext("2d") as CanvasRenderingContext2D;
+    const ctx = canvas1.current.getContext("2d") as CanvasRenderingContext2D;
     const image = new Image();
     image.src = currentImg;
+    console.log(currentImg)
     image.onload = () => {
-      if (!canvas.current) return;
-   
-      ctx.translate(image.width / 2, image.height / 2);
-      ctx.rotate(Math.PI / 2);
-      ctx.translate(-image.width / 2, -image.height / 2);
-      ctx.drawImage(image, 0, 0,image.width,image.height,0,0,image.height,image.width);
 
+      rotateImage();
+      console.log(canvas1.current?.toDataURL());
+
+    
     };
+    let rotateImage = () => {
+    
+      if (!canvas1.current) return;
+      canvas1.current.width = image.width;
+      canvas1.current.height = image.height;
+      console.log(image.width)
+      
+      ctx.translate(canvas1.current.width / 2,canvas1.current.height / 2);
+      ctx.rotate(Math.PI);
+      ctx.drawImage(image, -image.width / 2, -image.height / 2);
+  }
+
   };
   return (
     <div className="">
-      <canvas ref={canvas} />
+      <canvas ref={canvas1} />
       <img src={imgs.edited} alt="" />
-      <button onClick={onRotate}>Rotate</button>
+      <button onClick={onRotate}>Rotate</button>                                              
     </div>
   );
 };
 
-export default Rotate;
+
+
+
+
+// export default Rotate;
