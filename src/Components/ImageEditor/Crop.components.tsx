@@ -38,6 +38,7 @@ const Crop: React.FC<CropProps> = ({ imgs, setImg, setCurrentEditing ,index}) =>
 
   const previewCanvasRef = useRef<HTMLCanvasElement | null>(null);
   const previewCanvasRef1 = useRef<HTMLCanvasElement | null>(null);
+  const previewCanvasRef2 = useRef<HTMLCanvasElement | null>(null);
   
   const onLoad = useCallback((img: HTMLImageElement) => {
     imgRef.current = img;
