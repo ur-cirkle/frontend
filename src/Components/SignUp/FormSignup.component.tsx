@@ -1,13 +1,13 @@
 import React, { SetStateAction, useReducer, useState, Dispatch } from "react";
 import { Link } from "react-router-dom";
 import moment from "moment-timezone";
-import { credentials } from "../Interfaces/Verification.interfaces";
-import { errorsReducerProps } from "../Interfaces/Signup.interfaces";
+import { credentials } from "../../Interfaces/Verification.interfaces";
+import { errorsReducerProps } from "../../Interfaces/Signup.interfaces";
 import {
   isEmail,
   isPasswordRT,
   isUsernameRT,
-} from "../Utils/Verification.utils";
+} from "../../Utils/Verification.utils";
 export interface FormSignUpProps {
   onCredentialsFilled: Function;
   isUsernameAvailable: (
@@ -95,7 +95,6 @@ const FormSignUp: React.FC<FormSignUpProps> = ({
     TAC: false,
     type: "personal",
     timezone: moment.tz.guess(),
-    dob: "",
   });
   return (
     <div className="">
@@ -207,18 +206,7 @@ const FormSignUp: React.FC<FormSignUpProps> = ({
         />
       </label>
       {!credentials.TAC && <p>Please agree to Term and Conditions</p>}
-      <label>
-        DOB:
-        <input
-          type="date"
-          name=""
-          id=""
-          value={credentials.dob}
-          onChange={({ target }) =>
-            credentialsDispatcher({ type: "dob", payLoadValue: target.value })
-          }
-        />
-      </label>
+
       <label>
         Personal
         <input

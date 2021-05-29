@@ -118,7 +118,6 @@ export const isCredentialsValid = (credentials: credentials): boolean => {
     isPassword(credentials.password) &&
     isEmail(credentials.email) &&
     credentials.TAC &&
-    credentials.dob.length &&
     credentials.confirmPassword === credentials.password
   )
     return true;

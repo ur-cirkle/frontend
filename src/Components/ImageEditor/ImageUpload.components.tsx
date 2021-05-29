@@ -1,26 +1,21 @@
-import { AnyARecord } from "dns";
-import React, { Dispatch, SetStateAction, useState } from "react";
-import { useHistory } from "react-router-dom";
+import React, { Dispatch, SetStateAction } from "react";
+// import { useHistory } from "react-router-dom";
 export interface ImageUploadProps {
   setImg: Dispatch<{ type: string; payLoadValue: string; index: number }>;
   setCurrentEditing: Dispatch<SetStateAction<string>>;
-
 }
 
 const ImageUpload: React.FC<ImageUploadProps> = ({
   setImg,
   setCurrentEditing,
 }) => {
-
-  const history = useHistory();
+  // const history = useHistory();
   const a = function readFileAsText(file: any) {
     return new Promise(function (resolve, reject) {
       let fr = new FileReader();
 
       fr.onload = function () {
         resolve(fr.result);
-
-
       };
 
       fr.onerror = function () {
@@ -29,7 +24,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
 
       fr.readAsDataURL(file);
     });
-  }
+  };
 
   const onSelectFile = async (e: any) => {
     let files = e.target.files;
@@ -38,12 +33,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
 
     for (let i = 0; i < files.length; i++) {
       readers.push(a(files[i]));
-
-
-
     }
-
-
 
     Promise.all(readers).then((values) => {
       console.log(values);
@@ -51,12 +41,10 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
         setImg({
           type: "ORIGINAL",
           payLoadValue: values[j] as string,
-          index: j
+          index: j,
         });
-
       }
-    })
-      ;
+    });
     setCurrentEditing("Crop");
     window.history.pushState({}, "Image Editor : Crop", "/img/crop");
     // if (e.target.files && e.target.files.length > 0) {
@@ -79,24 +67,13 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
     //   console.log(reader.result,i,123124);
     //   // i = i -1;
 
-
-
-
     //   });
 
     // reader.readAsDataURL(e.target.files[0]);
     // }
     // }
+  };
 
-  }
-
-
-
-
-
-
-
-    ;
   return (
     <div>
       <input type="file" accept="image/*" onChange={onSelectFile} multiple />

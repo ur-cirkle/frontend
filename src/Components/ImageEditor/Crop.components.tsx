@@ -9,6 +9,7 @@ import React, {
 import { cropProp } from "../../Pages/ImageEditor.pages";
 import ReactCrop from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
+import Rotate from "./Rotate.component";
 export interface CropProps {
   imgs: {
     original: string;
@@ -30,7 +31,6 @@ const Crop: React.FC<CropProps> = ({
   setCurrentEditing,
   index,
 }) => {
-  const [currentDegree, setCurrentDegree] = useState<number>(0);
   const [crop, setCrop]: [cropProp, Dispatch<SetStateAction<cropProp>>] =
     useState<cropProp>({ unit: "%", width: 30, aspect: 1 / 1 });
   const imgRef = useRef<HTMLImageElement | null>(null);
@@ -91,8 +91,12 @@ const Crop: React.FC<CropProps> = ({
       crop.height
     );
 
-    setImg({ type: "EDITED", payLoadValue: canvas.toDataURL(), index });
-
+    setImg({
+      type: "CURRENT_EDITING",
+      payLoadValue: canvas.toDataURL(),
+      index,
+    });
+    console.log(imgs);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [completedCrop]);
   const onRatioChange = (ratio: number) => {
@@ -112,45 +116,7 @@ const Crop: React.FC<CropProps> = ({
       };
     });
   };
-  const onRotate = () => {
-    if (!previewCanvasRef.current) return;
-    setCurrentDegree(currentDegree === 270 ? 0 : currentDegree + 90);
 
-    let currentImg: string;
-    if (imgs.edited) currentImg = imgs.edited;
-    else currentImg = imgs.original;
-    const ctx: any = previewCanvasRef.current.getContext("2d");
-    const image = new Image();
-    image.src = currentImg;
-    const crop: any = completedCrop;
-
-    const scaleX = image.naturalWidth / image.width;
-    const scaleY = image.naturalHeight / image.height;
-    const width =
-      currentDegree === 270 || currentDegree === 90 ? crop.height : crop.width;
-    const height =
-      currentDegree === 270 || currentDegree === 90 ? crop.width : crop.height;
-
-    console.log(crop.width, crop.height);
-
-    ctx.clearRect(0, 0, width, height);
-    ctx.translate(width / 2, width / 2);
-    ctx.rotate(Math.PI / 2);
-    ctx.translate(-(width / 2), -(width / 2));
-    console.log(crop.width, crop.height);
-
-    ctx.drawImage(
-      image,
-      crop.x * scaleX,
-      crop.y * scaleY,
-      height * scaleX,
-      width * scaleY,
-      0,
-      0,
-      height,
-      width
-    );
-  };
   const onFlip = () => {
     if (!previewCanvasRef.current) return;
     const ctx = previewCanvasRef.current.getContext("2d");
@@ -201,8 +167,7 @@ const Crop: React.FC<CropProps> = ({
       >
         16:9
       </button>
-
-      <button onClick={onRotate}>rotate</button>
+      <Rotate imgs={imgs} setImg={setImg} index={index} />
       <button
         onClick={() => {
           setImg({ type: "ORIGINAL", payLoadValue: "", index });
@@ -216,9 +181,9 @@ const Crop: React.FC<CropProps> = ({
       <button
         onClick={() => {
           if (imgs.currentEditing === "data:,") return alert("Not Valid");
-          console.log(imgs.currentEditing);
+
           setImg({ type: "EDITED", payLoadValue: imgs.currentEditing, index });
-          setCurrentEditing("Filter");
+          // setCurrentEditing("Filter");
           window.history.pushState({}, "Image Editor:Filter", "/img/filter");
         }}
       >

@@ -7,5 +7,6 @@ export interface viewportObj {
   zoom: number;
   transitionDuration: any;
   transitionInterpolator: FlyToInterpolator;
+  maxBounds: Array<Array<number>>;
   transitionEasing: Function;
 }
