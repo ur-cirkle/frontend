@@ -7,7 +7,8 @@ import React, {
   useContext,
 } from "react";
 import * as bowser from "bowser";
-import FormSignUp from "../Components/SignUp/FormSignup.component";
+import {isUsernameRT,isPasswordRT} from "verifierjs"
+import FormSignUp from "../Components/SignUp/FormSignup/FormSignup.component";
 import { UserContext } from "../Contexts/UserContext";
 import { useHistory } from "react-router-dom";
 import { isCredentialsValid } from "../Utils/Verification.utils";
@@ -45,10 +46,23 @@ const Signup: React.FC = () => {
       const { data } = resp;
       setFunc(data.available);
       return data.available;
-    } catch (error) {}
+    } catch (error) {
+      console.log("hdskfaj")
+    }
   };
-  const onCredentialsFilled = (credentials: credentials) => {
-    if (!isCredentialsValid(credentials)) return;
+  //* When User has filled all credentials and click sign btn
+  const onCredentialsFilled = (credentials: credentials, setErrors: Dispatch<SetStateAction<{ username: string; password: string;}>>) => {
+    if (!isCredentialsValid(credentials)) {
+      //- Creating password error string
+      const passwordErrors = isPasswordRT(credentials.password);
+      const passwordErrStr = Object.values(passwordErrors).some(v => v)?"Invalid Password":"";
+      //- Creating username error string
+      const usernameErrors = isUsernameRT(credentials.username);
+      const usernameErrStr = Object.keys(usernameErrors).some(v => v) ? "Invalid Username" : "";
+    //- Seting Err
+     return setErrors({ username: usernameErrStr, password: passwordErrStr });
+    };
+    console.log(isCredentialsValid(credentials));
     axios({
       url: "http://localhost:5000/interests",
       method: "GET",

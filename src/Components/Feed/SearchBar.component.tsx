@@ -51,7 +51,7 @@ const SearchBar: React.SFC<SearchBarProps> = () => {
         })
         .catch(console.log);
     }, 500);
-
+ 
     return () => clearTimeout(delayDebounceFn);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query]);

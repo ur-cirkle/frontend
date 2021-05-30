@@ -2,7 +2,7 @@
 import React, { Dispatch, SetStateAction, useReducer, useState } from "react";
 //** InterFaces
 import { FormLoginProps } from "../Interfaces/Login.interfaces";
-import { isEmail, isUsername } from "../Utils/Verification.utils";
+import { isEmail, isUsername } from "verifierjs";
 
 const FormLogin: React.FC<FormLoginProps> = ({ onLogin }) => {
   //- Context Reducer Function
