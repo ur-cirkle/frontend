@@ -63,7 +63,7 @@ const SearchBar: React.SFC<SearchBarProps> = () => {
     <div className="">
       
       <Searchbar
-        type="text" placeholder="Search"
+        type="text"
         value={query}
         onChange={({ target }) => {
           setQuery(target.value);
