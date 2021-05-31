@@ -2,12 +2,7 @@ import React, { useEffect, useState, useReducer } from "react";
 import Crop from "../Components/ImageEditor/Crop.components";
 import Filter from "../Components/ImageEditor/Filter.components";
 import ImageUpload from "../Components/ImageEditor/ImageUpload.components";
-<<<<<<< HEAD
-import { hextoRGB } from "../Utils/Color.utils";
-export interface ImageEditorProps {}
-=======
 import { state } from "../Interfaces/ImageEditor.intrefaces";
->>>>>>> 6a4bb8e60a9feffc9dffdbc0306c92701e89c400
 
 export interface cropProp {
   unit?: any;
@@ -17,14 +12,10 @@ export interface cropProp {
   x?: number | undefined;
   y?: number | undefined;
 }
-<<<<<<< HEAD
-const ImageEditor: React.FC<ImageEditorProps> = () => {
-=======
 
 const ImageEditor: React.FC = () => {
   const [index, setIndex] = useState(0);
   const [counter, setCounter] = useState(0);
->>>>>>> 6a4bb8e60a9feffc9dffdbc0306c92701e89c400
   const [currentEditing, setCurrentEditing] = useState("Image Upload");
   const imgsReducer = (
     state: state,
