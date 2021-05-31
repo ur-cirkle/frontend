@@ -41,10 +41,8 @@ function App() {
       setUser,
       setJwtTokens
     );
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  // const UserContext = UserContextFunc({ user, setUser });
   return (
     <div className="App">
       <JwtTokens.Provider value={{ jwtTokens, setJwtTokens }}>
