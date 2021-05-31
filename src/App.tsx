@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import CardDir from "./Pages/CardDir.pages";
 import { Route, Switch, useHistory } from "react-router-dom";
-
 import "./TempStyles.css";
 import { UserContext } from "./Contexts/UserContext";
 import { CurrentJwtContext } from "./Contexts/CurrentJwtContext";
@@ -15,10 +14,11 @@ import Map from "./Pages/Map.pages";
 import Login from "./Pages/Login.pages";
 import useLocalStorage from "./Hooks/useLocalStorage.hooks";
 import { getCurrentUser } from "./Utils/getCurrentUser.utils";
-import InterestSelection from "./Components/InterestSelection.component";
 import AddBlog from "./Pages/AddBlog.pages";
 import Blog from "./Pages/Blog.pages";
 import ImageEditor from "./Pages/ImageEditor.pages";
+import SearchBar from "./Components/Feed/SearchBar.component";
+import UserProfile from "./Pages/UserProfile.pages";
 
 function App() {
   const [user, setUser] = useState({
@@ -33,7 +33,15 @@ function App() {
   );
   const [jwtTokens, setJwtTokens] = useLocalStorage("jwt-tokens", {});
   useEffect(() => {
-    getCurrentUser(currentJwt, jwtTokens, history, setCurrentJwt, setUser);
+    getCurrentUser(
+      currentJwt,
+      jwtTokens,
+      history,
+      setCurrentJwt,
+      setUser,
+      setJwtTokens
+    );
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   // const UserContext = UserContextFunc({ user, setUser });
@@ -52,6 +60,8 @@ function App() {
               <Route component={Blog} path="/:user/blogs/:blogid" />
               <Route component={ImageEditor} path="/img" />
               <Route component={Map} path="/map" />
+              <Route component={SearchBar} path="/search" />
+              <Route component={UserProfile} path="/p/:id" />
               <Route component={PageNotFound} path="*" />
             </Switch>
           </UserContext.Provider>

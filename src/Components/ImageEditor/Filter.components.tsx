@@ -1,4 +1,4 @@
-import { stat } from "node:fs";
+// import { stat } from "node:fs";
 import React, {
   useRef,
   useEffect,
@@ -13,11 +13,17 @@ import { SketchPicker } from "react-color";
 
 export interface FilterProps {
   imgs: { original: string; edited: string; currentEditing: string };
-  setImg: Dispatch<{ type: string; payLoadValue: string }>;
+  setImg: Dispatch<{ type: string; payLoadValue: string; index: number }>;
   setCurrentEditing: Dispatch<SetStateAction<string>>;
+  index: number;
 }
 
-const Filter: React.FC<FilterProps> = ({ imgs, setImg, setCurrentEditing }) => {
+const Filter: React.FC<FilterProps> = ({
+  imgs,
+  setImg,
+  setCurrentEditing,
+  index,
+}) => {
   const canvas = useRef<HTMLCanvasElement | null>(null);
   const [sliderValue, setSliderValue] = useState(0);
   const buffer = useRef<HTMLCanvasElement | null>(null);
@@ -170,14 +176,16 @@ const Filter: React.FC<FilterProps> = ({ imgs, setImg, setCurrentEditing }) => {
       setImg({
         type: "CURRENT_EDITING",
         payLoadValue: canvas.current.toDataURL(),
+        index,
       });
     };
 
     //console.log(imgRef, canvas);
     //   asjLDJAL
 
-    navigator.userAgent.toLowerCase().includes("safari") &&
-      alert("filter nai aave");
+    // navigator.userAgent.toLowerCase().includes("safari") &&
+    //   alert("filter nai aave");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [imgs.edited, filter, tint]);
 
   return (
@@ -221,7 +229,17 @@ const Filter: React.FC<FilterProps> = ({ imgs, setImg, setCurrentEditing }) => {
                   color: `rgba(${rgb.r},${rgb.g},${rgb.b},${rgb.a})`,
                 })
               }
-              presetColors={["#D9E3F0","#F47373","#697689","#37D67A","#2CCCE4","#555555","#DCE775","#FF8A65","#BA68C8"]}
+              presetColors={[
+                "#D9E3F0",
+                "#F47373",
+                "#697689",
+                "#37D67A",
+                "#2CCCE4",
+                "#555555",
+                "#DCE775",
+                "#FF8A65",
+                "#BA68C8",
+              ]}
             />
           )}
         </div>

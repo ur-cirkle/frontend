@@ -5,11 +5,11 @@ import React, {
   useEffect,
   Dispatch,
   SetStateAction,
-  MutableRefObject,
 } from "react";
 import { cropProp } from "../../Pages/ImageEditor.pages";
 import ReactCrop from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
+import Rotate from "./Rotate.component";
 export interface CropProps {
   imgs: {
     original: string;
@@ -19,18 +19,21 @@ export interface CropProps {
   setImg: React.Dispatch<{
     type: string;
     payLoadValue: string;
+    index: number;
   }>;
+  index: number;
   setCurrentEditing: Dispatch<SetStateAction<string>>;
 }
 
-const Crop: React.FC<CropProps> = ({ imgs, setImg, setCurrentEditing }) => {
-  const [crop, setCrop]: [
-    cropProp,
-    Dispatch<SetStateAction<cropProp>>
-  ] = useState<cropProp>({ unit: "%", width: 30, aspect: 1 / 1 });
+const Crop: React.FC<CropProps> = ({
+  imgs,
+  setImg,
+  setCurrentEditing,
+  index,
+}) => {
+  const [crop, setCrop]: [cropProp, Dispatch<SetStateAction<cropProp>>] =
+    useState<cropProp>({ unit: "%", width: 30, aspect: 1 / 1 });
   const imgRef = useRef<HTMLImageElement | null>(null);
-
-  const [dataURI, setDataURI] = useState(null);
   const previewCanvasRef = useRef<HTMLCanvasElement | null>(null);
   const onLoad = useCallback((img: HTMLImageElement) => {
     imgRef.current = img;
@@ -44,7 +47,6 @@ const Crop: React.FC<CropProps> = ({ imgs, setImg, setCurrentEditing }) => {
 
     const image = new Image();
     image.src = imgs.original;
-
     const canvas = previewCanvasRef.current;
     const crop: any = completedCrop;
 
@@ -54,12 +56,29 @@ const Crop: React.FC<CropProps> = ({ imgs, setImg, setCurrentEditing }) => {
 
     const pixelRatio = window.devicePixelRatio;
 
+    // canvas.width = crop.width * pixelRatio;
+    // canvas.height = crop.height * pixelRatio;
+
     canvas.width = crop.width * pixelRatio;
     canvas.height = crop.height * pixelRatio;
 
     ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
     ctx.imageSmoothingQuality = "high";
 
+    // ctx.drawImage(
+    //   image,
+    //   crop.x * scaleX,
+    //   crop.y * scaleY,
+    //   crop.width * scaleX,
+    //   crop.height * scaleY,
+    //   0,
+    //   0,
+    //   crop.width,
+    //   crop.height
+    // );
+    ctx.translate(crop.width / 2, crop.height / 2);
+
+    ctx.translate(-crop.width / 2, -crop.height / 2);
     ctx.drawImage(
       image,
       crop.x * scaleX,
@@ -72,12 +91,17 @@ const Crop: React.FC<CropProps> = ({ imgs, setImg, setCurrentEditing }) => {
       crop.height
     );
 
-    setImg({ type: "CURRENT_EDITING", payLoadValue: canvas.toDataURL() });
-
+    setImg({
+      type: "CURRENT_EDITING",
+      payLoadValue: canvas.toDataURL(),
+      index,
+    });
+    console.log(imgs);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [completedCrop]);
   const onRatioChange = (ratio: number) => {
     const image = new Image();
+    // console.log(imgs.original)
     image.src = imgs.original;
     if (!crop.width || !crop.height) return;
 
@@ -92,6 +116,23 @@ const Crop: React.FC<CropProps> = ({ imgs, setImg, setCurrentEditing }) => {
       };
     });
   };
+
+  const onFlip = () => {
+    if (!previewCanvasRef.current) return;
+    const ctx = previewCanvasRef.current.getContext("2d");
+    let currentImg: string;
+    if (imgs.edited) currentImg = imgs.edited;
+    else currentImg = imgs.original;
+
+    const image = new Image();
+    image.src = currentImg;
+    image.onload = () => {
+      ctx?.scale(-1, 1);
+      ctx?.drawImage(image, -image.naturalWidth, 0);
+      console.log(image, -image.naturalWidth, 0);
+    };
+  };
+
   return (
     <>
       <ReactCrop
@@ -101,10 +142,11 @@ const Crop: React.FC<CropProps> = ({ imgs, setImg, setCurrentEditing }) => {
         onChange={(c) => setCrop(c)}
         onComplete={(c) => setCompletedCrop(c)}
       />
+
       <canvas
         ref={previewCanvasRef}
         // Rounding is important so the canvas width and height matches/is a multiple for sharpness.
-        style={{ display: "none" }}
+        // style={{ display: "none" }}
       />
 
       <button
@@ -113,35 +155,35 @@ const Crop: React.FC<CropProps> = ({ imgs, setImg, setCurrentEditing }) => {
       >
         1:1
       </button>
-
       <button
         onClick={() => onRatioChange(9 / 16)}
         disabled={crop.aspect === 9 / 16}
       >
         9:16
       </button>
-
       <button
         onClick={() => onRatioChange(16 / 9)}
         disabled={crop.aspect === 16 / 9}
       >
         16:9
       </button>
+      <Rotate imgs={imgs} setImg={setImg} index={index} />
       <button
         onClick={() => {
-          setImg({ type: "ORIGINAL", payLoadValue: "" });
+          setImg({ type: "ORIGINAL", payLoadValue: "", index });
           setCurrentEditing("Image Upload");
           window.history.pushState({}, "Image Editor : Crop", "/img");
         }}
       >
         Change Image
       </button>
+      <button onClick={onFlip}>Flip</button>
       <button
         onClick={() => {
           if (imgs.currentEditing === "data:,") return alert("Not Valid");
 
-          setImg({ type: "EDITED", payLoadValue: imgs.currentEditing });
-          setCurrentEditing("Filter");
+          setImg({ type: "EDITED", payLoadValue: imgs.currentEditing, index });
+          // setCurrentEditing("Filter");
           window.history.pushState({}, "Image Editor:Filter", "/img/filter");
         }}
       >
