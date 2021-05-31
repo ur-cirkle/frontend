@@ -17,8 +17,13 @@ import { getCurrentUser } from "./Utils/getCurrentUser.utils";
 import AddBlog from "./Pages/AddBlog.pages";
 import Blog from "./Pages/Blog.pages";
 import ImageEditor from "./Pages/ImageEditor.pages";
+<<<<<<< HEAD
 import SearchBar from "./Components/Feed/SeachBar/SearchBar.component";
+=======
+// import SearchBar from "./Components/Feed/SearchBar.component";
+>>>>>>> e5b6c0c962c47ea56d0f322a7b86344f2aafc44f
 import UserProfile from "./Pages/UserProfile.pages";
+import ProfileHead from './Components/ProfileHead/ProfileHead.components';
 
 function App() {
   const [user, setUser] = useState({
@@ -60,8 +65,9 @@ const [jwtTokens, setJwtTokens] = useLocalStorage("jwt-tokens", {});
               <Route component={Blog} path="/:user/blogs/:blogid" />
               <Route component={ImageEditor} path="/img" />
               <Route component={Map} path="/map" />
-              <Route component={SearchBar} path="/search" />
+              {/* <Route component={SearchBar} path="/search" /> */}
               <Route component={UserProfile} path="/p/:id" />
+              <Route component={ProfileHead} path="/profilehead" />
               <Route component={PageNotFound} path="*" />
             </Switch>
           </UserContext.Provider>
