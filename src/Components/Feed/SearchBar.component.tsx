@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 //** Contexts Imports
 import { CurrentJwtContext } from "../../Contexts/CurrentJwtContext";
 
+
+
 export interface SearchBarProps {}
 
 const SearchBar: React.SFC<SearchBarProps> = () => {

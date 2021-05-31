@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import CardDir from "./Pages/CardDir.pages";
 import { Route, Switch, useHistory } from "react-router-dom";
 import "./TempStyles.css";
-import { UserContext } from "./Contexts/UserContext";
+import { UserContext  } from "./Contexts/UserContext";
 import { CurrentJwtContext } from "./Contexts/CurrentJwtContext";
 import { JwtTokens } from "./Contexts/JwtTokensContext";
 import Signup from "./Pages/Signup.pages";
@@ -29,22 +29,22 @@ function App() {
   const history = useHistory();
   const [currentJwt, setCurrentJwt] = useLocalStorage(
     "current-jwt-token",
-    null
+    "hello"
   );
-  const [jwtTokens, setJwtTokens] = useLocalStorage("jwt-tokens", {});
-  useEffect(() => {
-    getCurrentUser(
-      currentJwt,
-      jwtTokens,
-      history,
-      setCurrentJwt,
-      setUser,
-      setJwtTokens
-    );
+const [jwtTokens, setJwtTokens] = useLocalStorage("jwt-tokens", {});
+  // useEffect(() => {
+  //   getCurrentUser(
+  //     currentJwt,
+  //     jwtTokens,
+  //     history,
+  //     setCurrentJwt,
+  //     setUser,
+  //     setJwtTokens
+  //   );
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  // const UserContext = UserContextFunc({ user, setUser });
+  // }, []);
+
   return (
     <div className="App">
       <JwtTokens.Provider value={{ jwtTokens, setJwtTokens }}>
