@@ -9,7 +9,7 @@ import { FlyToInterpolator } from "react-map-gl";
 import * as d3 from "d3-ease";
 import { viewportObj } from "../Interfaces/Map.interfaces";
 import axios from "axios";
-import MapBox from "../Components/MapBox.component";
+import MapBox from "../Components/Map/MapBox.component";
 const Map: React.FC = () => {
   //** Search Text
   const [searchText, setSearchText] = useState("");
@@ -29,10 +29,15 @@ const Map: React.FC = () => {
     latitude: 23.022505,
     longitude: 72.571365,
     zoom: 3,
+
     transitionDuration: 1000,
     transitionInterpolator: new FlyToInterpolator({
       speed: 2,
     }),
+    maxBounds: [
+      [14167144.5705, -9196903.2433],
+      [70522636.7846, 20037508.3428],
+    ],
     transitionEasing: d3.easeCubic,
   });
   useEffect(() => {
@@ -53,6 +58,7 @@ const Map: React.FC = () => {
       .catch((e) => console.log(e));
     return () => cancel();
   }, [searchText]);
+
   return (
     <div className="">
       <input
@@ -77,10 +83,8 @@ const Map: React.FC = () => {
                     .getMap()
                     .fitBounds(suggestion.bbox, { padding: 100 });
 
-                  const {
-                    center,
-                    zoom,
-                  } = (mapRef as any).current.getMap()._easeOptions;
+                  const { center, zoom } = (mapRef as any).current.getMap()
+                    ._easeOptions;
                   setViewport({
                     ...viewport,
                     latitude: center.lat,
