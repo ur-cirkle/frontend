@@ -3,7 +3,8 @@ import axios from "axios";
 import React, { useContext, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 //** Contexts Imports
-import { CurrentJwtContext } from "../../Contexts/CurrentJwtContext";
+import { CurrentJwtContext } from "../../../Contexts/CurrentJwtContext";
+import {} from './Searchbar.styles';
 
 
 
