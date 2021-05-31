@@ -1,17 +1,8 @@
-import React, {
-  useEffect,
-  useRef,
-  useState,
-  useCallback,
-  SetStateAction,
-  Dispatch,
-  useReducer,
-} from "react";
+import React, { useEffect, useState, useReducer } from "react";
 import Crop from "../Components/ImageEditor/Crop.components";
 import Filter from "../Components/ImageEditor/Filter.components";
 import ImageUpload from "../Components/ImageEditor/ImageUpload.components";
-import { hextoRGB } from "../Utils/Color.utils";
-export interface ImageEditorProps {}
+import { state } from "../Interfaces/ImageEditor.intrefaces";
 
 export interface cropProp {
   unit?: any;
@@ -21,55 +12,119 @@ export interface cropProp {
   x?: number | undefined;
   y?: number | undefined;
 }
-const ImageEditor: React.FC<ImageEditorProps> = () => {
+
+const ImageEditor: React.FC = () => {
+  const [index, setIndex] = useState(0);
+  const [counter, setCounter] = useState(0);
   const [currentEditing, setCurrentEditing] = useState("Image Upload");
   const imgsReducer = (
-    state: {
-      original: string;
-      edited: string;
-      currentEditing: string;
-    },
-    action: { type: string; payLoadValue: string }
-  ): {
-    original: string;
-    edited: string;
-    currentEditing: string;
-  } => {
+    state: state,
+    action: { type: string; payLoadValue: string; index: number }
+  ): state => {
     switch (action.type) {
-      case "ORIGINAL":
-        return { ...state, original: action.payLoadValue };
-      case "EDITED":
-        return { ...state, edited: action.payLoadValue };
-      case "CURRENT_EDITING":
-        return { ...state, currentEditing: action.payLoadValue };
+      case "ORIGINAL": {
+        const tempState = state;
+        tempState[action.index] = {
+          ...state[action.index],
+          original: action.payLoadValue,
+        };
+        return tempState;
+      }
+      case "EDITED": {
+        const tempState = state;
+
+        tempState[action.index] = {
+          ...state[action.index],
+          edited: action.payLoadValue,
+        };
+        return tempState;
+      }
+      case "CURRENT_EDITING": {
+        const tempState = state;
+        console.log(action);
+        tempState[action.index] = {
+          ...state[action.index],
+          currentEditing: action.payLoadValue,
+        };
+        return tempState;
+      }
       default:
         return state;
     }
   };
-  const [imgs, setImg] = useReducer(imgsReducer, {
-    original: "",
-    edited: "",
-    currentEditing: "",
-  });
 
+  const [imgs, setImg] = useReducer(imgsReducer, [
+    {
+      original: "",
+      edited: "",
+      currentEditing: "",
+    },
+    {
+      original: "",
+      edited: "",
+      currentEditing: "",
+    },
+    {
+      original: "",
+      edited: "",
+      currentEditing: "",
+    },
+    {
+      original: "",
+      edited: "",
+      currentEditing: "",
+    },
+    {
+      original: "",
+      edited: "",
+      currentEditing: "",
+    },
+  ]);
+  useEffect(() => {
+    setCounter(counter + 1);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <div className="App">
+      <p>{counter}</p>
+      {/* <img src={imgs[0].original}></img> */}
       {currentEditing === "Image Upload" && (
         <ImageUpload setImg={setImg} setCurrentEditing={setCurrentEditing} />
       )}
       {currentEditing === "Crop" && (
         <Crop
-          imgs={imgs}
+          imgs={imgs[index]}
           setImg={setImg}
           setCurrentEditing={setCurrentEditing}
+          index={index}
         />
       )}
       {currentEditing === "Filter" && (
         <Filter
           setImg={setImg}
-          imgs={imgs}
+          imgs={imgs[index]}
           setCurrentEditing={setCurrentEditing}
+          index={index}
         />
+      )}
+      {currentEditing !== "Image Upload" && (
+        <>
+          {" "}
+          <button
+            onClick={() => {
+              setIndex(index + 1);
+            }}
+          >
+            NEXT
+          </button>
+          <button
+            onClick={() => {
+              setIndex(index - 1);
+            }}
+          >
+            Previous
+          </button>
+        </>
       )}
     </div>
   );

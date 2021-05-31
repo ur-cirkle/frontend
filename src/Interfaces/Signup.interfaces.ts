@@ -9,12 +9,6 @@ export interface FormSignUpProps {
 export interface errorsReducerProps {
   username: usernameErrors;
   password: passwordErrors;
-  email: {
-    syntax: boolean;
-  };
-  confirmPassword: {
-    equal: boolean;
-  };
 }
 
 export interface credentialsObj {}

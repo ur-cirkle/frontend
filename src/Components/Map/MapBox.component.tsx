@@ -8,7 +8,7 @@ import ReactMapGL, {
 } from "react-map-gl";
 import { default as cities } from "./in.json";
 
-import { viewportObj } from "../Interfaces/Map.interfaces";
+import { viewportObj } from "../../Interfaces/Map.interfaces";
 import { uid } from "uid";
 export interface MapBoxProps {
   viewport: viewportObj;
@@ -19,10 +19,8 @@ const MapBox: React.FC<MapBoxProps> = ({ viewport, setViewport, mapRef }) => {
   //** Marker Points in GeoJson Format
   const [points, setPoints] = useState([]);
   //** Current marker popup
-  const [popup, setPopup]: [
-    string,
-    Dispatch<SetStateAction<string>>
-  ] = useState<string>("");
+  const [popup, setPopup]: [string, Dispatch<SetStateAction<string>>] =
+    useState<string>("");
 
   //** Map Bounds
   const bounds = (mapRef as any).current
@@ -50,13 +48,13 @@ const MapBox: React.FC<MapBoxProps> = ({ viewport, setViewport, mapRef }) => {
   return (
     <ReactMapGL
       {...viewport}
-      minZoom={1}
+      minZoom={1.5}
       attributionControl={false}
       className="mapboxComponent"
       onViewportChange={(nextViewport: viewportObj) =>
         setViewport(nextViewport)
       }
-      mapStyle="mapbox://styles/heet-vakharia/ckeuzr84tak0719oc1kgj5c3m"
+      mapStyle="mapbox://styles/vakhariaheet/ckk6l2vh10t0217qbqrq5sgot"
       mapboxApiAccessToken="pk.eyJ1IjoiaGVldC12YWtoYXJpYSIsImEiOiJja2V1ejJzam0zenRwMnNwYzVnOHRpb3RsIn0.ucjS-K-34-JJgvlfAbHmCw"
       ref={mapRef as any}
     >
@@ -64,10 +62,8 @@ const MapBox: React.FC<MapBoxProps> = ({ viewport, setViewport, mapRef }) => {
       <NavigationControl style={{ right: 10, top: 50 }} />
       {clusters.map((cluster) => {
         const [longitude, latitude] = cluster.geometry.coordinates;
-        const {
-          cluster: isCluster,
-          point_count: pointCount,
-        } = cluster.properties;
+        const { cluster: isCluster, point_count: pointCount } =
+          cluster.properties;
         if (isCluster) {
           //* cluster
           return (
