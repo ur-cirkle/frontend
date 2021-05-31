@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import CardDir from "./Pages/CardDir.pages";
+import Explore from "./Pages/Explore/Explore.pages";
 import { Route, Switch, useHistory } from "react-router-dom";
 import "./TempStyles.css";
 import { UserContext  } from "./Contexts/UserContext";
@@ -52,7 +52,7 @@ const [jwtTokens, setJwtTokens] = useLocalStorage("jwt-tokens", {});
         <CurrentJwtContext.Provider value={{ currentJwt, setCurrentJwt }}>
           <UserContext.Provider value={{ user, setUser }}>
             <Switch>
-              <Route component={CardDir} path="/explore" />
+              <Route component={Explore} path="/explore" />
               <Route component={Login} path="/signin" />
               <Route component={Signup} path="/signup" />
               <Route component={ForgotPassword} path="/forgot" />

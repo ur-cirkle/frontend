@@ -1,9 +1,9 @@
 import React, { useState, useRef, useCallback } from "react";
 import { uid } from "uid";
-import Card from "../Components/Explore/Card.component";
-import { cardUser } from "../Interfaces/Card.interfaces";
-import useCardSearch from "../Hooks/useCardSearch.hooks";
-const CardDir: React.FC = () => {
+import Card from "../../Components/Explore/Card/Card.component";
+import { cardUser } from "../../Interfaces/Card.interfaces";
+import useCardSearch from "../../Hooks/useCardSearch.hooks";
+const Explore: React.FC = () => {
   const [cardPackNumber, setCardPackNumber]: [
     number,
     React.Dispatch<React.SetStateAction<number>>
@@ -42,4 +42,4 @@ const CardDir: React.FC = () => {
   );
 };
 
-export default CardDir;
+export default Explore;
