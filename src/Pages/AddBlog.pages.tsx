@@ -8,7 +8,8 @@ export interface AddBlogProps {}
 const AddBlog: React.FC<AddBlogProps> = () => {
   const { user } = useContext(UserContext);
   const [blog, setBlog] = useState("");
-  const [charCount, setCharCount] = useState(0);
+  const [heading, setHeading] = useState("");
+  const [wordCount, setWordCount] = useState(0);
   useEffect(() => {
     socket = io("127.0.0.1:3003", { transports: ["websocket"] });
   }, []);
@@ -19,7 +20,7 @@ const AddBlog: React.FC<AddBlogProps> = () => {
     });
   }, [user]);
   const createBlog = () => {
-    if (charCount > 20000 || charCount === 0) return;
+    if (wordCount > 2000 || wordCount === 0) return;
     socket.emit("add-blog", {
       userid: user.userid,
       blog,
@@ -31,8 +32,10 @@ const AddBlog: React.FC<AddBlogProps> = () => {
       <BlogEditor
         blog={blog}
         setBlog={setBlog}
-        charCount={charCount}
-        setCharCount={setCharCount}
+        heading={heading}
+        setHeading={setHeading}
+        wordCount={wordCount}
+        setWordCount={setWordCount}
       />
       <button onClick={createBlog}>Create</button>
     </div>

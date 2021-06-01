@@ -5,9 +5,12 @@ import FormLogin from "../Components/FormLogin.component";
 import { UserContext } from "../Contexts/UserContext";
 import { CurrentJwtContext } from "../Contexts/CurrentJwtContext";
 import { JwtTokens } from "../Contexts/JwtTokensContext";
+import * as bowser from "bowser";
+import moment from "moment-timezone";
 export interface LoginProps {}
 
 const Login: React.FC<LoginProps> = () => {
+  const browser = bowser.parse(window.navigator.userAgent);
   const { user, setUser } = useContext(UserContext);
   const { setCurrentJwt } = useContext(CurrentJwtContext);
   const { jwtTokens, setJwtTokens } = useContext(JwtTokens);
@@ -25,6 +28,8 @@ const Login: React.FC<LoginProps> = () => {
         contextType: context.type,
         contextValue: context.value,
         password,
+        timezone: moment.tz.guess(),
+        device: `${browser.browser.name},${browser.os.name},${browser.platform.type}`,
       }),
       headers: {
         "Content-Type": "application/json",
