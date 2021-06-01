@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import CardDir from "./Pages/CardDir.pages";
+import Explore from "./Pages/Explore/Explore.pages";
 import { Route, Switch, useHistory } from "react-router-dom";
 import "./TempStyles.css";
 import { UserContext  } from "./Contexts/UserContext";
@@ -17,10 +17,12 @@ import { getCurrentUser } from "./Utils/getCurrentUser.utils";
 import AddBlog from "./Pages/AddBlog.pages";
 import Blog from "./Pages/Blog.pages";
 import ImageEditor from "./Pages/ImageEditor.pages";
-import SearchBar from "./Components/Feed/SeachBar/SearchBar.component";
+// import SearchBar from "./Components/Feed/SearchBar.component";
 import UserProfile from "./Pages/UserProfile.pages";
 import FormLogin, { Signupbox } from "./Components/Login/FormLogin/Signupbox"
 import Setting from './Pages/Setting.pages';
+import ProfileHead from './Components/ProfileHead/ProfileHead.components';
+
 function App() {
   const [user, setUser] = useState({
     userid: "",
@@ -50,7 +52,7 @@ function App() {
         <CurrentJwtContext.Provider value={{ currentJwt, setCurrentJwt }}>
           <UserContext.Provider value={{ user, setUser }}>
             <Switch>
-              <Route component={CardDir} path="/explore" />
+              <Route component={Explore} path="/explore" />
               <Route component={Login} path="/signin" />
               <Route component={Signup} path="/signup" />
               <Route component={ForgotPassword} path="/forgot" />
@@ -59,9 +61,10 @@ function App() {
               <Route component={Blog} path="/:user/blogs/:blogid" />
               <Route component={ImageEditor} path="/img" />
               <Route component={Map} path="/map" />
-              <Route component={SearchBar} path="/search" />
+              {/* <Route component={SearchBar} path="/search" /> */}
               <Route component={UserProfile} path="/p/:id" />
               <Route component={Setting} path="/setting"/>
+              <Route component={ProfileHead} path="/profilehead" />
               <Route component={PageNotFound} path="*" />
             </Switch>
           </UserContext.Provider>
