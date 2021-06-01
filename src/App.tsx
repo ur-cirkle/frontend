@@ -20,6 +20,7 @@ import ImageEditor from "./Pages/ImageEditor.pages";
 import SearchBar from "./Components/Feed/SeachBar/SearchBar.component";
 import UserProfile from "./Pages/UserProfile.pages";
 import FormLogin, { Signupbox } from "./Components/Login/FormLogin/Signupbox"
+import Setting from './Pages/Setting.pages';
 function App() {
   const [user, setUser] = useState({
     userid: "",
@@ -51,7 +52,7 @@ function App() {
             <Switch>
               <Route component={CardDir} path="/explore" />
               <Route component={Login} path="/signin" />
-              <Route component={Signupbox} path="/signup" />
+              <Route component={Signup} path="/signup" />
               <Route component={ForgotPassword} path="/forgot" />
               <Route component={Feed} path="/feed" />
               <Route component={AddBlog} path="/new/blog" />
@@ -60,6 +61,7 @@ function App() {
               <Route component={Map} path="/map" />
               <Route component={SearchBar} path="/search" />
               <Route component={UserProfile} path="/p/:id" />
+              <Route component={Setting} path="/setting"/>
               <Route component={PageNotFound} path="*" />
             </Switch>
           </UserContext.Provider>

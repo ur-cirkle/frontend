@@ -7,7 +7,7 @@ import React, {
   useContext,
 } from "react";
 import * as bowser from "bowser";
-import { isUsernameRT, isPasswordRT } from "verifierjs";
+import { isUsernameRT, isPasswordRT,isEmail } from "verifierjs";
 import FormSignUp from "../Components/SignUp/FormSignup/FormSignup.component";
 import { UserContext } from "../Contexts/UserContext";
 import { useHistory } from "react-router-dom";
@@ -36,6 +36,10 @@ const Signup: React.FC = () => {
     latitude: null,
     longitude: null,
   });
+  //* When User Submits Email Form
+  const onEmail = (email: string) => {
+    if(isEmail(email)) {}
+  }
   const isUsernameAvailable = async (username: string, setFunc: Function) => {
     try {
       const resp = await axios({
