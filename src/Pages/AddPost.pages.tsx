@@ -33,6 +33,7 @@ const AddPost: React.FC = () => {
       }
       case "EDITED": {
         const tempState = state;
+
         tempState[action.index] = {
           ...state[action.index],
           edited: action.payLoadValue,
@@ -41,6 +42,7 @@ const AddPost: React.FC = () => {
       }
       case "CURRENT_EDITING": {
         const tempState = state;
+        console.log(action);
         tempState[action.index] = {
           ...state[action.index],
           currentEditing: action.payLoadValue,
@@ -81,7 +83,6 @@ const AddPost: React.FC = () => {
   ]);
   useEffect(() => {
     setCounter(counter + 1);
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   console.log(imgs)

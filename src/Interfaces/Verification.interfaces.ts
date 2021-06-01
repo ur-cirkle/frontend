@@ -6,7 +6,6 @@ export interface credentials {
   TAC: boolean;
   type: string;
   timezone: string;
-  dob: string;
 }
 export interface usernameErrors {
   syntax: boolean;

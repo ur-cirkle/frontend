@@ -6,22 +6,22 @@ import React, {
   Dispatch,
   useContext,
 } from "react";
-import FormSignUp from "../Components/FormSignup.component";
+import * as bowser from "bowser";
+import FormSignUp from "../Components/SignUp/FormSignup.component";
 import { UserContext } from "../Contexts/UserContext";
 import { useHistory } from "react-router-dom";
 import { isCredentialsValid } from "../Utils/Verification.utils";
 import { credentials } from "../Interfaces/Verification.interfaces";
 import { CurrentJwtContext } from "../Contexts/CurrentJwtContext";
 import { JwtTokens } from "../Contexts/JwtTokensContext";
-import InterestSelection from "../Components/InterestSelection.component";
+import InterestSelection from "../Components/SignUp/InterestSelection.component";
 
 const Signup: React.FC = () => {
+  const browser = bowser.parse(window.navigator.userAgent);
   const { user, setUser } = useContext(UserContext);
   const { setCurrentJwt } = useContext(CurrentJwtContext);
   const { setJwtTokens, jwtTokens } = useContext(JwtTokens);
-  const [interests, setInterests] = useState<
-    Array<{ interest: string; id: string }>
-  >([]);
+  const [interests, setInterests] = useState<Array<string>>([]);
   const [isCredentialsFilled, setIsCredentialsFilled] = useState(false);
   const history = useHistory();
   const [userLocation, setUserLocation]: [
@@ -59,9 +59,9 @@ const Signup: React.FC = () => {
     });
   };
   //* On SignUp
-  const onSignup = (selectedInterests: Array<Array<string>>) => {
+  const onSignup = (selectedInterests: Array<string>) => {
     //* Checks if all credentials are satisfied
-
+    console.log(selectedInterests);
     axios({
       url: "http://localhost:5000/signup",
       method: "POST",
@@ -69,6 +69,7 @@ const Signup: React.FC = () => {
         ...user,
         ...userLocation,
         interests: selectedInterests,
+        device: `${browser.browser.name},${browser.os.name},${browser.platform.type}`,
       }),
       headers: { "Content-Type": "application/json" },
     }).then(({ data }) => {

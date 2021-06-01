@@ -171,6 +171,9 @@ h1 {
 .color_container {
   display: flex;
 }
+.mapboxgl-canvas-container {
+  height: 100vh;
+}
 .rgba_number {
   width: 50px;
 }
