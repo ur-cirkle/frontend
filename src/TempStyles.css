@@ -91,9 +91,7 @@ h1 {
 .ReactCrop__crop-selection {
   border-radius: 10px !important;
 }
-canvas {
-  transform: scale(0.7);
-}
+
 .filter {
   display: flex;
 }
@@ -172,6 +170,9 @@ canvas {
 
 .color_container {
   display: flex;
+}
+.mapboxgl-canvas-container {
+  height: 100vh;
 }
 .rgba_number {
   width: 50px;

@@ -1,5 +1,5 @@
 import React, { useReducer, SetStateAction, Dispatch } from "react";
-import { isEmail, isUsername } from "../Utils/Verification.utils";
+import { isEmail, isUsername } from "verifierjs";
 export interface FormFPProps {
   setCurrentStatus: Dispatch<SetStateAction<string>>;
 }

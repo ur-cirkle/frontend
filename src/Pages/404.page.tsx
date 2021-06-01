@@ -6,6 +6,7 @@ import { JwtTokens } from "../Contexts/JwtTokensContext";
 import { UserContext } from "../Contexts/UserContext";
 import { getCurrentUser } from "../Utils/getCurrentUser.utils";
 import { uid } from "uid";
+import removeUser from "../Utils/removeUser.utils";
 const PageNotFound: React.FC = () => {
   const { user, setUser } = useContext(UserContext);
   const { jwtTokens, setJwtTokens } = useContext(JwtTokens);
@@ -23,7 +24,7 @@ const PageNotFound: React.FC = () => {
           <Link to="/signin">Signin</Link>
         </li>
         <li>
-          <Link to="/explore">CardDir</Link>
+          <Link to="/explore">Explore</Link>
         </li>
         <li>
           <Link to="/forgot">Forgot</Link>
@@ -40,19 +41,18 @@ const PageNotFound: React.FC = () => {
         <li>
           <Link to="/img">img</Link>
         </li>
+        <Link to="/search">Search</Link>
       </ul>
       <button
         onClick={() => {
-          const temptoken = jwtTokens;
-          delete temptoken[user.username];
-          setJwtTokens(temptoken);
-
-          localStorage.setItem(
-            "the-cirkle-jwt-tokens",
-            JSON.stringify(temptoken)
+          removeUser(
+            user.username,
+            jwtTokens,
+            history,
+            setCurrentJwt,
+            setUser,
+            setJwtTokens
           );
-
-          getCurrentUser(null, temptoken, history, setCurrentJwt, setUser);
         }}
       >
         Log Out
