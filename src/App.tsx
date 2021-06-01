@@ -19,6 +19,8 @@ import Blog from "./Pages/Blog.pages";
 import ImageEditor from "./Pages/ImageEditor.pages";
 // import SearchBar from "./Components/Feed/SearchBar.component";
 import UserProfile from "./Pages/UserProfile.pages";
+import FormLogin, { Signupbox } from "./Components/Login/FormLogin/Signupbox"
+import Setting from './Pages/Setting.pages';
 import ProfileHead from './Components/ProfileHead/ProfileHead.components';
 
 function App() {
@@ -32,20 +34,18 @@ function App() {
     "current-jwt-token",
     "hello"
   );
-const [jwtTokens, setJwtTokens] = useLocalStorage("jwt-tokens", {});
-  // useEffect(() => {
-  //   getCurrentUser(
-  //     currentJwt,
-  //     jwtTokens,
-  //     history,
-  //     setCurrentJwt,
-  //     setUser,
-  //     setJwtTokens
-  //   );
-
+  const [jwtTokens, setJwtTokens] = useLocalStorage("jwt-tokens", {});
+  useEffect(() => {
+    getCurrentUser(
+      currentJwt,
+      jwtTokens,
+      history,
+      setCurrentJwt,
+      setUser,
+      setJwtTokens
+    );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
-
+  }, []);
   return (
     <div className="App">
       <JwtTokens.Provider value={{ jwtTokens, setJwtTokens }}>
@@ -63,6 +63,7 @@ const [jwtTokens, setJwtTokens] = useLocalStorage("jwt-tokens", {});
               <Route component={Map} path="/map" />
               {/* <Route component={SearchBar} path="/search" /> */}
               <Route component={UserProfile} path="/p/:id" />
+              <Route component={Setting} path="/setting"/>
               <Route component={ProfileHead} path="/profilehead" />
               <Route component={PageNotFound} path="*" />
             </Switch>

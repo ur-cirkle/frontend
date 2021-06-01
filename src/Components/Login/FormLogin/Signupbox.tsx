@@ -1,11 +1,5 @@
-import { blockStatement } from '@babel/types';
 import React from 'react';
 import Sbox from './Signup.style';
-
-// type SignupboxProps = {
-// str:string;
-// }
-
 
 export const Signupbox = () => 
 <Sbox>
