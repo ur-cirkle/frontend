@@ -9,7 +9,7 @@ const FormLogin: React.FC<FormLoginProps> = ({ onLogin }) => {
   const contextReducer = (
     state: { value: string; type: string; error: boolean },
     value: string
-  ) => {
+  ) => { 
     if (isEmail(value)) {
       return { value: value, type: "email", error: false };
     } else if (isUsername(value)) {

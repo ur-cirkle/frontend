@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import CardDir from "./Pages/CardDir.pages";
 import { Route, Switch, useHistory } from "react-router-dom";
 import "./TempStyles.css";
-import { UserContext } from "./Contexts/UserContext";
+import { UserContext  } from "./Contexts/UserContext";
 import { CurrentJwtContext } from "./Contexts/CurrentJwtContext";
 import { JwtTokens } from "./Contexts/JwtTokensContext";
 import Signup from "./Pages/Signup.pages";
@@ -17,9 +17,9 @@ import { getCurrentUser } from "./Utils/getCurrentUser.utils";
 import AddBlog from "./Pages/AddBlog.pages";
 import Blog from "./Pages/Blog.pages";
 import ImageEditor from "./Pages/ImageEditor.pages";
-import SearchBar from "./Components/Feed/SearchBar.component";
+import SearchBar from "./Components/Feed/SeachBar/SearchBar.component";
 import UserProfile from "./Pages/UserProfile.pages";
-
+import FormLogin, { Signupbox } from "./Components/Login/FormLogin/Signupbox"
 function App() {
   const [user, setUser] = useState({
     userid: "",
@@ -29,7 +29,7 @@ function App() {
   const history = useHistory();
   const [currentJwt, setCurrentJwt] = useLocalStorage(
     "current-jwt-token",
-    null
+    "hello"
   );
   const [jwtTokens, setJwtTokens] = useLocalStorage("jwt-tokens", {});
   useEffect(() => {
@@ -51,7 +51,7 @@ function App() {
             <Switch>
               <Route component={CardDir} path="/explore" />
               <Route component={Login} path="/signin" />
-              <Route component={Signup} path="/signup" />
+              <Route component={Signupbox} path="/signup" />
               <Route component={ForgotPassword} path="/forgot" />
               <Route component={Feed} path="/feed" />
               <Route component={AddBlog} path="/new/blog" />
