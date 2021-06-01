@@ -18,7 +18,7 @@ import { getCurrentUser } from "./Utils/getCurrentUser.utils";
 import InterestSelection from "./Components/InterestSelection.component";
 import AddBlog from "./Pages/AddBlog.pages";
 import Blog from "./Pages/Blog.pages";
-import ImageEditor from "./Pages/ImageEditor.pages";
+import AddPost from "./Pages/AddPost.pages";
 
 function App() {
   const [user, setUser] = useState({
@@ -50,7 +50,7 @@ function App() {
               <Route component={Feed} path="/feed" />
               <Route component={AddBlog} path="/new/blog" />
               <Route component={Blog} path="/:user/blogs/:blogid" />
-              <Route component={ImageEditor} path="/img" />
+              <Route component={AddPost} path="/img" />
               <Route component={Map} path="/map" />
               <Route component={PageNotFound} path="*" />
             </Switch>

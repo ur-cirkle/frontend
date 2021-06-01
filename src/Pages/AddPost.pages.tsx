@@ -1,8 +1,9 @@
 import React, { useEffect, useState, useReducer } from "react";
-import Crop from "../Components/ImageEditor/Crop.components";
-import Filter from "../Components/ImageEditor/Filter.components";
-import ImageUpload from "../Components/ImageEditor/ImageUpload.components";
-import { state } from "../Interfaces/ImageEditor.intrefaces";
+import Crop from "../Components/AddPost/Crop.components";
+import Filter from "../Components/AddPost/Filter.components";
+import ImageUpload from "../Components/AddPost/ImageUpload.components";
+import { state } from "../Interfaces/AddPost.intrefaces";
+
 
 export interface cropProp {
   unit?: any;
@@ -13,7 +14,7 @@ export interface cropProp {
   y?: number | undefined;
 }
 
-const ImageEditor: React.FC = () => {
+const AddPost: React.FC = () => {
   const [index, setIndex] = useState(0);
   const [counter, setCounter] = useState(0);
   const [currentEditing, setCurrentEditing] = useState("Image Upload");
@@ -127,4 +128,4 @@ const ImageEditor: React.FC = () => {
   );
 };
 
-export default ImageEditor;
+export default AddPost;

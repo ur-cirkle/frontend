@@ -6,7 +6,7 @@ import React, {
   useReducer,
   useState,
 } from "react";
-import { filterState } from "../../Interfaces/ImageEditor.intrefaces";
+import { filterState } from "../../Interfaces/AddPost.intrefaces";
 
 import { SketchPicker } from "react-color";
 
@@ -59,7 +59,7 @@ const Filter: React.FC<FilterProps> = ({ imgs, setImg, setCurrentEditing ,index}
         };
     }
   };
-  const onFilterValueChange = (
+  const onFilterValueChange = ( 
     value: number,
     type: string,
     filter: string

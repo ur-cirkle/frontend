@@ -1,5 +1,5 @@
 import { AnyARecord } from "dns";
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { Dispatch, SetStateAction, useState,useRef } from "react";
 import { useHistory } from "react-router-dom";
 export interface ImageUploadProps {
   setImg: Dispatch<{ type: string; payLoadValue: string; index: number }>;
@@ -11,7 +11,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   setImg,
   setCurrentEditing,
 }) => {
-
+  const canvas = useRef<HTMLCanvasElement | null>(null);
   const history = useHistory();
   const a = function readFileAsText(file: any) {
     return new Promise(function (resolve, reject) {
@@ -28,6 +28,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
       };
 
       fr.readAsDataURL(file);
+    
     });
   }
 
@@ -45,7 +46,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
 
     Promise.all(readers).then((values) => {
       console.log(values);
-      for (let j = 0; j < files.length; j++) {
+      for (let j = 0; j < files.length; j++) {       
         setImg({
           type: "ORIGINAL",
           payLoadValue: values[j] as string,

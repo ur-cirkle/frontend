@@ -7,10 +7,9 @@ import React, {
   SetStateAction,
   MutableRefObject,
 } from "react";
-import { cropProp } from "../../Pages/ImageEditor.pages";
+import { cropProp } from "../../Pages/AddPost.pages";
 import ReactCrop from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
-// import Rotate from "./rotate.components";
 
 export interface CropProps {
   imgs: {
@@ -35,7 +34,7 @@ const Crop: React.FC<CropProps> = ({ imgs, setImg, setCurrentEditing ,index}) =>
     Dispatch<SetStateAction<cropProp>>
   ] = useState<cropProp>({ unit: "%", width: 30, aspect: 1 / 1 });
   const imgRef = useRef<HTMLImageElement | null>(null);
-
+  
   const previewCanvasRef = useRef<HTMLCanvasElement | null>(null);
   const previewCanvasRef1 = useRef<HTMLCanvasElement | null>(null);
   const previewCanvasRef2 = useRef<HTMLCanvasElement | null>(null);
@@ -47,78 +46,13 @@ const Crop: React.FC<CropProps> = ({ imgs, setImg, setCurrentEditing ,index}) =>
   const [completedCrop, setCompletedCrop] = useState<any>(null);
   const [CompleteRotate, setCompleteRotate] = useState<any>(null);
   const [Completeflip, setCompleteflip] = useState<any>(null);
-  
-  useEffect(() => {
-    console.log(123)
-    if (!CompleteRotate ||  !previewCanvasRef1.current) {
-      return;
-    }
-    console.log(CompleteRotate)
-    const image = new Image();
-    image.src = imgs.edited;
-    
-    const canvasRotate = previewCanvasRef1.current;
-    const ctxRotate: any = canvasRotate.getContext("2d");
-    if(CompleteRotate%2===0){
-      canvasRotate.width = image.width;
-      canvasRotate.height = image.height;
-      
-      ctxRotate.translate(canvasRotate.width / 2,canvasRotate.height / 2);
-      ctxRotate.rotate(Math.PI*(CompleteRotate/2));
-      console.log(Math.PI*(CompleteRotate/2));
-      ctxRotate.drawImage(image, -image.width / 2, -image.height / 2);
-      console.log(canvasRotate.toDataURL(),61);
-
-    }
-    if(CompleteRotate%2!==0){
-      canvasRotate.width = image.height;
-      canvasRotate.height = image.width;
-      
-      ctxRotate.translate(canvasRotate.width / 2,canvasRotate.height / 2);
-      ctxRotate.rotate(Math.PI*(CompleteRotate/2));
-      console.log(Math.PI*(CompleteRotate/2));
-      ctxRotate.drawImage(image, -image.width / 2, -image.height / 2);
-      console.log(canvasRotate.toDataURL(),61);
-
-    }
-   
-
-  }, [CompleteRotate]);
-
-useEffect(() => {
-
-  if (!Completeflip ||  !previewCanvasRef2.current) {
-    return;
-  }
-  console.log(456)
-
-  const image = new Image();
-  image.src = imgs.edited;
-  const canvasFlip = previewCanvasRef2.current;
-  const ctxFlip: any = canvasFlip.getContext("2d");
-  canvasFlip.width=image.width
-  canvasFlip.height=image.height
-  if(Completeflip%2===0){
-    console.log(1234)
-    ctxFlip.scale(1,1);
-    ctxFlip.drawImage(image,0,0,image.width,image.height);
-  }
-  if(Completeflip%2!==0){    
-    ctxFlip.scale(-1,1);
-    ctxFlip.drawImage(image,-image.width,0,image.width,image.height);
-  }
-  
-
-  
-}, [Completeflip]);
-
   useEffect(() => {
     if (!completedCrop || !previewCanvasRef.current) {
       return;
     }
 
     const image = new Image();
-    image.src = imgs.original;
+    image.src = imgs.edited?imgs.edited:imgs.original;
     const canvas = previewCanvasRef.current;
     const crop: any = completedCrop;
 
@@ -152,10 +86,76 @@ useEffect(() => {
     );
 
 
-    setImg({ type: "CURRENT_EDITING", payLoadValue: canvas.toDataURL() ,index});
+    setImg({ type: "EDITED", payLoadValue: canvas.toDataURL() ,index});
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [completedCrop]);
+  }, [completedCrop,imgs.edited]);
+  
+  
+  useEffect(() => {
+    console.log(123)
+    if (!CompleteRotate ||  !previewCanvasRef1.current) {
+      return;
+    }
+    const image = new Image();
+    image.src = imgs.edited?imgs.edited:imgs.original;
+    
+    const canvasRotate = previewCanvasRef1.current;
+    const ctxRotate: any = canvasRotate.getContext("2d");
+    if(CompleteRotate%2===0){
+      canvasRotate.width = image.width;
+      canvasRotate.height = image.height;
+      
+      ctxRotate.translate(canvasRotate.width / 2,canvasRotate.height / 2);
+      ctxRotate.rotate(Math.PI*(CompleteRotate/2));
+      console.log(Math.PI*(CompleteRotate/2));
+      ctxRotate.drawImage(image, -image.width / 2, -image.height / 2);
+      console.log(canvasRotate.toDataURL(),61);
+
+    }
+    if(CompleteRotate%2!==0){
+      canvasRotate.width = image.height;
+      canvasRotate.height = image.width;
+      
+      ctxRotate.translate(canvasRotate.width / 2,canvasRotate.height / 2);
+      ctxRotate.rotate(Math.PI*(CompleteRotate/2));
+      console.log(Math.PI*(CompleteRotate/2));
+      ctxRotate.drawImage(image, -image.width / 2, -image.height / 2);
+      console.log(canvasRotate.toDataURL(),61);
+
+    }
+    setImg({ type: "EDITED", payLoadValue: canvasRotate.toDataURL(),index });
+       
+  }, [CompleteRotate,imgs.edited]);
+
+useEffect(() => {
+
+  if (!Completeflip ||  !previewCanvasRef2.current) {
+    return;
+  }
+  console.log(456)
+
+  const image = new Image();
+  image.src = imgs.edited?imgs.edited:imgs.original;
+  const canvasFlip = previewCanvasRef2.current;
+  const ctxFlip: any = canvasFlip.getContext("2d");
+  canvasFlip.width=image.width
+  canvasFlip.height=image.height
+  if(Completeflip%2===0){
+  
+    ctxFlip.scale(1,1);
+    ctxFlip.drawImage(image,0,0,image.width,image.height);
+  }
+  if(Completeflip%2!==0){    
+    ctxFlip.scale(-1,1);
+    ctxFlip.drawImage(image,-image.width,0,image.width,image.height);
+  }
+  
+  setImg({ type: "EDITED", payLoadValue: canvasFlip.toDataURL(),index });
+  
+}, [Completeflip,imgs.edited]);
+
+
   const onRatioChange = (ratio: number) => {
     const image = new Image();
     // console.log(imgs.original)
@@ -176,8 +176,8 @@ useEffect(() => {
   return (
     <>
       <ReactCrop
-        src={imgs.original}
-        onImageLoaded={onLoad}
+        src={imgs.edited?imgs.edited:imgs.original}
+        
         crop={crop as any}
         onChange={(c) => setCrop(c)}
         onComplete={(c) => setCompletedCrop(c)}
@@ -214,7 +214,7 @@ useEffect(() => {
       >
         16:9
       </button>
-      <button
+      {/* <button
         onClick={() => {
           setImg({ type: "ORIGINAL", payLoadValue: "" ,index});
                             setCurrentEditing("Image Upload");
@@ -233,20 +233,21 @@ useEffect(() => {
         }}
       >
         ✔️
-      </button>
+      </button> */}
+      <button onClick={()=>{
+        setCurrentEditing("Filter");
+        window.history.pushState({}, "Image Editor:Filter", "/img/filter");}}>filter</button>
       <canvas
         ref={previewCanvasRef1}
-        // Rounding is important so the canvas width and height matches/is a multiple for sharpness.
-        // style={{ display: "none" }}
       />
     <button onClick={()=>{setCompleteRotate(CompleteRotate+1)}}>rotate</button>
-
+   
     <canvas
         ref={previewCanvasRef2}
-        // Rounding is important so the canvas width and height matches/is a multiple for sharpness.
-        // style={{ display: "none" }}
+        
       />
     <button onClick={()=>{setCompleteflip(Completeflip+1)}}>flip</button>
+    
     </>
   );
 };
