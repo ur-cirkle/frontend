@@ -1,9 +1,6 @@
 export interface credentials {
   username: string;
   password: string;
-  confirmPassword: string;
-  email: string;
-  TAC: boolean;
   type: string;
   timezone: string;
 }

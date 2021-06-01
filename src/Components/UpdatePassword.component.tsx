@@ -1,6 +1,6 @@
 import React, { useReducer } from "react";
 import { passwordErrors } from "../Interfaces/Verification.interfaces";
-import { isPasswordRT } from "../Utils/Verification.utils";
+import { isPasswordRT } from "verifierjs";
 export interface UpdatePasswordProps {}
 
 const UpdatePassword: React.FC<UpdatePasswordProps> = () => {
@@ -11,7 +11,7 @@ const UpdatePassword: React.FC<UpdatePasswordProps> = () => {
   ) => {
     switch (action.type) {
       case "PASSWORD":
-        return { ...state, password: isPasswordRT(action.payLoadValue) };
+        return { ...state, password: isPasswordRT(action.payLoadValue) as passwordErrors };
       case "CONFIRM PASSWORD":
         if (action.payLoadValue === action.secondaryValue) {
           return { ...state, confirmPassword: { equal: false } };

@@ -36,18 +36,18 @@ function App() {
     null
   );
   const [jwtTokens, setJwtTokens] = useLocalStorage("jwt-tokens", {});
-  useEffect(() => {
-    getCurrentUser(
-      currentJwt,
-      jwtTokens,
-      history,
-      setCurrentJwt,
-      setUser,
-      setJwtTokens
-    );
+  // useEffect(() => {
+  //   // getCurrentUser(
+  //   //   currentJwt,
+  //   //   jwtTokens,
+  //   //   history,
+  //   //   setCurrentJwt,
+  //   //   setUser,
+  //   //   setJwtTokens
+  //   // );
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
   // const UserContext = UserContextFunc({ user, setUser });
   return (
     <div className="App">
