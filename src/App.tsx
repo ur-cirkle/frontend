@@ -6,7 +6,7 @@ import { UserContext  } from "./Contexts/UserContext";
 import { CurrentJwtContext } from "./Contexts/CurrentJwtContext";
 import { JwtTokens } from "./Contexts/JwtTokensContext";
 import Signup from "./Pages/Signup.pages";
-
+import Navbar from "./Components/UI/Navbar/Navbar.component"
 import PageNotFound from "./Pages/404.page";
 import ForgotPassword from "./Pages/ForgotPassword.pages";
 import Feed from "./Pages/Feed.pages";
@@ -58,6 +58,7 @@ function App() {
               <Route component={ForgotPassword} path="/forgot" />
               <Route component={Feed} path="/feed" />
               <Route component={AddBlog} path="/new/blog" />
+              <Route component={Navbar} path="/nav"/>
               <Route component={Blog} path="/:user/blogs/:blogid" />
               <Route component={ImageEditor} path="/img" />
               <Route component={Map} path="/map" />
