@@ -14,13 +14,13 @@ const ProfileHead: React.FC<ProfileHeadProps> = () => {
     return (
       <React.Fragment>
         <MainDiv className="main-div">
-          <ImageContainer className="main-div__image-container" />
+          <ImageContainer className="main-div__image-container"/>
 
           <div className="main-div__username">
             <NameContainer>Adminoaf</NameContainer>
           </div>
           <DivLikes>
-            <SpanLikes>Photography |</SpanLikes>
+            <SpanLikes>Photography</SpanLikes>
             <SpanLikes>Travel</SpanLikes>
             <SpanLikes style={{ border: "none" }}>Dogs</SpanLikes>
           </DivLikes>
