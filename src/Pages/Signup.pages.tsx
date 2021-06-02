@@ -6,8 +6,9 @@ import React, {
   Dispatch,
   useContext,
 } from "react";
+
 import * as bowser from "bowser";
-import { isUsernameRT, isPasswordRT,isEmail } from "verifierjs";
+import { isUsernameRT, isPasswordRT, isEmail } from "verifierjs";
 import FormSignUp from "../Components/SignUp/FormSignup/FormSignup.component";
 import { UserContext } from "../Contexts/UserContext";
 import { useHistory } from "react-router-dom";
@@ -21,6 +22,7 @@ import EmailForm from "../Components/SignUp/EmailForm/EmailForm.component";
 const Signup: React.FC = () => {
   const browser = bowser.parse(window.navigator.userAgent);
   const { user, setUser } = useContext(UserContext);
+  const [email, setEmail] = useState("");
   const { setCurrentJwt } = useContext(CurrentJwtContext);
   const { setJwtTokens, jwtTokens } = useContext(JwtTokens);
   const [interests, setInterests] = useState<Array<string>>([]);
@@ -38,8 +40,12 @@ const Signup: React.FC = () => {
   });
   //* When User Submits Email Form
   const onEmail = (email: string) => {
-    if(isEmail(email)) {}
-  }
+    //* If Email is Not Valid then return;
+    if (!isEmail(email)) return;
+    //* Else set email to email(given in param);
+    setEmail(email);
+  };
+  //* Checks if
   const isUsernameAvailable = async (username: string, setFunc: Function) => {
     try {
       const resp = await axios({
@@ -73,12 +79,19 @@ const Signup: React.FC = () => {
       //- Seting Err
       return setErrors({ username: usernameErrStr, password: passwordErrStr });
     }
+
     axios({
       url: "http://localhost:5000/interests",
       method: "GET",
     }).then(({ data: interests }) => {
       setInterests(interests);
-      setUser(credentials);
+      setUser({
+        ...user,
+        username: credentials.username,
+        password: credentials.password,
+        type: credentials.type,
+        timezone: credentials.timezone,
+      });
       setIsCredentialsFilled(true);
     });
   };
@@ -124,7 +137,7 @@ const Signup: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   if (currentMode === "EMAIL") {
-    return <EmailForm checkEmail={(email) => true} onEmailSignup={() => {}} />;
+    return <EmailForm checkEmail={(email) => true} onEmailSignup={onEmail} />;
   } else if (currentMode === "") {
     return (
       <FormSignUp

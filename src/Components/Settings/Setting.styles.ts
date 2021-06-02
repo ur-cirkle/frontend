@@ -308,7 +308,7 @@ color: white;
 
 export const BlocAcc = styled.div`
 display: inline;
-color: red;
+color: colorRed;
 line-height: 20px;
 `;
 
