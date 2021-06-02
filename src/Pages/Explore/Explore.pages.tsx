@@ -3,6 +3,9 @@ import { uid } from "uid";
 import Card from "../../Components/Explore/Card/Card.component";
 import { cardUser } from "../../Interfaces/Card.interfaces";
 import useCardSearch from "../../Hooks/useCardSearch.hooks";
+import ExploreStyle from "../Explore/Explore.styles"
+
+
 const Explore: React.FC = () => {
   const [cardPackNumber, setCardPackNumber]: [
     number,
