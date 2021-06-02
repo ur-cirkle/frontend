@@ -9,18 +9,18 @@ export const MainDiv=styled.div`
     text-align:center;
     background:#000000;
     color:${colors.white};
-    height:600px;
+    height:60rem;
     
 `
 export const ImageContainer=styled.div`
     background:url("https://picsum.photos/200/300");
-    width:129px;
-    height:129px;
-    border-radius:60px;
+    width:12.9rem;
+    height:12.9rem;
+    border-radius:6rem;
 `
-export const NameContainer=styled.h2`
-    width:202px;
-    height:44px;
+export const NameContainer=styled.h2` 
+    width:20.2rem;
+    height:4.4rem;
     text-align:center;
     font-family:Montserrat;
     font-style:normal;
