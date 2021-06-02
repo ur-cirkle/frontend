@@ -25,10 +25,12 @@ export interface CropProps {
     
   }>;
   index :number;
+  counter:number;
+  setCounter:React.Dispatch<SetStateAction<number>>
   setCurrentEditing: Dispatch<SetStateAction<string>>;
 }
 
-const Crop: React.FC<CropProps> = ({ imgs, setImg, setCurrentEditing ,index}) => {
+const Crop: React.FC<CropProps> = ({ imgs, setImg, setCurrentEditing ,index,counter,setCounter}) => {
   const [crop, setCrop]: [
     cropProp,
     Dispatch<SetStateAction<cropProp>>
@@ -47,12 +49,17 @@ const Crop: React.FC<CropProps> = ({ imgs, setImg, setCurrentEditing ,index}) =>
   const [CompleteRotate, setCompleteRotate] = useState<any>(null);
   const [Completeflip, setCompleteflip] = useState<any>(null);
   useEffect(() => {
+    if(imgs.original)return;
+    setCounter(counter+1)
+    
+  }, [counter]);
+  useEffect(() => {
     if (!completedCrop || !previewCanvasRef.current) {
       return;
     }
 
     const image = new Image();
-    image.src = imgs.edited?imgs.edited:imgs.original;
+    image.src = imgs.original;
     const canvas = previewCanvasRef.current;
     const crop: any = completedCrop;
 
@@ -89,7 +96,7 @@ const Crop: React.FC<CropProps> = ({ imgs, setImg, setCurrentEditing ,index}) =>
     setImg({ type: "EDITED", payLoadValue: canvas.toDataURL() ,index});
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [completedCrop,imgs.edited]);
+  }, [completedCrop,imgs.edited,counter]);
   
   
   useEffect(() => {
@@ -173,10 +180,13 @@ useEffect(() => {
       };
     });
   };
+  if(!imgs.original){
+    return <p>Loading......</p>
+  }
   return (
     <>
       <ReactCrop
-        src={imgs.edited?imgs.edited:imgs.original}
+        src={imgs.original}
         
         crop={crop as any}
         onChange={(c) => setCrop(c)}
@@ -214,26 +224,7 @@ useEffect(() => {
       >
         16:9
       </button>
-      {/* <button
-        onClick={() => {
-          setImg({ type: "ORIGINAL", payLoadValue: "" ,index});
-                            setCurrentEditing("Image Upload");
-                            window.history.pushState({}, "Image Editor : Crop", "/img");
-                          }}
-                        >
-                          Change Image  
-                        </button>
-                        <button
-                          onClick={() => {
-                            if (imgs.currentEditing === "data:,") return alert("Not Valid");
-          setImg({ type: "EDITED", payLoadValue: imgs.currentEditing,index });
-          
-          // setCurrentEditing("Filter");
-          // window.history.pushState({}, "Image Editor:Filter", "/img/filter");
-        }}
-      >
-        ✔️
-      </button> */}
+      
       <button onClick={()=>{
         setCurrentEditing("Filter");
         window.history.pushState({}, "Image Editor:Filter", "/img/filter");}}>filter</button>

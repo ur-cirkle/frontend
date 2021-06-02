@@ -112,13 +112,8 @@ useEffect(() => {
       onViewportChange={(nextViewport: viewportObj) =>
         setViewport(nextViewport)
       }
-<<<<<<< HEAD:src/Components/MapBox.component.tsx
-      mapStyle="mapbox://styles/heet-vakharia/ckeuzr84tak0719oc1kgj5c3m"
-      mapboxApiAccessToken=""
-=======
       mapStyle="mapbox://styles/vakhariaheet/ckk6l2vh10t0217qbqrq5sgot"
       mapboxApiAccessToken="pk.eyJ1IjoiaGVldC12YWtoYXJpYSIsImEiOiJja2V1ejJzam0zenRwMnNwYzVnOHRpb3RsIn0.ucjS-K-34-JJgvlfAbHmCw"
->>>>>>> 26d2f6f91d3b480f249a6abff63965a72908976f:src/Components/Map/MapBox.component.tsx
       ref={mapRef as any}
     >
       <FullscreenControl style={{ right: 10, top: 10 }} />

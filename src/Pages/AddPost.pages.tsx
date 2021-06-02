@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useReducer } from "react";
+import React, { useEffect, useState, useReducer,useRef } from "react";
 import Crop from "../Components/AddPost/Crop.components";
 import Filter from "../Components/AddPost/Filter.components";
 import ImageUpload from "../Components/AddPost/ImageUpload.components";
@@ -17,7 +17,9 @@ export interface cropProp {
 const AddPost: React.FC = () => {
   const [index, setIndex] = useState(0);
   const [counter, setCounter] = useState(0);
+  const [counter1, setCounter1] = useState(0);
   const [currentEditing, setCurrentEditing] = useState("Image Upload");
+  const previewCanvas = useRef<HTMLCanvasElement | null>(null);
   const imgsReducer = (
     state: state,
     action: { type: string; payLoadValue: string; index: number }
@@ -84,8 +86,25 @@ const AddPost: React.FC = () => {
   useEffect(() => {
     setCounter(counter + 1);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [currentEditing,imgs[0].original]);
   console.log(imgs)
+
+  useEffect(() => {
+    const image = new Image();
+    image.src = imgs[0].original;
+    const canvas =previewCanvas.current;
+    if (!canvas){return}
+    canvas.height=787*(image.height)/image.width
+    canvas.width=787
+
+    const ctx: any = canvas.getContext("2d");
+    ctx.drawImage(image,0,0,787,787*(image.height)/image.width)
+    // console.log(canvas.toDataURL()) 
+    setImg({ type: "ORIGINAL", payLoadValue: canvas.toDataURL() , index:0 });
+    console.log(imgs[0], "were")
+  }, []);
+
+  
   return (
     <div className="App">
       <p>{counter}</p>
@@ -99,6 +118,8 @@ const AddPost: React.FC = () => {
           setImg={setImg}
           setCurrentEditing={setCurrentEditing}
           index={index}
+          counter={counter}
+          setCounter={setCounter}
         />
       )}
       {currentEditing === "Filter" && (
@@ -118,7 +139,7 @@ const AddPost: React.FC = () => {
       <img src={imgs[3].original} onClick={()=>{setIndex(3)}}alt="upload"></img>
       <img src={imgs[4].original} onClick={()=>{setIndex(4)}}alt="upload"></img>
  */}
-
+       <canvas ref={previewCanvas}></canvas>
 
       <button onClick={()=>{setCounter(counter+1)}}>load </button>
       <button onClick={()=>{setIndex(index+1)}}> next </button>
