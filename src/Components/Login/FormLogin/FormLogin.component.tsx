@@ -3,13 +3,14 @@ import React, { Dispatch, SetStateAction, useReducer, useState } from "react";
 //** InterFaces
 import { FormLoginProps } from "../../../Interfaces/Login.interfaces";
 import { isEmail, isUsername } from "verifierjs";
+import LoginBox from "./FormLogin.styles";
 
 const FormLogin: React.FC<FormLoginProps> = ({ onLogin }) => {
   //- Context Reducer Function
   const contextReducer = (
     state: { value: string; type: string; error: boolean },
     value: string
-  ) => { 
+  ) => {
     if (isEmail(value)) {
       return { value: value, type: "email", error: false };
     } else if (isUsername(value)) {
@@ -32,11 +33,13 @@ const FormLogin: React.FC<FormLoginProps> = ({ onLogin }) => {
   ] = useState<boolean>(false);
   const [validCredentials, setValidCredentials] = useState(true);
   return (
-    <div>
+    <LoginBox>
+      <h2>Welcome! <br /> Log in to continue</h2>
+
       <label>
         <input
           type="text"
-          placeholder={"Username/Email"}
+          placeholder={"Enter your Username"}
           value={context.value}
           onChange={(event) => contextDispatcher(event.target.value)}
         />
@@ -44,14 +47,16 @@ const FormLogin: React.FC<FormLoginProps> = ({ onLogin }) => {
       <label>
         <input
           type={showPassword ? "text" : "password"}
-          placeholder={"Password"}
+          placeholder={"Enter your Password"}
           value={password}
           onChange={({ target }) => setPassword(target.value)}
         />
       </label>
+      {/* Put the Link for Forget Password here.  */}
+      <a href="#" id="forgetpassword">Forget Password</a>
 
       <label>
-        Show Password
+        <i className="fas fa-eye-slash"></i>
         <input
           type="checkbox"
           checked={showPassword}
@@ -64,7 +69,8 @@ const FormLogin: React.FC<FormLoginProps> = ({ onLogin }) => {
       <button onClick={() => onLogin(password, context, setValidCredentials)}>
         Login
       </button>
-    </div>
+      <h3>Don't have an account? <a href="#">Sign Up</a></h3>
+    </LoginBox>
   );
 };
 
