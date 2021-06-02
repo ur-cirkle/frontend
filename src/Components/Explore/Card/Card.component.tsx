@@ -7,7 +7,7 @@ import {Description} from './Card.styles';
 import {Connections} from './Card.styles';
 
 const Card: React.FC<CardProps> = ({ cardRef, cardUser, index }) => {
-    let imgUrl = "http://placeimg.com/100/100/animals";
+    
     return (
         <CardWrapper className="Card" ref={cardRef}>
           <img
@@ -19,17 +19,15 @@ const Card: React.FC<CardProps> = ({ cardRef, cardUser, index }) => {
           <FirstName>
             {cardUser.name.first}
           </FirstName>
-          <Connections className="">{Math.floor(Math.random() * 5000 + 1)} </Connections>
+          <Connections className="">PhotoGraphy | Travel | Dogs</Connections>
+          <Connections className="">{Math.floor(Math.random() * 500 + 1)} Connections  {Math.floor(Math.random() * 10000 + 1)} Supporting</Connections>
           <SubmitButton>Connect</SubmitButton>
+
           <Description>
             Lorem ipsum dolor sit amet consectetur, adipisicing elit. Reiciendis,
             doloribus voluptatum. Saepe architecto unde dolorum est, ratione
           </Description>
-          <div className="card_imgs">
-            <img src={imgUrl} alt="" />
-            <img src={imgUrl} alt="" />
-            <img src={imgUrl} alt="" />
-          </div>
+
         </CardWrapper>
     );
 };
