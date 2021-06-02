@@ -16,13 +16,9 @@ import useLocalStorage from "./Hooks/useLocalStorage.hooks";
 import { getCurrentUser } from "./Utils/getCurrentUser.utils";
 import AddBlog from "./Pages/AddBlog.pages";
 import Blog from "./Pages/Blog.pages";
-<<<<<<< HEAD
 import AddPost from "./Pages/AddPost.pages";
-=======
-import ImageEditor from "./Pages/ImageEditor.pages";
 import SearchBar from "./Components/Feed/SearchBar.component";
 import UserProfile from "./Pages/UserProfile.pages";
->>>>>>> 26d2f6f91d3b480f249a6abff63965a72908976f
 
 function App() {
   const [user, setUser] = useState({
