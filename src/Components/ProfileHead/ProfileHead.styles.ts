@@ -8,7 +8,7 @@ export const MainDiv = styled.div`
   margin: 1rem 0;
   text-align: center;
   background: #000000;
-  color: ${colors.white};
+  color: ${colors.colorWhite};
   height: 600px;
   flex-wrap: wrap;
 `;
