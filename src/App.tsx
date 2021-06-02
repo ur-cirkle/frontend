@@ -19,7 +19,7 @@ import Blog from './Pages/Blog.pages';
 import ImageEditor from './Pages/ImageEditor.pages';
 import SearchBar from './Components/UI/SearchBar/SearchBar.component';
 import UserProfile from './Pages/UserProfile.pages';
-import FormLogin, { Signupbox } from './Components/Login/FormLogin/Signupbox';
+import FormLogin from './Components/Login/FormLogin/FormLogin.component';
 import Setting from './Pages/Setting.pages';
 import ProfileHead from './Components/ProfileHead/ProfileHead.components';
 import CardLandscape from './Components/UI/Cards/CardLandscape.component';
