@@ -17,12 +17,9 @@ import { getCurrentUser } from './Utils/getCurrentUser.utils';
 import AddBlog from './Pages/AddBlog.pages';
 import Blog from './Pages/Blog.pages';
 import ImageEditor from './Pages/ImageEditor.pages';
-import SearchBar from './Components/UI/SearchBar/SearchBar.component';
 import UserProfile from './Pages/UserProfile.pages';
 import Setting from './Components/Settings/Setting.pages';
 import ProfileHead from './Components/ProfileHead/ProfileHead.components';
-import CardLandscape from './Components/UI/Cards/CardLandscape.component';
-import CardSquare from './Components/UI/Cards/CardSquare.component';
 
 function App() {
     const [user, setUser] = useState({
