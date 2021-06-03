@@ -5,6 +5,8 @@ export const ExploreStyle =styled.div`
 
     display: grid;
     grid-template-columns: 36.8rem 36.8rem;
+    grid-gap: 2.6rem;
+    grid-column-gap: 1.2rem;
     margin-top:auto;
 
 
