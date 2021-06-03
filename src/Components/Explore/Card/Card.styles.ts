@@ -66,7 +66,7 @@ export const SubmitButton =styled.button`
     font-family:Poppins;
     font-style: normal;
     font-weight: normal;
-    font-size:1rem;
+    font-size:1.6rem;
     line-hieght:2.4rem;
     background:#6F1BCF;
     text-align:center;
@@ -84,8 +84,7 @@ export const Description =styled.p`
 
     width: 34.3rem;
     height: 12.4rem;
-    left: 95.7rem;
-    top: 55.3rem;
+    
 
     font-family: Montserrat;
     font-style: normal;
@@ -101,36 +100,64 @@ export const Description =styled.p`
 `;
 
 
-export const Connections=styled.p`
+export const SpanStyle2=styled.p`
 
     width:auto;
     height: 3.3rem;
-    left: 96.9rem;
-    top: 50rem;
+    
 
     font-family:Montserrat;
     font-style: normal;
     font-weight:300;
-    font-size:1.2rem;
+    font-size:1.6rem;
     line-height: 2rem;
 
     text-align:center;
 
     color:#FFFFFF;
 
+    margin-right:2rem;
+
+
+`;
+
+export const Para=styled.p`
+
+    display:flex;
+    justify-content:center;
+
+`;
+
+export const SpanStyle1=styled.span`
+
+    width:auto;
+    height: 3.3rem;
+
+    margin-right: 1rem;
+    margin-left: 1rem;
+
+
+    font-family:Montserrat;
+    font-style: normal;
+    font-weight:bold;
+    font-size:1.6rem;
+    line-height: 2rem;
+
+    text-align:center;
+
+    color:#FFFFFF;
 
 `;
 export const Tags=styled.p`
 
     width:auto;
     height: 3.3rem;
-    left: 96.9rem;
-    top: 50rem;
+    
 
     font-family:Montserrat;
     font-style: normal;
     font-weight:400;
-    font-size:1.2rem;
+    font-size:1.8rem;
     line-height: 2rem;
 
     text-align:center;
@@ -147,8 +174,7 @@ export const ImgStyle=styled.img`
 
     width: 9.5rem;
     height: 9.5rem;
-    left: 68.7rem;
-    top: 32.5rem;
+
     background: #C4C4C4;
 
 
