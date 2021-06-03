@@ -6,6 +6,7 @@ import useCardSearch from "../../Hooks/useCardSearch.hooks";
 import {ExploreStyle} from "./Explore.styles"
 import {HeadingStyle} from "./Explore.styles"
 import {TagLineStyle} from "./Explore.styles"
+import {PageStyle} from "./Explore.styles"
 
 
 const Explore: React.FC = () => {
@@ -32,7 +33,7 @@ const Explore: React.FC = () => {
   );
 
   return (
-    <div className="">
+    <PageStyle className="">
       <HeadingStyle>Explore</HeadingStyle>
       <TagLineStyle>Find people with shared interests</TagLineStyle>
         <ExploreStyle className="cards">
@@ -44,7 +45,7 @@ const Explore: React.FC = () => {
           {isLoading && <div className="">Loading...</div>}
           {error && <div className="">Errrrrrr</div>}
         </ExploreStyle>
-    </div>
+    </PageStyle>
   );
 };
 
