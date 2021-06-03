@@ -1,3 +1,4 @@
+import { profile } from 'console';
 import React from 'react';
 import { MainDiv, ImageContainer, NameContainer,
      DivLikes, SpanLikes, DivConnections,

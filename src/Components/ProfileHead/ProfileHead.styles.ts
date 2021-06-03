@@ -7,9 +7,11 @@ export const MainDiv = styled.div`
   align-items: center;
   margin: 1rem 0;
   text-align: center;
-  background: #000000;
   color: ${colors.colorWhite};
   height: 600px;
+  width:769px;
+  margin:auto;
+  margin-top:1rem;
   flex-wrap: wrap;
 `;
 export const ImageContainer = styled.div`
@@ -58,10 +60,10 @@ export const ParaConnections = styled.p`
   font-size: 1.8rem;
   line-height: 2.2rem;
   text-align: center;
-  padding: 0 0.5rem;
+  padding: 0 2.5rem;
 
   & span {
-    padding: 0 0.3rem;
+    padding: 0 0.4rem;
     font-weight: bold;
     font-size:1.8rem;
   }
@@ -81,7 +83,7 @@ export const ParaDesc = styled.p`
   padding-bottom: 2rem;
 `;
 export const LinkDesc = styled.a`
-  color: blue;
+  color: ${colors.colorBlue};
   font-size:1.8rem;
   &:hover {
     color: purple;
@@ -90,11 +92,11 @@ export const LinkDesc = styled.a`
 export const Button = styled.button`
   width: 10rem;
   height: 4rem;
-  color: #ffffff;
   border: none;
   background: #6f1bcf;
   border-radius: 1rem;
   font-size:1.6rem;
   line-height:2.4rem;
+  color: ${colors.colorWhite};
 `;
 export default styled;
