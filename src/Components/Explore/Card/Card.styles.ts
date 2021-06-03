@@ -16,7 +16,7 @@ export const CardWrapper =styled.div`
 
 
     margin:auto;
-    margin-top:1.5rem;
+    margin-top:7.5rem;
     margin-bottom:2rem;
 
     width :36.8rem;

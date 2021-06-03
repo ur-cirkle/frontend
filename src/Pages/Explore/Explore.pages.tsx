@@ -5,6 +5,7 @@ import { cardUser } from "../../Interfaces/Card.interfaces";
 import useCardSearch from "../../Hooks/useCardSearch.hooks";
 import {ExploreStyle} from "./Explore.styles"
 import {HeadingStyle} from "./Explore.styles"
+import {TagLineStyle} from "./Explore.styles"
 
 
 const Explore: React.FC = () => {
@@ -33,7 +34,8 @@ const Explore: React.FC = () => {
   return (
     <div className="">
       <HeadingStyle>Explore</HeadingStyle>
-        <div className="cards">
+      <TagLineStyle>Find people with shared interests</TagLineStyle>
+        <ExploreStyle className="cards">
           {cards.map((card: cardUser, index: number) => {
             if (index === cards.length - 1)
               return <Card cardRef={lastCardRef} cardUser={card} index={index} />;
@@ -41,7 +43,7 @@ const Explore: React.FC = () => {
           })}
           {isLoading && <div className="">Loading...</div>}
           {error && <div className="">Errrrrrr</div>}
-        </div>
+        </ExploreStyle>
     </div>
   );
 };
