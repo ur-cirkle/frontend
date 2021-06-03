@@ -68,4 +68,10 @@ export const A = styled.a`
     font-size:2rem;
     color:${colors.colorCyan};
 `;
+export const Error = styled.p`
+    position:absolute;
+    right:10rem;
+    margin-top:2.5rem;
+    font-size:1.4rem;
+`;
 export default LoginBox;

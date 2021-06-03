@@ -4,7 +4,7 @@ import React, { Dispatch, SetStateAction, useReducer, useState } from "react";
 import { FormLoginProps } from "../../../Interfaces/Login.interfaces";
 import { isEmail, isUsername } from "verifierjs";
 import {LoginBox} from "./FormLogin.styles";
-import {H2,Input,Eye,CheckBox,ForgetPswd,Button,H3,A } from "./FormLogin.styles";
+import {H2,Input,Eye,CheckBox,ForgetPswd,Button,H3,A,Error } from "./FormLogin.styles";
 
 const FormLogin: React.FC<FormLoginProps> = ({ onLogin }) => {
   //- Context Reducer Function
@@ -65,8 +65,8 @@ const FormLogin: React.FC<FormLoginProps> = ({ onLogin }) => {
         />
       </label>
 
-      {context.error && <p>Enter Valid Email/Username</p>}
-      {!validCredentials && <p>Invalid credentials</p>}
+      {context.error && <Error>Enter Valid Email/Username</Error>}
+      {!validCredentials && <Error>Invalid credentials</Error>}
       <Button onClick={() => onLogin(password, context, setValidCredentials)}>
         Login
       </Button>
