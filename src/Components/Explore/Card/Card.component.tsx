@@ -6,12 +6,13 @@ import {SubmitButton} from './Card.styles';
 import {Description} from './Card.styles';
 import {Connections} from './Card.styles';
 import {Tags} from './Card.styles';
+import {ImgStyle} from './Card.styles';
 
 const Card: React.FC<CardProps> = ({ cardRef, cardUser, index }) => {
     
     return (
         <CardWrapper className="Card" ref={cardRef}>
-          <img
+          <ImgStyle
             src={cardUser.picture.large}
             alt=""
             className="Image"

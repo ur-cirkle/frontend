@@ -58,12 +58,12 @@ export const SubmitButton =styled.button`
     width:8.5rem;
     height:3.179rem;
     
-    padding:auto;
+    
     vertical-align: center;
 
     display: inline-block;
 
-    margin-bottom: 3rem;
+    margin-bottom: 3.4rem;
 
     font-family:Poppins;
     font-style: normal;
@@ -138,6 +138,20 @@ export const Tags=styled.p`
     text-align:center;
 
     color:#FFFFFF;
+
+
+`;
+
+export const ImgStyle=styled.img`
+
+
+    margin: 1.7rem;
+
+    width: 9.5rem;
+    height: 9.5rem;
+    left: 68.7rem;
+    top: 32.5rem;
+    background: #C4C4C4;
 
 
 `;
