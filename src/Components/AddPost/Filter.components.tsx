@@ -173,7 +173,7 @@ const Filter: React.FC<FilterProps> = ({
       ctx.globalAlpha = tint.opacity;
       ctx.drawImage(buffer.current, 0, 0);
       setImg({
-        type: "CURRENT_EDITING",
+        type: "EDITED",
         payLoadValue: canvas.current.toDataURL(),
         index,
       });

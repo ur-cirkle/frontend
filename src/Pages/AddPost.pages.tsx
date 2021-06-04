@@ -87,7 +87,7 @@ const AddPost: React.FC = () => {
   useEffect(() => {
     setCounter(counter + 1);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentEditing,imgs[0].original]);
+  }, [currentEditing,imgs[index].original]);
   console.log(imgs)
 
   // useEffect(() => {
@@ -109,7 +109,6 @@ const AddPost: React.FC = () => {
   return (
     <div className="App">
       <p>{counter}</p>
-      {/* <img src={imgs[0].original}></img> */}
       {currentEditing === "Image Upload" && (
         <ImageUpload setImg={setImg} setCurrentEditing={setCurrentEditing} />
       )}
@@ -136,20 +135,23 @@ const AddPost: React.FC = () => {
           <AddPostForm  />
         )
       }
-
-
-
-      <img src={imgs[0].original} onClick={()=>{setIndex(0)}} alt="upload"></img>
-      <img src={imgs[1].original} onClick={()=>{setIndex(1)}}alt="upload"></img>
-      <img src={imgs[2].original} onClick={()=>{setIndex(2)}}alt="upload"></img>
-      <img src={imgs[3].original} onClick={()=>{setIndex(3)}}alt="upload"></img>
-      <img src={imgs[4].original} onClick={()=>{setIndex(4)}}alt="upload"></img>
-
-       <canvas ref={previewCanvas}></canvas>
-
-      <button onClick={()=>{setCounter(counter+1)}}>load </button>
+      <button onClick={()=>{setCounter(counter+1)
+      setImg({ type: "EDITED", payLoadValue: imgs[index].currentEditing , index:index })
+      }}>SAVE</button>
       <button onClick={()=>{setIndex(index+1)}}> next </button>
       <button onClick={()=>{setIndex(index-1)}}>prev </button>
+
+<div>
+
+{   
+  imgs.map(img =>(
+    <div className="">
+      <img src={img.original} alt="upload" />
+    </div>
+  ))
+}
+
+</div>
 
    
     </div>

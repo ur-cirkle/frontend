@@ -93,7 +93,7 @@ const Crop: React.FC<CropProps> = ({ imgs, setImg, setCurrentEditing ,index,coun
     );
 
 
-    setImg({ type: "EDITED", payLoadValue: canvas.toDataURL() ,index});
+    setImg({ type: "CURRENT_EDITING", payLoadValue: canvas.toDataURL() ,index});
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [completedCrop,imgs.edited,counter]);
@@ -131,7 +131,7 @@ const Crop: React.FC<CropProps> = ({ imgs, setImg, setCurrentEditing ,index,coun
       console.log(canvasRotate.toDataURL(),61);
 
     }
-    setImg({ type: "EDITED", payLoadValue: canvasRotate.toDataURL(),index });
+    setImg({ type: "CURRENT_EDITING", payLoadValue: canvasRotate.toDataURL(),index });
        
   }, [CompleteRotate,imgs.edited]);
 
@@ -158,7 +158,7 @@ useEffect(() => {
     ctxFlip.drawImage(image,-image.width,0,image.width,image.height);
   }
   
-  setImg({ type: "EDITED", payLoadValue: canvasFlip.toDataURL(),index });
+  setImg({ type: "CURRENT_EDITING", payLoadValue: canvasFlip.toDataURL(),index });
   
 }, [Completeflip,imgs.edited]);
 
