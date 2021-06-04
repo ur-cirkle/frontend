@@ -59,7 +59,7 @@ const Crop: React.FC<CropProps> = ({ imgs, setImg, setCurrentEditing ,index,coun
     }
 
     const image = new Image();
-    image.src = imgs.original;
+    image.src = imgs.edited?imgs.edited:imgs.original;
     const canvas = previewCanvasRef.current;
     const crop: any = completedCrop;
 
@@ -186,7 +186,7 @@ useEffect(() => {
   return (
     <>
       <ReactCrop
-        src={imgs.original}
+        src={imgs.edited?imgs.edited:imgs.original}
         
         crop={crop as any}
         onChange={(c) => setCrop(c)}
