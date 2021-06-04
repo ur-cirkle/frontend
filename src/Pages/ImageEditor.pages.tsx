@@ -2,7 +2,7 @@ import React, { useEffect, useState, useReducer } from "react";
 import Crop from "../Components/ImageEditor/Crop.components";
 import Filter from "../Components/ImageEditor/Filter.components";
 import ImageUpload from "../Components/ImageEditor/ImageUpload.components";
-import { state } from "../Interfaces/ImageEditor.intrefaces";
+import { state } from "../Interfaces/AddPost.intrefaces";
 
 export interface cropProp {
   unit?: any;
