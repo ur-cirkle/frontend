@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useReducer } from "react";
+import React, { useEffect, useState, useReducer,useRef } from "react";
+import AddPostForm from "../Components/AddPost/AddPostForm/AddPostForm.component";
 import Crop from "../Components/AddPost/Crop.components";
 import Filter from "../Components/AddPost/Filter.components";
 import ImageUpload from "../Components/AddPost/ImageUpload.components";
@@ -18,6 +19,7 @@ const AddPost: React.FC = () => {
   const [index, setIndex] = useState(0);
   const [counter, setCounter] = useState(0);
   const [currentEditing, setCurrentEditing] = useState("Image Upload");
+  const previewCanvas = useRef<HTMLCanvasElement | null>(null);
   const imgsReducer = (
     state: state,
     action: { type: string; payLoadValue: string; index: number }
@@ -44,7 +46,8 @@ const AddPost: React.FC = () => {
         const tempState = state;
         console.log(action);
         tempState[action.index] = {
-          ...state[action.index],
+          ...state[action.index], 
+           
           currentEditing: action.payLoadValue,
         };
         return tempState;
@@ -84,12 +87,28 @@ const AddPost: React.FC = () => {
   useEffect(() => {
     setCounter(counter + 1);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [currentEditing,imgs[index].original]);
   console.log(imgs)
+
+  // useEffect(() => {
+  //   const image = new Image();
+  //   image.src = imgs[0].original;
+  //   const canvas =previewCanvas.current;
+  //   if (!canvas){return}
+  //   canvas.height=787*(image.height)/image.width
+  //   canvas.width=787
+
+  //   const ctx: any = canvas.getContext("2d");
+  //   ctx.drawImage(image,0,0,787,787*(image.height)/image.width)
+  //   // console.log(canvas.toDataURL()) 
+  //   setImg({ type: "ORIGINAL", payLoadValue: canvas.toDataURL() , index:0 });
+  //   console.log(imgs[0], "were")
+  // }, []);
+
+  
   return (
     <div className="App">
       <p>{counter}</p>
-      {/* <img src={imgs[0].original}></img> */}
       {currentEditing === "Image Upload" && (
         <ImageUpload setImg={setImg} setCurrentEditing={setCurrentEditing} />
       )}
@@ -99,6 +118,8 @@ const AddPost: React.FC = () => {
           setImg={setImg}
           setCurrentEditing={setCurrentEditing}
           index={index}
+          counter={counter}
+          setCounter={setCounter}
         />
       )}
       {currentEditing === "Filter" && (
@@ -109,20 +130,28 @@ const AddPost: React.FC = () => {
           index={index}
         />
       )}
-
-{/* 
-
-      <img src={imgs[0].original} onClick={()=>{setIndex(0)}} alt="upload"></img>
-      <img src={imgs[1].original} onClick={()=>{setIndex(1)}}alt="upload"></img>
-      <img src={imgs[2].original} onClick={()=>{setIndex(2)}}alt="upload"></img>
-      <img src={imgs[3].original} onClick={()=>{setIndex(3)}}alt="upload"></img>
-      <img src={imgs[4].original} onClick={()=>{setIndex(4)}}alt="upload"></img>
- */}
-
-
-      <button onClick={()=>{setCounter(counter+1)}}>load </button>
+      {
+        currentEditing === "Form" && (
+          <AddPostForm  />
+        )
+      }
+      <button onClick={()=>{setCounter(counter+1)
+      setImg({ type: "EDITED", payLoadValue: imgs[index].currentEditing , index:index })
+      }}>SAVE</button>
       <button onClick={()=>{setIndex(index+1)}}> next </button>
       <button onClick={()=>{setIndex(index-1)}}>prev </button>
+
+<div>
+
+{   
+  imgs.map(img =>(
+    <div className="">
+      <img src={img.original} alt="upload" />
+    </div>
+  ))
+}
+
+</div>
 
    
     </div>

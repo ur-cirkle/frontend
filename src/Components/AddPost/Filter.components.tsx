@@ -173,7 +173,7 @@ const Filter: React.FC<FilterProps> = ({
       ctx.globalAlpha = tint.opacity;
       ctx.drawImage(buffer.current, 0, 0);
       setImg({
-        type: "CURRENT_EDITING",
+        type: "EDITED",
         payLoadValue: canvas.current.toDataURL(),
         index,
       });
@@ -332,6 +332,9 @@ const Filter: React.FC<FilterProps> = ({
         >
           <img src={imgs.edited} className="fimg img_tint" alt="" />
           <p>Tint</p>
+          <button  onClick={()=>{
+        setCurrentEditing("Form");
+        window.history.pushState({}, "Image Editor:Form", "/img/form");}}>post</button>
         </div>
       </div>
     </div>

@@ -49,31 +49,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
     });
     setCurrentEditing("Crop");
     window.history.pushState({}, "Image Editor : Crop", "/img/crop");
-    // if (e.target.files && e.target.files.length > 0) {
 
-    //   const files = e.target.files;
-    //   console.log(files)
-    //   console.log(1234);
-    // for(var i = 0; i< files.length; i++)
-    // {
-    //     var file = files[i];
-    //     console.log(file)
-    //     const reader = new FileReader();
-    //     console.log(i);
-
-    //  setA()
-    //  console.log(reader.readAsDataURL(file));
-    // console.log(reader.readAsDataURL(e.target.files[i]),999);
-    // reader.addEventListener("load",async () => {
-    //   // reader.readAsDataURL(file);
-    //   console.log(reader.result,i,123124);
-    //   // i = i -1;
-
-    //   });
-
-    // reader.readAsDataURL(e.target.files[0]);
-    // }
-    // }
   };
 
   return (

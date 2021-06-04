@@ -25,10 +25,12 @@ export interface CropProps {
     
   }>;
   index :number;
+  counter:number;
+  setCounter:React.Dispatch<SetStateAction<number>>
   setCurrentEditing: Dispatch<SetStateAction<string>>;
 }
 
-const Crop: React.FC<CropProps> = ({ imgs, setImg, setCurrentEditing ,index}) => {
+const Crop: React.FC<CropProps> = ({ imgs, setImg, setCurrentEditing ,index,counter,setCounter}) => {
   const [crop, setCrop]: [
     cropProp,
     Dispatch<SetStateAction<cropProp>>
@@ -46,6 +48,11 @@ const Crop: React.FC<CropProps> = ({ imgs, setImg, setCurrentEditing ,index}) =>
   const [completedCrop, setCompletedCrop] = useState<any>(null);
   const [CompleteRotate, setCompleteRotate] = useState<any>(null);
   const [Completeflip, setCompleteflip] = useState<any>(null);
+  useEffect(() => {
+    if(imgs.original)return;
+    setCounter(counter+1)
+    
+  }, [counter]);
   useEffect(() => {
     if (!completedCrop || !previewCanvasRef.current) {
       return;
@@ -86,10 +93,10 @@ const Crop: React.FC<CropProps> = ({ imgs, setImg, setCurrentEditing ,index}) =>
     );
 
 
-    setImg({ type: "EDITED", payLoadValue: canvas.toDataURL() ,index});
+    setImg({ type: "CURRENT_EDITING", payLoadValue: canvas.toDataURL() ,index});
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [completedCrop,imgs.edited]);
+  }, [completedCrop,imgs.edited,counter]);
   
   
   useEffect(() => {
@@ -124,7 +131,7 @@ const Crop: React.FC<CropProps> = ({ imgs, setImg, setCurrentEditing ,index}) =>
       console.log(canvasRotate.toDataURL(),61);
 
     }
-    setImg({ type: "EDITED", payLoadValue: canvasRotate.toDataURL(),index });
+    setImg({ type: "CURRENT_EDITING", payLoadValue: canvasRotate.toDataURL(),index });
        
   }, [CompleteRotate,imgs.edited]);
 
@@ -151,7 +158,7 @@ useEffect(() => {
     ctxFlip.drawImage(image,-image.width,0,image.width,image.height);
   }
   
-  setImg({ type: "EDITED", payLoadValue: canvasFlip.toDataURL(),index });
+  setImg({ type: "CURRENT_EDITING", payLoadValue: canvasFlip.toDataURL(),index });
   
 }, [Completeflip,imgs.edited]);
 
@@ -173,6 +180,9 @@ useEffect(() => {
       };
     });
   };
+  if(!imgs.original){
+    return <p>Loading......</p>
+  }
   return (
     <>
       <ReactCrop
@@ -214,26 +224,7 @@ useEffect(() => {
       >
         16:9
       </button>
-      {/* <button
-        onClick={() => {
-          setImg({ type: "ORIGINAL", payLoadValue: "" ,index});
-                            setCurrentEditing("Image Upload");
-                            window.history.pushState({}, "Image Editor : Crop", "/img");
-                          }}
-                        >
-                          Change Image  
-                        </button>
-                        <button
-                          onClick={() => {
-                            if (imgs.currentEditing === "data:,") return alert("Not Valid");
-          setImg({ type: "EDITED", payLoadValue: imgs.currentEditing,index });
-          
-          // setCurrentEditing("Filter");
-          // window.history.pushState({}, "Image Editor:Filter", "/img/filter");
-        }}
-      >
-        ✔️
-      </button> */}
+      
       <button onClick={()=>{
         setCurrentEditing("Filter");
         window.history.pushState({}, "Image Editor:Filter", "/img/filter");}}>filter</button>
