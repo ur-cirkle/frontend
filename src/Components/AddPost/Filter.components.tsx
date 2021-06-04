@@ -1,4 +1,3 @@
-//import { stat } from "node:fs";
 import React, {
   useRef,
   useEffect,
@@ -7,9 +6,10 @@ import React, {
   useReducer,
   useState,
 } from "react";
-import { filterState } from "../../Interfaces/AddPost.interfaces";
+import { filterState } from "../../Interfaces/AddPost.intrefaces";
 
 import { SketchPicker } from "react-color";
+import {DivFilter,DivFiltersGallery,DivFilterLeftItems,Canvas,DivImage,ParaText} from './Filter.styles';
 
 export interface FilterProps {
   imgs: { original: string; edited: string; currentEditing: string };
@@ -60,7 +60,7 @@ const Filter: React.FC<FilterProps> = ({ imgs, setImg, setCurrentEditing ,index}
         };
     }
   };
-  const onFilterValueChange = (
+  const onFilterValueChange = ( 
     value: number,
     type: string,
     filter: string
@@ -169,7 +169,7 @@ const Filter: React.FC<FilterProps> = ({ imgs, setImg, setCurrentEditing ,index}
       ctx.globalAlpha = tint.opacity;
       ctx.drawImage(buffer.current, 0, 0);
       setImg({
-        type: "CURRENT_EDITING",
+        type: "EDITED",
         payLoadValue: canvas.current.toDataURL(),
         index,
       });
@@ -178,14 +178,12 @@ const Filter: React.FC<FilterProps> = ({ imgs, setImg, setCurrentEditing ,index}
     //console.log(imgRef, canvas);
     //   asjLDJAL
 
-    navigator.userAgent.toLowerCase().includes("safari") &&
-      alert("filter nai aave");
   }, [imgs.edited, filter, tint]);
 
   return (
-    <div className="filter">
-      <div className="filter_left_items">
-        <canvas ref={canvas} />
+    <DivFilter className="filter">
+      <DivFilterLeftItems className="filter_left_items">
+        <Canvas ref={canvas} />
         <div className="slider_container">
           {filter.type !== "tint" && (
             <label htmlFor="" className="slider">
@@ -227,40 +225,44 @@ const Filter: React.FC<FilterProps> = ({ imgs, setImg, setCurrentEditing ,index}
             />
           )}
         </div>
-      </div>
+      </DivFilterLeftItems>
 
-      <div className="filters_gallery">
-        <div id={filter.type === "sepia" ? "img_selected" : ""}>
+      <DivFiltersGallery className="filters_gallery">
+        <DivImage id={filter.type === "sepia" ? "img_selected" : "none"}>
           <img
+            style={{width: "100%", height: "100%"}}
             src={imgs.edited}
             className="fimg img_sepia "
             alt=""
             onClick={() => setFilter({ type: "TYPE", payLoadValue: "SEPIA" })}
           />
-          <p>sepia</p>
-        </div>
-        <div id={filter.type === "blur" ? "img_selected" : ""}>
+          <ParaText>sepia</ParaText>
+        </DivImage>
+        <DivImage id={filter.type === "blur" ? "img_selected" : "none"}>
           <img
+             style={{width: "100%", height: "100%"}}
             src={imgs.edited}
             className="fimg img_blur"
             alt=""
             onClick={() => setFilter({ type: "TYPE", payLoadValue: "BLUR" })}
           />
-          <p>blur</p>
-        </div>
-        <div id={filter.type === "invert" ? "img_selected" : ""}>
+          <ParaText>blur</ParaText>
+        </DivImage>
+        <DivImage id={filter.type === "invert" ? "img_selected" : "none"}>
           <img
+            style={{width: "100%", height: "100%"}}
             src={imgs.edited}
             className="fimg img_invert"
             alt=""
             onClick={() => setFilter({ type: "TYPE", payLoadValue: "INVERT" })}
           />
 
-          <p>invert</p>
-        </div>
+          <ParaText>invert</ParaText>
+        </DivImage>
 
-        <div id={filter.type === "contrast" ? "img_selected" : ""}>
+        <DivImage id={filter.type === "contrast" ? "img_selected" : "none"}>
           <img
+             style={{width: "100%", height: "100%"}}
             src={imgs.edited}
             className="fimg img_contrast"
             alt=""
@@ -268,10 +270,11 @@ const Filter: React.FC<FilterProps> = ({ imgs, setImg, setCurrentEditing ,index}
               setFilter({ type: "TYPE", payLoadValue: "CONTRAST" })
             }
           />
-          <p>contrast</p>
-        </div>
-        <div id={filter.type === "saturation" ? "img_selected" : ""}>
+          <ParaText>contrast</ParaText>
+        </DivImage>
+        <DivImage id={filter.type === "saturation" ? "img_selected" : "none"}>
           <img
+             style={{width: "100%", height: "100%"}}
             src={imgs.edited}
             className="fimg img_saturation"
             alt=""
@@ -279,10 +282,11 @@ const Filter: React.FC<FilterProps> = ({ imgs, setImg, setCurrentEditing ,index}
               setFilter({ type: "TYPE", payLoadValue: "SATURATION" })
             }
           />
-          <p>saturation</p>
-        </div>
-        <div id={filter.type === "hue rotate" ? "img_selected" : ""}>
+          <ParaText>saturation</ParaText>
+        </DivImage>
+        <DivImage id={filter.type === "hue rotate" ? "img_selected" : "none"}>
           <img
+             style={{width: "100%", height: "100%"}}
             src={imgs.edited}
             className="fimg img_hueRotate"
             alt=""
@@ -290,10 +294,11 @@ const Filter: React.FC<FilterProps> = ({ imgs, setImg, setCurrentEditing ,index}
               setFilter({ type: "TYPE", payLoadValue: "HUE ROTATE" })
             }
           />
-          <p>hue Rotate</p>
-        </div>
-        <div id={filter.type === "grayscale" ? "img_selected" : ""}>
+          <ParaText>hue Rotate</ParaText>
+        </DivImage>
+        <DivImage id={filter.type === "grayscale" ? "img_selected" : "none"}>
           <img
+             style={{width: "100%", height: "100%"}}
             src={imgs.edited}
             className="fimg img_grayscale"
             alt=""
@@ -301,10 +306,10 @@ const Filter: React.FC<FilterProps> = ({ imgs, setImg, setCurrentEditing ,index}
               setFilter({ type: "TYPE", payLoadValue: "GRAYSCALE" })
             }
           />
-          <p>Gray scale</p>
-        </div>
-        <div
-          id={filter.type === "tint" ? "img_selected" : ""}
+          <ParaText>Gray scale</ParaText>
+        </DivImage>
+        <DivImage
+          id={filter.type === "tint" ? "img_selected" : "none"}
           className="tint"
           onClick={() => {
             console.log("hello");
@@ -315,11 +320,14 @@ const Filter: React.FC<FilterProps> = ({ imgs, setImg, setCurrentEditing ,index}
             setFilter({ type: "TINT", payLoadValue: 0 });
           }}
         >
-          <img src={imgs.edited} className="fimg img_tint" alt="" />
-          <p>Tint</p>
-        </div>
-      </div>
-    </div>
+          <img  style={{width: "100%", height: "100%"}} src={imgs.edited} className="fimg img_tint" alt="" />
+          <ParaText>Tint</ParaText>
+          <button  onClick={()=>{
+        setCurrentEditing("Form");
+        window.history.pushState({}, "Image Editor:Form", "/img/form");}}>post</button>
+        </DivImage>
+      </DivFiltersGallery>
+    </DivFilter>
   );
 };
 // 10px
