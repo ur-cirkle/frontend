@@ -1,34 +1,37 @@
 import React from "react";
 import { CardProps } from "../../../Interfaces/Card.interfaces.js";
-import CardStyle from './Card.styles';
+import {CardWrapper} from './Card.styles';
+import {FirstName} from './Card.styles';
+import {SubmitButton} from './Card.styles';
+import {Description} from './Card.styles';
+import {SpanStyle2} from './Card.styles';
+import {Tags} from './Card.styles';
+import {ImgStyle} from './Card.styles';
+import {SpanStyle1} from './Card.styles';
+import {Para} from './Card.styles';
 
 const Card: React.FC<CardProps> = ({ cardRef, cardUser, index }) => {
-    let imgUrl = "http://placeimg.com/100/100/animals";
+    
     return (
-      <CardStyle>
-        <div className="Card" ref={cardRef}>
-          <img
+        <CardWrapper className="Card" ref={cardRef}>
+          <ImgStyle
             src={cardUser.picture.large}
             alt=""
             className="Image"
             style={{ borderRadius: "50%" }}
           />
-          <h1>
+          <FirstName>
             {cardUser.name.first}
-          </h1>
-          <p className="">{Math.floor(Math.random() * 5000 + 1)} Connections</p>
-          <button>Connect</button>
-          <p>
+          </FirstName>
+          <Tags className="">PhotoGraphy   |   Travel   |   Dogs</Tags>
+          <Para className=""><SpanStyle1>{Math.floor(Math.random() * 500 + 1)}</SpanStyle1><SpanStyle2>Connections</SpanStyle2><SpanStyle1>{Math.floor(Math.random() * 10000 + 1)}</SpanStyle1><SpanStyle2>Supporting</SpanStyle2></Para>
+
+          <Description>
             Lorem ipsum dolor sit amet consectetur, adipisicing elit. Reiciendis,
             doloribus voluptatum. Saepe architecto unde dolorum est, ratione
-          </p>
-          <div className="card_imgs">
-            <img src={imgUrl} alt="" />
-            <img src={imgUrl} alt="" />
-            <img src={imgUrl} alt="" />
-          </div>
-        </div>
-      </CardStyle>
+          </Description>
+          <SubmitButton>Connect</SubmitButton>
+        </CardWrapper>
     );
 };
 

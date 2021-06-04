@@ -1,16 +1,16 @@
 import React, { useReducer } from "react";
-// import { PostForm } from "../../../Interfaces/AddPost.intrefaces";
+ import { PostForm } from "../../Interfaces/AddPost.interfaces";
 export interface AddPostFormProps {}
 
 const AddPostForm: React.SFC<AddPostFormProps> = () => {
   const postContentReducer = (
-    state: PostForm,
+    state:PostForm,
     action: {
       type: "caption" | "interests" | "connections" | "location";
       payLoadValue: string;
       group: "STRING" | "ARRAY ADD" | "ARRAY DELETE";
     }
-  ): PostForm => {
+  ):PostForm => {
     const { type, payLoadValue, group } = action;
     switch (group) {
       case "STRING":
