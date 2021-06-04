@@ -7,7 +7,7 @@ import React, {
   useReducer,
   useState,
 } from "react";
-import { filterState } from "../../Interfaces/ImageEditor.intrefaces";
+import { filterState } from "../../Interfaces/AddPost.interfaces";
 
 import { SketchPicker } from "react-color";
 

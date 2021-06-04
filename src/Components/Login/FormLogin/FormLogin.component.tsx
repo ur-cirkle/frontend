@@ -3,7 +3,8 @@ import React, { Dispatch, SetStateAction, useReducer, useState } from "react";
 //** InterFaces
 import { FormLoginProps } from "../../../Interfaces/Login.interfaces";
 import { isEmail, isUsername } from "verifierjs";
-import LoginBox from "./FormLogin.styles";
+import {LoginBox} from "./FormLogin.styles";
+import {H2,Input,Eye,CheckBox,ForgetPswd,Button,H3,A,Error } from "./FormLogin.styles";
 
 const FormLogin: React.FC<FormLoginProps> = ({ onLogin }) => {
   //- Context Reducer Function
@@ -34,10 +35,10 @@ const FormLogin: React.FC<FormLoginProps> = ({ onLogin }) => {
   const [validCredentials, setValidCredentials] = useState(true);
   return (
     <LoginBox>
-      <h2>Welcome! <br /> Log in to continue</h2>
+      <H2>Welcome! <br /> Log in to continue</H2>
 
       <label>
-        <input
+        <Input
           type="text"
           placeholder={"Enter your Username"}
           value={context.value}
@@ -45,7 +46,7 @@ const FormLogin: React.FC<FormLoginProps> = ({ onLogin }) => {
         />
       </label>
       <label>
-        <input
+        <Input
           type={showPassword ? "text" : "password"}
           placeholder={"Enter your Password"}
           value={password}
@@ -53,23 +54,23 @@ const FormLogin: React.FC<FormLoginProps> = ({ onLogin }) => {
         />
       </label>
       {/* Put the Link for Forget Password here.  */}
-      <a href="#" id="forgetpassword">Forget Password</a>
+      <ForgetPswd href="#" id="forgetpassword">Forget Password</ForgetPswd>
 
       <label>
-        <i className="fas fa-eye-slash"></i>
-        <input
+        <Eye className="fas fa-eye-slash"></Eye>
+        <CheckBox
           type="checkbox"
           checked={showPassword}
           onChange={() => setShowPassword(!showPassword)}
         />
       </label>
 
-      {context.error && <p>Enter Valid Email/Username</p>}
-      {!validCredentials && <p>Invalid credentials</p>}
-      <button onClick={() => onLogin(password, context, setValidCredentials)}>
+      {context.error && <Error>Enter Valid Email/Username</Error>}
+      {!validCredentials && <Error>Invalid credentials</Error>}
+      <Button onClick={() => onLogin(password, context, setValidCredentials)}>
         Login
-      </button>
-      <h3>Don't have an account? <a href="#">Sign Up</a></h3>
+      </Button>
+      <H3>Don't have an account? <A href="#">Sign Up</A></H3>
     </LoginBox>
   );
 };

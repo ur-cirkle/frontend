@@ -6,7 +6,6 @@ export const CardWrapper =styled.div`
 
 
     background: rgba(255,255,255,0.01);
-    justify-content:center;
 
     display:flex;
     align-items:center;
@@ -15,9 +14,8 @@ export const CardWrapper =styled.div`
 
 
 
-    margin:auto;
-    margin-top:7.5rem;
-    margin-bottom:2rem;
+    
+
 
     width :36.8rem;
     height :43.5rem;
@@ -55,8 +53,8 @@ export const FirstName =styled.h1`
 
 export const SubmitButton =styled.button`
 
-    width:8.5rem;
-    height:3.179rem;
+    width:12.1rem;
+    height:4.3rem;
     
     
     vertical-align: center;
@@ -68,7 +66,7 @@ export const SubmitButton =styled.button`
     font-family:Poppins;
     font-style: normal;
     font-weight: normal;
-    font-size:1rem;
+    font-size:1.6rem;
     line-hieght:2.4rem;
     background:#6F1BCF;
     text-align:center;
@@ -76,8 +74,8 @@ export const SubmitButton =styled.button`
 
     text-align:center;
 
-    border: 1rem solid #6F1BCF; 
-    border-radius: 0.4rem;
+    border: 1rem solid rgba(111,27,207,1); 
+    border-radius: 1rem;
     cursor:pointer;
 
 `;
@@ -86,8 +84,7 @@ export const Description =styled.p`
 
     width: 34.3rem;
     height: 12.4rem;
-    left: 95.7rem;
-    top: 55.3rem;
+    
 
     font-family: Montserrat;
     font-style: normal;
@@ -103,36 +100,64 @@ export const Description =styled.p`
 `;
 
 
-export const Connections=styled.p`
+export const SpanStyle2=styled.p`
 
     width:auto;
     height: 3.3rem;
-    left: 96.9rem;
-    top: 50rem;
+    
 
     font-family:Montserrat;
     font-style: normal;
     font-weight:300;
-    font-size:1.2rem;
+    font-size:1.6rem;
     line-height: 2rem;
 
     text-align:center;
 
     color:#FFFFFF;
 
+    margin-right:2rem;
+
+
+`;
+
+export const Para=styled.p`
+
+    display:flex;
+    justify-content:center;
+
+`;
+
+export const SpanStyle1=styled.span`
+
+    width:auto;
+    height: 3.3rem;
+
+    margin-right: 1rem;
+    margin-left: 1rem;
+
+
+    font-family:Montserrat;
+    font-style: normal;
+    font-weight:bold;
+    font-size:1.6rem;
+    line-height: 2rem;
+
+    text-align:center;
+
+    color:#FFFFFF;
 
 `;
 export const Tags=styled.p`
 
     width:auto;
     height: 3.3rem;
-    left: 96.9rem;
-    top: 50rem;
+    
 
     font-family:Montserrat;
     font-style: normal;
     font-weight:400;
-    font-size:1.2rem;
+    font-size:1.8rem;
     line-height: 2rem;
 
     text-align:center;
@@ -149,8 +174,7 @@ export const ImgStyle=styled.img`
 
     width: 9.5rem;
     height: 9.5rem;
-    left: 68.7rem;
-    top: 32.5rem;
+
     background: #C4C4C4;
 
 

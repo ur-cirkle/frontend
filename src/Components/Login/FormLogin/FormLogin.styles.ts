@@ -1,69 +1,77 @@
 import styled from 'styled-components';
 import { colors } from '../../../Variables';
 
-const LoginBox = styled.div`
-    background-color:${colors.colorBlack};
+export const LoginBox = styled.div`
     color:${colors.colorWhite};
-    width:36rem;
+    width:40rem;
     margin:1rem;
     padding:3rem 0rem;   
     text-align:center;
-    position:relative;
-    h2{
-        font-size:3rem;
-        line-height:3rem;
-        margin-bottom:5rem;
-        font-family:Montserrat;
-        font-weight:lighter;
-    }
-    input{
-        font-size:1.2rem;
-        color:${colors.colorWhite};
-        background-color:${colors.colorTransparent};
-        marign:3rem;
-        padding:1rem;
-        margin:0.5rem;
-        border-radius:30px;
-        width:30rem;
-        outline:none;
-        border:1px solid ${colors.colorGrey};
-    }
-    .fa-eye-slash{
-        position:absolute;
-        opacity:0.7;
-        right:5rem;
-        top:20rem;
-        cursor:pointer;
-    }
-    #forgetpassword{
-      font-size:1.2rem;
-      position:absolute;
-      right:50px;
-      color:${colors.colorPurple};  
-    }
-    button{
-        border:none;
-        outline:none;
-        border-radius:30px;
-        background-color: ${colors.colorPurple};
-        padding:10px 0px;
-        width:250px;
-        font-size:0.8em;
-        color:${colors.colorWhite};
-        margin:50px 0px;
-    }
-    h3{
-        margin-top:130px;
-        font-family:Montserrat;
-        font-weight:lighter;
-        font-size:2rem;
-    }
-    h3 a{
-        text-decoration:none;
-        color:${colors.colorCyan};
-    }
-    input[type="checkbox"]{
-        display:none;
-    }
+    position:relative;    
+`;
+export const H2 = styled.h2`
+    font-size:3rem;
+    line-height:3.5rem;
+    margin-bottom:5rem;
+    font-family:Montserrat;
+    font-weight:normal;
+`;
+export const Input = styled.input`
+    font-size:1.2rem;
+    color:${colors.colorWhite};
+    background-color:${colors.colorTransparent};
+    marign:3rem;
+    padding:1rem 3rem;
+    margin:0.5rem;
+    border-radius:30px;
+    width:39rem;
+    outline:none;
+    border:1px solid ${colors.colorGrey};
+`;
+export const Eye = styled.div`
+    position:absolute;
+    opacity:0.7;
+    right:2rem;
+    top:21.2rem;
+    cursor:pointer;
+`;
+export const CheckBox = styled.input`
+    display:none;
+`;
+export const ForgetPswd = styled.a`
+    font-size:0.8rem;
+    position:absolute;
+    right:2rem;
+    color:${colors.colorPurple};  
+`;
+export const Button = styled.button`
+    border:none;
+    outline:none;
+    border-radius:30px;
+    background-color: ${colors.colorPurple};
+    padding:1rem 0rem;
+    width:29rem;
+    font-size:1.2rem;
+    color:${colors.colorWhite};
+    margin:6rem 0rem;
+`;
+export const H3 = styled.h3`
+    margin-top:13rem;
+    font-family:Montserrat;
+    font-weight:lighter;
+    font-size:2rem;
+`;
+export const A = styled.a`
+    margin-top:13rem;
+    font-family:Montserrat;
+    font-weight:lighter;
+    font-size:2rem;
+    color:${colors.colorCyan};
+`;
+export const Error = styled.p`
+    position:absolute;
+    right:10rem;
+    margin-top:2.5rem;
+    font-size:1.4rem;
 `;
 export default LoginBox;
