@@ -151,9 +151,9 @@ const AddPost: React.FC = () => {
 <div>
 
 {   
-  imgs.map(img =>(
+  imgs.map((img,i) =>(
     <div className="">
-      <img src={img.original} alt="upload" />
+      <img src={img.original} alt="upload" onClick={()=>{setIndex(i)}} />
     </div>
   ))
 }
