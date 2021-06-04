@@ -11,7 +11,7 @@ export interface ProfileHeadProps {
     }
 }
  
-const ProfileHead: React.FC<ProfileHeadProps> = () => {
+const ProfileHead: React.FC<ProfileHeadProps> = ({profile}) => {
     return (
       <React.Fragment>
         <MainDiv className="main-div">
