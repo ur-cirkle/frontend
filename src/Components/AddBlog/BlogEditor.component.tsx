@@ -2,6 +2,7 @@ import React, { Dispatch, SetStateAction } from "react";
 import Editor from "ckeditor5-custom-build/build/ckeditor";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import axios from "axios";
+import "../AddBlog/BlogEditorStyle.css";
 
 export interface BlogEditorProps {
   blog: string;
