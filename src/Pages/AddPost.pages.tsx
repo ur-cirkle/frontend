@@ -18,6 +18,7 @@ export interface cropProp {
 const AddPost: React.FC = () => {
   const [index, setIndex] = useState(0);
   const [counter, setCounter] = useState(0);
+  const [Converted, setConverted] = useState(false)
   const [currentEditing, setCurrentEditing] = useState("Image Upload");
   const [file,setFile]=useState(0)
   const previewCanvas = useRef<HTMLCanvasElement | null>(null);
@@ -85,41 +86,47 @@ const AddPost: React.FC = () => {
       currentEditing: "",
     },
   ]);
+
+  useEffect(() => {
+    const image = new Image();
+    if(currentEditing === "Image Upload") return;
+    if(Converted){return}
+    if(imgs[file - 1].original.length){ 
+      for(let i=0;i<file;i++){
+        image.src = imgs[i].original;
+        const canvas =previewCanvas.current;
+        if (!canvas){return}
+        canvas.height=787*(image.height)/image.width
+        canvas.width=787
+    
+        const ctx: any = canvas.getContext("2d");
+        ctx.drawImage(image,0,0,787,787*(image.height)/image.width)
+        setImg({ type: "ORIGINAL", payLoadValue: canvas.toDataURL() , index:i });
+      }
+      
+      setConverted(true)}
+      setCounter(counter +1)
+   
+
+  }, [imgs,counter]);
+
   useEffect(() => {
     setCounter(counter + 1);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentEditing,imgs[index].original]);
-  console.log(imgs)
   useEffect(() => {
     if(currentEditing === "Image Upload") return;
     if(imgs[file - 1].original.length) return;
     setCounter(counter+1)
     
   }, [counter]);
-
-  // useEffect(() => {
-  //   const image = new Image();
-  //   image.src = imgs[0].original;
-  //   const canvas =previewCanvas.current;
-  //   if (!canvas){return}
-  //   canvas.height=787*(image.height)/image.width
-  //   canvas.width=787
-
-  //   const ctx: any = canvas.getContext("2d");
-  //   ctx.drawImage(image,0,0,787,787*(image.height)/image.width)
-  //   // console.log(canvas.toDataURL()) 
-  //   setImg({ type: "ORIGINAL", payLoadValue: canvas.toDataURL() , index:0 });
-  //   console.log(imgs[0], "were")
-  // }, []);
-
-  
   return (
     <div className="App">
       <p>{counter}</p>
       {currentEditing === "Image Upload" && (
         <ImageUpload setImg={setImg} setCurrentEditing={setCurrentEditing} setFile={setFile}  />
       )}
-      {currentEditing === "Crop" && (
+      {currentEditing === "Crop" && Converted && (
         <Crop
           imgs={imgs[index]}
           setImg={setImg}
@@ -127,6 +134,8 @@ const AddPost: React.FC = () => {
           index={index}
           counter={counter}
           setCounter={setCounter}
+          Converted={Converted}
+          
         />
       )}
       {currentEditing === "Filter" && (
@@ -153,13 +162,14 @@ const AddPost: React.FC = () => {
 {   
   imgs.map((img,i) =>(
     <div className="">
-      <img src={img.original} alt="upload" onClick={()=>{setIndex(i)}} />
+      <img src={img.original} alt={`upload ${i}`} onClick={()=>{setIndex(i)}} />
     </div>
   ))
 }
 
 </div>
-
+<canvas ref={previewCanvas}
+style={{ display: "none" }}></canvas>
    
     </div>
   );
