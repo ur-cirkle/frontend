@@ -3,7 +3,7 @@ import Editor from "ckeditor5-custom-build/build/ckeditor";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import axios from "axios";
 import "../AddBlog/BlogEditorStyle.css";
-import {Span} from "./BlogEditor.styles"
+import {Span} from "./Blogeditor.styles"
 
 export interface BlogEditorProps {
   blog: string;
@@ -101,7 +101,7 @@ const BlogEditor: React.FC<BlogEditorProps> = ({
         }}
       />
       
-      <p style={{ color: wordCount > 2000 ? "red" : "black" }}>
+      <p style={{ color: wordCount > 2000 ? "red" : "rgba(196,196,196,1)" }}>
         Characters : {wordCount}
       </p>
     </div>

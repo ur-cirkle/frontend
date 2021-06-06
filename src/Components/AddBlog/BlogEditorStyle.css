@@ -13,6 +13,8 @@
 
     font-weight: 700;
 
+    color: rgba(255,255,255,1);
+
     /* margin-top:8.9rem;
     margin-left:3.6rem;
     margin-left:4.5rem;
@@ -20,16 +22,6 @@
 
 }
 
-.ck.ck-editor
-{
-    width: 95.6rem;
-    height: 22.1rem;
-    /* left: 55.6rem;
-    top: 29.8rem; */
-
-    background-color: rgba(44, 44, 44, 0.52);
-    border-radius: 3.3rem;
-}
 
 span.Upper
 {
@@ -51,4 +43,23 @@ p
     text-align: center;
 
     color: #FFFFFF;
+}
+
+.ck.ck-toolbar
+{
+    background: rgba(44,44,44,0.52);
+
+    /* width: 95.6rem;
+    height: 22.1rem; */
+    /* left: 55.6rem;
+    top: 29.8rem; */
+
+    background-color: rgba(44, 44, 44, 0.52);
+    border-radius: 3.3rem;
+
+}
+
+.ck.ck-editor
+{
+    background: rgba(44,44,44,0.52);
 }
