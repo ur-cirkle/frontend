@@ -21,6 +21,7 @@ const AddPost: React.FC = () => {
   const [currentEditing, setCurrentEditing] = useState("Image Upload");
   const [file, setFile] = useState(0);
   const [Croped, setCroped] = useState(false);
+  const [Rotated, setRotated] = useState(false);
   const [CropProp, setCropProp] = useState({
     cropX: 0,
     cropY: 0,
@@ -204,6 +205,7 @@ const AddPost: React.FC = () => {
           index: i,
         });
         console.log(imgs);
+        setCounter(counter + 1);
       }
       setCroped(true);
     }
@@ -214,95 +216,99 @@ const AddPost: React.FC = () => {
       return;
     }
     if (Croped) {
-      const image = new Image();
-        image.src = imgs[2].autoSave;
-        const canvas1 = previewCanvas2.current;
-        if (!canvas1) {
-          return;
-        }
-        canvas1.width = image.width;
-        canvas1.height = image.height;
-        const ctx1= canvas1.getContext("2d");
-        if(!ctx1) return;
-        ctx1.drawImage(image,0,0)
-        
-        console.log(canvas1.toDataURL())
-        // if(canvas1.toDataURL()==="data:,"){setCounter(counter+1)}
-      
+      for (let i = 0; i < file; i++) {
+        const image = new Image();
+
+        image.src = imgs[i].autoSave;
+
+        image.onload = () => {
+          const canvas1 = previewCanvas2.current;
+          if (!canvas1) {
+            return;
+          }
+          canvas1.width = image.width;
+          canvas1.height = image.height;
+          const ctx1 = canvas1.getContext("2d");
+          if (!ctx1) return;
+          if (rotateProp % 2 === 0) {
+            canvas1.width = image.width;
+            canvas1.height = image.height;
+
+            ctx1.translate(canvas1.width / 2, canvas1.height / 2);
+            ctx1.rotate(Math.PI * (rotateProp / 2));
+            ctx1.drawImage(image, -image.width / 2, -image.height / 2);
+          }
+          if (rotateProp % 2 !== 0) {
+            canvas1.width = image.height;
+            canvas1.height = image.width;
+
+            ctx1.translate(canvas1.width / 2, canvas1.height / 2);
+            ctx1.rotate(Math.PI * (rotateProp / 2));
+            ctx1.drawImage(image, -image.width / 2, -image.height / 2);
+          }
+          console.log(canvas1.toDataURL(), i);
+          setImg({
+            type: "Auto_Rotate",
+            payLoadValue: canvas1.toDataURL(),
+            index: i,
+          });
+          console.log(imgs);
+          
+        };
+      }
+      setRotated(true)
     } else {
       setCounter(counter + 1);
     }
   }, [apply, Croped, counter]);
-  // useEffect(() => {
-  //   const image = new Image();
-  //   console.log(imgs)
-  //   if(imgs[0].autoSave) return
-  //   if (currentEditing === "Image Upload") return;
-
-  //     for (let i = 0; i < file; i++) {
-
-  //   image.src = imgs[i].autoSave;
-  //   const canvas1 = previewCanvas2.current;
-  //   if (!canvas1) {
-  //     return;
-  //   }
-  //   console.log(imgs);
-  //   const ctx: any = canvas1.getContext("2d");
-  //   if (rotateProp % 2 === 0) {
-  //     canvas1.width = image.width;
-  //     canvas1.height = image.height;
-
-  //     ctx.translate(canvas1.width / 2, canvas1.height / 2);
-  //     ctx.rotate(Math.PI * (rotateProp / 2));
-  //     ctx.drawImage(image, -image.width / 2, -image.height / 2);
-  //   }
-  //   if (rotateProp % 2 !== 0) {
-  //     canvas1.width = image.height;
-  //     canvas1.height = image.width;
-
-  //     ctx.translate(canvas1.width / 2, canvas1.height / 2);
-  //     ctx.rotate(Math.PI * (rotateProp / 2));
-  //     ctx.drawImage(image, -image.width / 2, -image.height / 2);
-  //   }
-  //   if(canvas1.toDataURL()!== "data:,"){
-  //     setImg({
-  //       type: "Auto_Rotate",
-  //       payLoadValue: canvas1.toDataURL(),
-  //       index: i,
-  //     });
-  //   }
-
-  //   console.log(imgs);
-  //     }
-
-  //   if(!imgs[file-1].autoRotate){
-  //     setCounter(counter + 1)}
-
-  // }, [apply,counter]);
 
   useEffect(() => {
-    const image = new Image();
-    if (currentEditing === "Image Upload") return;
-    image.src = imgs[1].autoRotate ? imgs[1].autoRotate : imgs[1].original;
-    const canvas = document.createElement("canvas");
-    const ctxFlip: any = canvas.getContext("2d");
-    if (flipProp % 2 === 0) {
-      canvas.width = image.width;
-      canvas.height = image.height;
-
-      ctxFlip.scale(1, 1);
-      ctxFlip.drawImage(image, 0, 0, image.width, image.height);
+    if (!apply) {
+      return;
     }
-    if (flipProp % 2 !== 0) {
-      canvas.width = image.width;
-      canvas.height = image.height;
+    if (Rotated) {
+      for (let i = 0; i < file; i++) {
+        const image = new Image();
+        image.src = imgs[i].autoRotate;
 
-      ctxFlip.scale(-1, 1);
+        image.onload = () => {
+          const canvas1 = previewCanvas2.current;
+          if (!canvas1) {
+            return;
+          }
+          canvas1.width = image.width;
+          canvas1.height = image.height;
+          const ctx1 = canvas1.getContext("2d");
+          if (!ctx1) return;
+          if (flipProp % 2 === 0) {
+            canvas1.width = image.width;
+            canvas1.height = image.height;
 
-      ctxFlip.drawImage(image, -image.width, 0, image.width, image.height);
+            ctx1.scale(1, 1);
+            ctx1.drawImage(image, 0, 0, image.width, image.height);
+          }
+          if (flipProp % 2 !== 0) {
+            canvas1.width = image.width;
+            canvas1.height = image.height;
+            ctx1.scale(-1, 1);
+            ctx1.drawImage(image, -image.width, 0, image.width, image.height);
+          }
+           setImg({
+        type: "EDITED",
+        payLoadValue: canvas1.toDataURL(),
+        index: i,
+      });  
+          console.log(imgs);
+        };
+      }
+      setCurrentEditing("Filter");
+          window.history.pushState({}, "Image Editor:Filter", "/img/filter");
+     
+    } else {
+      setCounter(counter + 1);
     }
-    console.log(canvas.toDataURL());
-  }, [flipProp, imgs[1].autoRotate]);
+  }, [apply, counter, Rotated]);
+
 
   console.log(CropProp);
   return (
@@ -324,11 +330,8 @@ const AddPost: React.FC = () => {
           counter={counter}
           setCounter={setCounter}
           Converted={Converted}
-          CropProp={CropProp}
           setCropProp={setCropProp}
-          rotateProp={rotateProp}
           setrotateProp={setrotateProp}
-          flipProp={flipProp}
           setflipProp={setflipProp}
         />
       )}
@@ -373,16 +376,7 @@ const AddPost: React.FC = () => {
                 className="crop"
               />
             </div>
-            <div className="">
-              <img
-                src={img.autoRotate}
-                alt={`upload ${i}`}
-                onClick={() => {
-                  setIndex(i);
-                }}
-                className="crop"
-              />
-            </div>
+            
           </>
         ))}
         <button

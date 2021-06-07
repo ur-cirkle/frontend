@@ -25,14 +25,6 @@ export interface CropProps {
   Converted: boolean;
   setCounter: React.Dispatch<SetStateAction<number>>;
   setCurrentEditing: Dispatch<SetStateAction<string>>;
-  CropProp: {
-    cropX: number;
-    cropY: number;
-    scaleX: number;
-    scaleY: number;
-    width: number;
-    height: number;
-}
   setCropProp: React.Dispatch<React.SetStateAction<{
     cropX: number;
     cropY: number;
@@ -42,9 +34,7 @@ export interface CropProps {
     height: number;
 }
 >>
-rotateProp: number
 setrotateProp: React.Dispatch<React.SetStateAction<number>>
-flipProp: number
 setflipProp: React.Dispatch<React.SetStateAction<number>>
 }
 
@@ -56,10 +46,7 @@ const Crop: React.FC<CropProps> = ({
   counter,
   setCounter,
   Converted,
-  CropProp,
   setCropProp,
-  rotateProp,
-  flipProp,
   setflipProp,
   setrotateProp
 }) => {
@@ -125,7 +112,6 @@ const Crop: React.FC<CropProps> = ({
 
 
     })
-    console.log(CropProp,3151)
     
     setImg({
       type: "CURRENT_EDITING",
