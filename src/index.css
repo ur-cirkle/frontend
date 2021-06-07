@@ -6,7 +6,7 @@
     box-sizing: border-box;
 
 }
-*::-webkit-scrollbar {
+/* *::-webkit-scrollbar {
     width: 12px;
     height:10px;
   }
@@ -19,7 +19,7 @@
   *::-webkit-scrollbar-thumb {
     background-color: gray;
     border-radius: 20px;
-  }
+  } */
 html {
     font-size: 62.5%;
 }
