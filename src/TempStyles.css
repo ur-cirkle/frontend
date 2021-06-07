@@ -83,10 +83,17 @@ h1 {
   background-color: #fff;
   padding: 0.5rem;
 }
-.suggestion {
-  display: block;
-  margin: 0.3rem;
-  cursor: pointer;
+.post_interest_wrapper{
+  display:flex;
+  width: 100%;
+}
+
+.post-interest {
+  margin:.2rem 1rem;
+  height: 100%;
+  padding: .3rem .5rem;
+  background-color:#1978c8;
+  width:fit-content;
 }
 .ReactCrop__crop-selection {
   border-radius: 10px !important;
@@ -176,4 +183,11 @@ h1 {
 }
 .rgba_number {
   width: 50px;
+}
+.crop {
+  height:10rem;
+  width:auto;
+}
+.crop_wrapper{
+  display: flex;
 }

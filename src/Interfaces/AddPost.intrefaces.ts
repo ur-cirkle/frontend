@@ -7,26 +7,36 @@ export type state = [
     original: string;
     edited: string;
     currentEditing: string;
+    autoSave:string
+    autoRotate:string
   },
   {
     original: string;
     edited: string;
     currentEditing: string;
+    autoSave:string
+    autoRotate:string
   },
   {
     original: string;
     edited: string;
     currentEditing: string;
+    autoSave:string
+    autoRotate:string
   },
   {
     original: string;
     edited: string;
     currentEditing: string;
+    autoSave:string
+    autoRotate:string
   },
   {
     original: string;
     edited: string;
     currentEditing: string;
+    autoSave:string
+    autoRotate:string
   }
 ];
 export interface PostForm {

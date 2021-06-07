@@ -25,6 +25,27 @@ export interface CropProps {
   Converted: boolean;
   setCounter: React.Dispatch<SetStateAction<number>>;
   setCurrentEditing: Dispatch<SetStateAction<string>>;
+  CropProp: {
+    cropX: number;
+    cropY: number;
+    scaleX: number;
+    scaleY: number;
+    width: number;
+    height: number;
+}
+  setCropProp: React.Dispatch<React.SetStateAction<{
+    cropX: number;
+    cropY: number;
+    scaleX: number;
+    scaleY: number;
+    width: number;
+    height: number;
+}
+>>
+rotateProp: number
+setrotateProp: React.Dispatch<React.SetStateAction<number>>
+flipProp: number
+setflipProp: React.Dispatch<React.SetStateAction<number>>
 }
 
 const Crop: React.FC<CropProps> = ({
@@ -35,6 +56,12 @@ const Crop: React.FC<CropProps> = ({
   counter,
   setCounter,
   Converted,
+  CropProp,
+  setCropProp,
+  rotateProp,
+  flipProp,
+  setflipProp,
+  setrotateProp
 }) => {
   const [crop, setCrop]: [cropProp, Dispatch<SetStateAction<cropProp>>] =
     useState<cropProp>({ unit: "%", width: 30, aspect: 1 / 1 });
@@ -46,10 +73,14 @@ const Crop: React.FC<CropProps> = ({
   const [completedCrop, setCompletedCrop] = useState<any>(null);
   const [CompleteRotate, setCompleteRotate] = useState<any>(null);
   const [Completeflip, setCompleteflip] = useState<any>(null);
+
+    
+  
   useEffect(() => {
     if (imgs.original && Converted) return;
     setCounter(counter + 1);
   }, [counter]);
+ 
   useEffect(() => {
     if (!completedCrop || !previewCanvasRef.current) {
       return;
@@ -83,7 +114,19 @@ const Crop: React.FC<CropProps> = ({
       crop.width,
       crop.height
     );
+    console.log(crop.x)
+    setCropProp({
+      cropX: crop.x,
+      cropY: crop.y,
+      scaleX: scaleX,
+      scaleY: scaleY,
+      width: crop.width,
+      height: crop.height
 
+
+    })
+    console.log(CropProp,3151)
+    
     setImg({
       type: "CURRENT_EDITING",
       payLoadValue: canvas.toDataURL(),
@@ -92,8 +135,8 @@ const Crop: React.FC<CropProps> = ({
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [completedCrop, imgs.edited, counter]);
-
-  useEffect(() => {
+  
+   useEffect(() => {
     if (!CompleteRotate || !previewCanvasRefRotate.current) {
       return;
     }
@@ -118,11 +161,13 @@ const Crop: React.FC<CropProps> = ({
       ctxRotate.rotate(Math.PI * (CompleteRotate / 2));
       ctxRotate.drawImage(image, -image.width / 2, -image.height / 2);
     }
+    setrotateProp(CompleteRotate)
     setImg({
       type: "CURRENT_EDITING",
       payLoadValue: canvasRotate.toDataURL(),
       index,
     });
+    
   }, [CompleteRotate, imgs.edited]);
 
   useEffect(() => {
@@ -134,14 +179,19 @@ const Crop: React.FC<CropProps> = ({
     image.src = imgs.edited ? imgs.edited : imgs.original;
     const canvasFlip = previewCanvasRefFlip.current;
     const ctxFlip: any = canvasFlip.getContext("2d");
-    canvasFlip.width = image.width;
-    canvasFlip.height = image.height;
     if (Completeflip % 2 === 0) {
+      canvasFlip.width = image.width;
+    canvasFlip.height = image.height;
+    
       ctxFlip.scale(1, 1);
       ctxFlip.drawImage(image, 0, 0, image.width, image.height);
     }
     if (Completeflip % 2 !== 0) {
+      canvasFlip.width = image.width;
+    canvasFlip.height = image.height;
+    
       ctxFlip.scale(-1, 1);
+    
       ctxFlip.drawImage(image, -image.width, 0, image.width, image.height);
     }
 
@@ -150,6 +200,8 @@ const Crop: React.FC<CropProps> = ({
       payLoadValue: canvasFlip.toDataURL(),
       index,
     });
+    setflipProp(Completeflip)
+    console.log(imgs)
   }, [Completeflip, imgs.edited]);
 
   const onRatioChange = (ratio: number) => {
