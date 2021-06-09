@@ -1,13 +1,17 @@
-import React, { Dispatch, SetStateAction } from "react";
+import { count } from "console";
+import React, { Dispatch, SetStateAction,useState } from "react";
 // import { useHistory } from "react-router-dom";
 export interface ImageUploadProps {
   setImg: Dispatch<{ type: string; payLoadValue: string; index: number }>;
   setCurrentEditing: Dispatch<SetStateAction<string>>;
+  setFile: Dispatch<SetStateAction<number>>;
+  
 }
 
 const ImageUpload: React.FC<ImageUploadProps> = ({
   setImg,
   setCurrentEditing,
+  setFile
 }) => {
   // const history = useHistory();
   const a = function readFileAsText(file: any) {
@@ -39,14 +43,18 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
 
     Promise.all(readers).then((values) => {
       console.log(values);
+      
       for (let j = 0; j < files.length; j++) {       
         setImg({
           type: "ORIGINAL",
           payLoadValue: values[j] as string,
           index: j,
         });
+        
       }
+
     });
+    setFile(files.length)
     setCurrentEditing("Crop");
     window.history.pushState({}, "Image Editor : Crop", "/img/crop");
 

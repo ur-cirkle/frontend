@@ -19,6 +19,7 @@ const AddPost: React.FC = () => {
   const [index, setIndex] = useState(0);
   const [counter, setCounter] = useState(0);
   const [currentEditing, setCurrentEditing] = useState("Image Upload");
+  const [file,setFile]=useState(0)
   const previewCanvas = useRef<HTMLCanvasElement | null>(null);
   const imgsReducer = (
     state: state,
@@ -89,6 +90,12 @@ const AddPost: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentEditing,imgs[index].original]);
   console.log(imgs)
+  useEffect(() => {
+    if(currentEditing === "Image Upload") return;
+    if(imgs[file - 1].original.length) return;
+    setCounter(counter+1)
+    
+  }, [counter]);
 
   // useEffect(() => {
   //   const image = new Image();
@@ -110,7 +117,7 @@ const AddPost: React.FC = () => {
     <div className="App">
       <p>{counter}</p>
       {currentEditing === "Image Upload" && (
-        <ImageUpload setImg={setImg} setCurrentEditing={setCurrentEditing} />
+        <ImageUpload setImg={setImg} setCurrentEditing={setCurrentEditing} setFile={setFile}  />
       )}
       {currentEditing === "Crop" && (
         <Crop
@@ -144,9 +151,9 @@ const AddPost: React.FC = () => {
 <div>
 
 {   
-  imgs.map(img =>(
+  imgs.map((img,i) =>(
     <div className="">
-      <img src={img.original} alt="upload" />
+      <img src={img.original} alt="upload" onClick={()=>{setIndex(i)}} />
     </div>
   ))
 }
