@@ -11,7 +11,7 @@ import PageNotFound from './Pages/404.page';
 import ForgotPassword from './Pages/ForgotPassword.pages';
 import Feed from './Pages/Feed.pages';
 import Map from './Pages/Map.pages';
-import Login from './Pages/Login.pages';
+import Login from './Pages/Singin/Login.pages';
 import useLocalStorage from './Hooks/useLocalStorage.hooks';
 import { getCurrentUser } from './Utils/getCurrentUser.utils';
 import AddBlog from './Pages/AddBlog.pages';
