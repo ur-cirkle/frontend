@@ -9,7 +9,7 @@ import * as bowser from "bowser";
 import moment from "moment-timezone";
 import { DivConnections } from "../../Components/ProfileHead/ProfileHead.styles";
 import styled from 'styled-components';
-import { Container,Svg } from "./Login.pages.styles";
+import { Container,Svg } from "../../Components/UI/Signin/Login.pages.styles";
 export interface LoginProps { }
 
 
