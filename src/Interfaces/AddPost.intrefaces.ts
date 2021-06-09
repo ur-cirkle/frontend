@@ -9,6 +9,7 @@ export type state = [
     currentEditing: string;
     autoSave:string
     autoRotate:string
+    compressed:string
   },
   {
     original: string;
@@ -16,6 +17,7 @@ export type state = [
     currentEditing: string;
     autoSave:string
     autoRotate:string
+    compressed:string
   },
   {
     original: string;
@@ -23,6 +25,7 @@ export type state = [
     currentEditing: string;
     autoSave:string
     autoRotate:string
+    compressed:string
   },
   {
     original: string;
@@ -30,6 +33,7 @@ export type state = [
     currentEditing: string;
     autoSave:string
     autoRotate:string
+    compressed:string
   },
   {
     original: string;
@@ -37,6 +41,7 @@ export type state = [
     currentEditing: string;
     autoSave:string
     autoRotate:string
+    compressed:string
   }
 ];
 export interface PostForm {

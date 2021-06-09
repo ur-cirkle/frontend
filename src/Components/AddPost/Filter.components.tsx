@@ -178,7 +178,7 @@ const Filter: React.FC<FilterProps> = ({
         index,
       });
     };
-
+console.log(imgs)
     //console.log(imgRef, canvas);
     //   asjLDJAL
 
@@ -332,10 +332,11 @@ const Filter: React.FC<FilterProps> = ({
         >
           <img src={imgs.edited} className="fimg img_tint" alt="" />
           <p>Tint</p>
-          <button  onClick={()=>{
-        setCurrentEditing("Form");
-        window.history.pushState({}, "Image Editor:Form", "/img/form");}}>post</button>
+          
         </div>
+        <button  onClick={()=>{
+               setCurrentEditing("Form");
+              window.history.pushState({}, "Image Editor:Form", "/img/form");}}>post</button>
       </div>
     </div>
   );
