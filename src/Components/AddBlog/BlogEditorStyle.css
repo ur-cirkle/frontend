@@ -1,0 +1,65 @@
+.ck.ck-icon
+{
+    width: 1.9rem;
+    height: 2.8rem;
+    left: 59.2rem;
+    top: 38.7rem;
+
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 2.1rem;
+    line-height: 3.1rem;
+
+    font-weight: 700;
+
+    color: rgba(255,255,255,1);
+
+    /* margin-top:8.9rem;
+    margin-left:3.6rem;
+    margin-left:4.5rem;
+    margin-bottom:10.4rem; */
+
+}
+
+
+span.Upper
+{
+    display:inline-block;
+}
+
+p
+{
+    width: 9.5rem;
+    height: 2.1rem;
+    left: 127.9rem;
+    top: 20.1rem;
+
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 1.6rem;
+    line-height: 2.4rem;
+    text-align: center;
+
+    color: #FFFFFF;
+}
+
+.ck.ck-toolbar
+{
+    background: rgba(44,44,44,0.52);
+
+    /* width: 95.6rem;
+    height: 22.1rem; */
+    /* left: 55.6rem;
+    top: 29.8rem; */
+
+    background-color: rgba(44, 44, 44, 0.52);
+    border-radius: 3.3rem;
+
+}
+
+.ck.ck-editor
+{
+    background: rgba(44,44,44,0.52);
+}
