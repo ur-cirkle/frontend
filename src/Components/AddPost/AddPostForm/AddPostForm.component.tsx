@@ -1,5 +1,7 @@
-import React,{useReducer,useEffect} from 'react'
+import { BADHINTS } from 'dns';
+import React,{useReducer,useEffect, useState} from 'react'
 import {  PostForm} from "../../../Interfaces/AddPost.intrefaces";
+import PostReview from "../PostReview/PostReview.component";
 export interface AddPostFormProps {
   setImg: React.Dispatch<{
     type: string;
@@ -47,6 +49,7 @@ imgs:[{
  }
  
 const AddPostForm: React.SFC<AddPostFormProps> = ({imgs,setImg}) => {
+  const [mode ,setMode]= useState<"Form" | "Review">("Form");
     const postContentReducer = (
         state: PostForm,
         action: {
@@ -116,7 +119,17 @@ const AddPostForm: React.SFC<AddPostFormProps> = ({imgs,setImg}) => {
           
         </>
       ))}</div>
-
+     { 
+         mode==="Review" && (<PostReview
+            post={{
+              imgs:imgs.map(img => img.edited),
+              caption:postContent.caption,
+              interests:postContent.interests,
+              location:postContent.location,
+              tags:postContent.connections.join(", ")
+            }}
+          />)}
+          <button onClick={() => setMode("Review")}>next</button>
         </div>
 
      );
