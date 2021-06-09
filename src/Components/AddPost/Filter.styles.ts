@@ -43,7 +43,7 @@ export const DivFiltersGallery=styled.div`
       }
       
       &::-webkit-scrollbar-thumb {
-        background-color: ${colors.colorGrey};
+        background-color: ${colors.colorPurple};
         border-radius: 20px;
       }
     `
@@ -71,6 +71,7 @@ export const DivImage=styled.div`
     outline:none;
     border:none;
     margin:0 1.2rem;
+    
    }
 
    
@@ -81,7 +82,9 @@ height: 100%;
 border-radius:7px;
 
 &.img_sepia{
-    filter: sepia(1);
+  filter: invert(15%) sepia(100%) saturate(4122%) hue-rotate(267deg)
+  brightness(81%) contrast(102%);
+  opacity:0.7;
 }
     &.img_blur {
     filter: blur(2px);

@@ -246,6 +246,7 @@ const Filter: React.FC<FilterProps> = ({ imgs, setImg, setCurrentEditing ,index}
             className="fimg img_blur"
             alt=""
             onClick={() => setFilter({ type: "TYPE", payLoadValue: "BLUR" })}
+           
           />
           <ParaText>blur</ParaText>
         </DivImage>
@@ -256,6 +257,7 @@ const Filter: React.FC<FilterProps> = ({ imgs, setImg, setCurrentEditing ,index}
             className="fimg img_invert"
             alt=""
             onClick={() => setFilter({ type: "TYPE", payLoadValue: "INVERT" })}
+         
           />
 
           <ParaText>invert</ParaText>
