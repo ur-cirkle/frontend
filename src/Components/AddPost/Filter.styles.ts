@@ -76,33 +76,44 @@ export const DivImage=styled.div`
 
    
 `
-export const ImageFilter=styled.img`
+export const ImageFilter=styled.img<{isSelected:boolean}>`
 width: 100%;
 height: 100%;
 border-radius:7px;
 
 &.img_sepia{
-  filter: invert(15%) sepia(100%) saturate(4122%) hue-rotate(267deg)
-  brightness(81%) contrast(102%);
+  filter:${props=>props.isSelected ? "invert(15%) sepia(100%) saturate(4122%) hue-rotate(267deg) brightness(81%) contrast(102%)":
+"sepia(1)"};
   opacity:0.7;
 }
     &.img_blur {
-    filter: blur(2px);
+    filter:${props=>props.isSelected ? "invert(15%) sepia(100%) saturate(4122%) hue-rotate(267deg) brightness(81%) contrast(102%)":
+    "blur(2px)"};
+    
   }
   &.img_invert {
-    filter: invert();
+    filter:${props=>props.isSelected ? "invert(15%) sepia(100%) saturate(4122%) hue-rotate(267deg) brightness(81%) contrast(102%)":
+    "invert()"};
   }
   &.img_contrast {
-    filter: contrast(200%);
+    filter:${props=>props.isSelected ? "invert(15%) sepia(100%) saturate(4122%) hue-rotate(267deg) brightness(81%) contrast(102%)":
+    "contrast(200%)"};
   }
   &.img_saturation {
-    filter: saturate(100);
+    filter:${props=>props.isSelected ? "invert(15%) sepia(100%) saturate(4122%) hue-rotate(267deg) brightness(81%) contrast(102%)":
+    "saturate(100)"};
   }
   &.img_hueRotate {
-    filter: hue-rotate(180deg);
+    filter:${props=>props.isSelected ? "invert(15%) sepia(100%) saturate(4122%) hue-rotate(267deg) brightness(81%) contrast(102%)":
+    "hue-rotate(180deg)"};
   }
   &.img_grayscale {
-    filter: grayscale(1);
+    filter:${props=>props.isSelected ? "invert(15%) sepia(100%) saturate(4122%) hue-rotate(267deg) brightness(81%) contrast(102%)":
+    "grayscale(1)"};
+  }
+  &.img_tint{
+    filter:${props=>props.isSelected ? "invert(15%) sepia(100%) saturate(4122%) hue-rotate(267deg) brightness(81%) contrast(102%)":
+    ''};
   }
 `
 export const ParaText=styled.p`

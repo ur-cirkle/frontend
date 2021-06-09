@@ -236,6 +236,7 @@ const Filter: React.FC<FilterProps> = ({ imgs, setImg, setCurrentEditing ,index}
             className="fimg img_sepia "
             alt=""
             onClick={() => setFilter({ type: "TYPE", payLoadValue: "SEPIA" })}
+            isSelected={filter.value.includes("sepia")}
           />
           <ParaText>sepia</ParaText>
         </DivImage>
@@ -246,7 +247,7 @@ const Filter: React.FC<FilterProps> = ({ imgs, setImg, setCurrentEditing ,index}
             className="fimg img_blur"
             alt=""
             onClick={() => setFilter({ type: "TYPE", payLoadValue: "BLUR" })}
-           
+            isSelected={filter.value.includes("blur")}
           />
           <ParaText>blur</ParaText>
         </DivImage>
@@ -257,7 +258,7 @@ const Filter: React.FC<FilterProps> = ({ imgs, setImg, setCurrentEditing ,index}
             className="fimg img_invert"
             alt=""
             onClick={() => setFilter({ type: "TYPE", payLoadValue: "INVERT" })}
-         
+            isSelected={filter.value.includes("invert")}
           />
 
           <ParaText>invert</ParaText>
@@ -272,6 +273,7 @@ const Filter: React.FC<FilterProps> = ({ imgs, setImg, setCurrentEditing ,index}
             onClick={() =>
               setFilter({ type: "TYPE", payLoadValue: "CONTRAST" })
             }
+            isSelected={filter.value.includes("contrast")}
           />
           <ParaText>contrast</ParaText>
         </DivImage>
@@ -284,6 +286,7 @@ const Filter: React.FC<FilterProps> = ({ imgs, setImg, setCurrentEditing ,index}
             onClick={() =>
               setFilter({ type: "TYPE", payLoadValue: "SATURATION" })
             }
+            isSelected={filter.value.includes("saturate")}
           />
           <ParaText>saturation</ParaText>
         </DivImage>
@@ -296,6 +299,7 @@ const Filter: React.FC<FilterProps> = ({ imgs, setImg, setCurrentEditing ,index}
             onClick={() =>
               setFilter({ type: "TYPE", payLoadValue: "HUE ROTATE" })
             }
+            isSelected={filter.value.includes("hue-rotate")}
           />
           <ParaText>hue Rotate</ParaText>
         </DivImage>
@@ -308,6 +312,7 @@ const Filter: React.FC<FilterProps> = ({ imgs, setImg, setCurrentEditing ,index}
             onClick={() =>
               setFilter({ type: "TYPE", payLoadValue: "GRAYSCALE" })
             }
+            isSelected={filter.value.includes("grayscale")}
           />
           <ParaText>Gray scale</ParaText>
         </DivImage>
@@ -323,7 +328,8 @@ const Filter: React.FC<FilterProps> = ({ imgs, setImg, setCurrentEditing ,index}
             setFilter({ type: "TINT", payLoadValue: 0 });
           }}
         >
-          <ImageFilter  style={{width: "100%", height: "100%"}} src={imgs.edited} className="fimg img_tint" alt="" />
+          <ImageFilter  style={{width: "100%", height: "100%"}} src={imgs.edited} className="fimg img_tint" alt="" 
+          isSelected={filter.type.includes("tint")} />
           <ParaText>Tint</ParaText>
           {/* <button  onClick={()=>{
         setCurrentEditing("Form");
