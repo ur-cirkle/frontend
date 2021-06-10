@@ -5,9 +5,38 @@
   margin: 0;
   box-sizing: border-box;
 }
-html{
-  font-size:10px;
+/* *::-webkit-scrollbar {
+    width: 12px;
+    height:10px;
+  }
+  
+  *::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius:20px;
+  }
+  
+  *::-webkit-scrollbar-thumb {
+    background-color: gray;
+    border-radius: 20px;
+  } */
+html {
+  font-size: 62.5%;
 }
+
+body {
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: #fff;
+  line-height: 1.95rem;
+  background: linear-gradient(to right, #18072b 8%, #121212 18%);
+  height: 100vh;
+}
+
 label {
   display: block;
+}
+
+.container {
+  margin-left: 17.1rem;
 }

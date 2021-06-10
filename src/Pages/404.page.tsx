@@ -24,7 +24,7 @@ const PageNotFound: React.FC = () => {
           <Link to="/signin">Signin</Link>
         </li>
         <li>
-          <Link to="/explore">CardDir</Link>
+          <Link to="/explore">Explore</Link>
         </li>
         <li>
           <Link to="/forgot">Forgot</Link>

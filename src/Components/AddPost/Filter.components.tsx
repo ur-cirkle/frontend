@@ -9,20 +9,17 @@ import React, {
 import { filterState } from "../../Interfaces/AddPost.intrefaces";
 
 import { SketchPicker } from "react-color";
+import {DivFilter,DivFiltersGallery,DivFilterLeftItems,Canvas,DivImage,ParaText,
+DivSliderContainer,Label,InputNumber,InputScroll,ImageFilter} from './Filter.styles';
 
 export interface FilterProps {
   imgs: { original: string; edited: string; currentEditing: string };
-  setImg: Dispatch<{ type: string; payLoadValue: string; index: number }>;
+  setImg: Dispatch<{ type: string; payLoadValue: string , index:number }>;
   setCurrentEditing: Dispatch<SetStateAction<string>>;
-  index: number;
+  index:number
 }
 
-const Filter: React.FC<FilterProps> = ({
-  imgs,
-  setImg,
-  setCurrentEditing,
-  index,
-}) => {
+const Filter: React.FC<FilterProps> = ({ imgs, setImg, setCurrentEditing ,index}) => {
   const canvas = useRef<HTMLCanvasElement | null>(null);
   const [sliderValue, setSliderValue] = useState(0);
   const buffer = useRef<HTMLCanvasElement | null>(null);
@@ -182,19 +179,16 @@ console.log(imgs)
     //console.log(imgRef, canvas);
     //   asjLDJAL
 
-    // navigator.userAgent.toLowerCase().includes("safari") &&
-    //   alert("filter nai aave");
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [imgs.edited, filter, tint]);
 
   return (
-    <div className="filter">
-      <div className="filter_left_items">
-        <canvas ref={canvas} />
-        <div className="slider_container">
+    <DivFilter className="filter">
+      <DivFilterLeftItems className="filter_left_items">
+        <Canvas ref={canvas} />
+        <DivSliderContainer className="slider_container">
           {filter.type !== "tint" && (
-            <label htmlFor="" className="slider">
-              <input
+            <Label htmlFor="" className="slider">
+              <InputNumber
                 type="number"
                 name=""
                 id=""
@@ -206,7 +200,7 @@ console.log(imgs)
                   onSliderChanged(target.value);
                 }}
               />
-              <input
+              <InputScroll
                 type="range"
                 name=""
                 id=""
@@ -217,7 +211,7 @@ console.log(imgs)
                   onSliderChanged(target.value);
                 }}
               />
-            </label>
+            </Label>
           )}
           {filter.type === "tint" && (
             <SketchPicker
@@ -228,98 +222,102 @@ console.log(imgs)
                   color: `rgba(${rgb.r},${rgb.g},${rgb.b},${rgb.a})`,
                 })
               }
-              presetColors={[
-                "#D9E3F0",
-                "#F47373",
-                "#697689",
-                "#37D67A",
-                "#2CCCE4",
-                "#555555",
-                "#DCE775",
-                "#FF8A65",
-                "#BA68C8",
-              ]}
+              presetColors={["#D9E3F0","#F47373","#697689","#37D67A","#2CCCE4","#555555","#DCE775","#FF8A65","#BA68C8"]}
             />
           )}
-        </div>
-      </div>
+        </DivSliderContainer>
+      </DivFilterLeftItems>
 
-      <div className="filters_gallery">
-        <div id={filter.type === "sepia" ? "img_selected" : ""}>
-          <img
+      <DivFiltersGallery className="filters_gallery">
+        <DivImage id={filter.type === "sepia" ? "img_selected" : "none"}>
+          <ImageFilter
+            style={{width: "100%", height: "100%"}}
             src={imgs.edited}
             className="fimg img_sepia "
             alt=""
             onClick={() => setFilter({ type: "TYPE", payLoadValue: "SEPIA" })}
+            isSelected={filter.value.includes("sepia")}
           />
-          <p>sepia</p>
-        </div>
-        <div id={filter.type === "blur" ? "img_selected" : ""}>
-          <img
+          <ParaText>sepia</ParaText>
+        </DivImage>
+        <DivImage id={filter.type === "blur" ? "img_selected" : "none"}>
+          <ImageFilter
+             style={{width: "100%", height: "100%"}}
             src={imgs.edited}
             className="fimg img_blur"
             alt=""
             onClick={() => setFilter({ type: "TYPE", payLoadValue: "BLUR" })}
+            isSelected={filter.value.includes("blur")}
           />
-          <p>blur</p>
-        </div>
-        <div id={filter.type === "invert" ? "img_selected" : ""}>
-          <img
+          <ParaText>blur</ParaText>
+        </DivImage>
+        <DivImage id={filter.type === "invert" ? "img_selected" : "none"}>
+          <ImageFilter
+            style={{width: "100%", height: "100%"}}
             src={imgs.edited}
             className="fimg img_invert"
             alt=""
             onClick={() => setFilter({ type: "TYPE", payLoadValue: "INVERT" })}
+            isSelected={filter.value.includes("invert")}
           />
 
-          <p>invert</p>
-        </div>
+          <ParaText>invert</ParaText>
+        </DivImage>
 
-        <div id={filter.type === "contrast" ? "img_selected" : ""}>
-          <img
+        <DivImage id={filter.type === "contrast" ? "img_selected" : "none"}>
+          <ImageFilter
+             style={{width: "100%", height: "100%"}}
             src={imgs.edited}
             className="fimg img_contrast"
             alt=""
             onClick={() =>
               setFilter({ type: "TYPE", payLoadValue: "CONTRAST" })
             }
+            isSelected={filter.value.includes("contrast")}
           />
-          <p>contrast</p>
-        </div>
-        <div id={filter.type === "saturation" ? "img_selected" : ""}>
-          <img
+          <ParaText>contrast</ParaText>
+        </DivImage>
+        <DivImage id={filter.type === "saturation" ? "img_selected" : "none"}>
+          <ImageFilter
+             style={{width: "100%", height: "100%"}}
             src={imgs.edited}
             className="fimg img_saturation"
             alt=""
             onClick={() =>
               setFilter({ type: "TYPE", payLoadValue: "SATURATION" })
             }
+            isSelected={filter.value.includes("saturate")}
           />
-          <p>saturation</p>
-        </div>
-        <div id={filter.type === "hue rotate" ? "img_selected" : ""}>
-          <img
+          <ParaText>saturation</ParaText>
+        </DivImage>
+        <DivImage id={filter.type === "hue rotate" ? "img_selected" : "none"}>
+          <ImageFilter
+             style={{width: "100%", height: "100%"}}
             src={imgs.edited}
             className="fimg img_hueRotate"
             alt=""
             onClick={() =>
               setFilter({ type: "TYPE", payLoadValue: "HUE ROTATE" })
             }
+            isSelected={filter.value.includes("hue-rotate")}
           />
-          <p>hue Rotate</p>
-        </div>
-        <div id={filter.type === "grayscale" ? "img_selected" : ""}>
-          <img
+          <ParaText>hue Rotate</ParaText>
+        </DivImage>
+        <DivImage id={filter.type === "grayscale" ? "img_selected" : "none"}>
+          <ImageFilter
+             style={{width: "100%", height: "100%"}}
             src={imgs.edited}
             className="fimg img_grayscale"
             alt=""
             onClick={() =>
               setFilter({ type: "TYPE", payLoadValue: "GRAYSCALE" })
             }
+            isSelected={filter.value.includes("grayscale")}
           />
-          <p>Gray scale</p>
-        </div>
-        <div
-          id={filter.type === "tint" ? "img_selected" : ""}
+          <ParaText>Gray scale</ParaText>
+        </DivImage>
+        <DivImage
+          id={filter.type === "tint" ? "img_selected" : "none"}
           className="tint"
           onClick={() => {
             console.log("hello");
@@ -330,6 +328,7 @@ console.log(imgs)
             setFilter({ type: "TINT", payLoadValue: 0 });
           }}
         >
+<<<<<<< HEAD
           <img src={imgs.edited} className="fimg img_tint" alt="" />
           <p>Tint</p>
           
@@ -339,6 +338,17 @@ console.log(imgs)
               window.history.pushState({}, "Image Editor:Form", "/img/form");}}>post</button>
       </div>
     </div>
+=======
+          <ImageFilter  style={{width: "100%", height: "100%"}} src={imgs.edited} className="fimg img_tint" alt="" 
+          isSelected={filter.type.includes("tint")} />
+          <ParaText>Tint</ParaText>
+          {/* <button  onClick={()=>{
+        setCurrentEditing("Form");
+        window.history.pushState({}, "Image Editor:Form", "/img/form");}}>post</button> */}
+        </DivImage>
+      </DivFiltersGallery>
+    </DivFilter>
+>>>>>>> b778277bb25b24769ba88c45ebea821c171e6ef9
   );
 };
 // 10px

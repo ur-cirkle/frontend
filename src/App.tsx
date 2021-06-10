@@ -17,7 +17,7 @@ import { getCurrentUser } from "./Utils/getCurrentUser.utils";
 import AddBlog from "./Pages/AddBlog.pages";
 import Blog from "./Pages/Blog.pages";
 import AddPost from "./Pages/AddPost.pages";
-import SearchBar from "./Components/Feed/SearchBar.component";
+import SearchBar from "./Components/UI/SearchBar/SearchBar.component";
 import UserProfile from "./Pages/UserProfile.pages";
 
 function App() {

@@ -16,7 +16,7 @@ const Blog: React.FC<BlogCProps> = ({ blog, blogRef }) => {
         {expland ? "See Less" : "See More"}
       </button>
       <p>Author : {blog.author}</p>
-      <p>{!expland ? `${blog.content.slice(0, 300)}...` : blog.content}</p>
+      +<p>{!expland ? `${blog.content.slice(0, 300)}...` : blog.content}</p>
     </div>
   );
 };

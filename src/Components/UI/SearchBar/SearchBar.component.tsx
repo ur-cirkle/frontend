@@ -3,7 +3,10 @@ import axios from "axios";
 import React, { useContext, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 //** Contexts Imports
-import { CurrentJwtContext } from "../../Contexts/CurrentJwtContext";
+import { CurrentJwtContext } from "../../../Contexts/CurrentJwtContext";
+import {Searchbar}  from "./Searchbar.styles"
+
+
 
 export interface SearchBarProps {}
 
@@ -56,12 +59,15 @@ const SearchBar: React.SFC<SearchBarProps> = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query]);
   return (
+    
     <div className="">
-      <input
+      
+      <Searchbar
         type="text"
         value={query}
         onChange={({ target }) => {
           setQuery(target.value);
+         
         }}
       />
       <div className="suggestions">
@@ -71,7 +77,9 @@ const SearchBar: React.SFC<SearchBarProps> = () => {
           </Link>
         ))}
       </div>
+      
     </div>
+   
   );
 };
 

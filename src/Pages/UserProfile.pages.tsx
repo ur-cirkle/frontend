@@ -54,28 +54,8 @@ const UserProfile: React.SFC<UserProfileProps> = () => {
   }
   return (
     <div className="">
-      <p>{profile.username}</p>
-      <img src={profile.image} alt="DP" />
-      <p>{profile.connections}</p>
-      <p>{profile.subscriptions}</p>
-      <p>{profile.bio}</p>
-      {!isReqSent ? (
-        <button
-          onClick={() =>
-            socket.emit("connectivity", {
-              userid: user.userid,
-              receiverid: id,
-              type: "new",
-              acc_type: profile.acc_type === "personal" ? 0 : 1,
-            })
-          }
-        >
-          Connect
-        </button>
-      ) : (
-        <p>Sent</p>
-      )}
-      p
+
+      
     </div>
   );
 };

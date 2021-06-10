@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useContext, Dispatch, SetStateAction, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import FormLogin from "../Components/FormLogin.component";
+import FormLogin from "../Components/Login/FormLogin/FormLogin.component";
 import { UserContext } from "../Contexts/UserContext";
 import { CurrentJwtContext } from "../Contexts/CurrentJwtContext";
 import { JwtTokens } from "../Contexts/JwtTokensContext";
