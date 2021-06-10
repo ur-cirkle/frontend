@@ -392,7 +392,7 @@ const AddPost: React.FC = () => {
         ref={previewCanvas2}
         // style={{ display: "none" }}
       ></canvas>
-      <ImgContainer className="crop_wrapper">
+      <ImgContainer>
         {imgs.map((img, i) => (
           <Img
             id={`img-${i}`}
@@ -401,16 +401,16 @@ const AddPost: React.FC = () => {
             onClick={() => {
               setIndex(i);
             }}
-            className="crop"
+            isSelected={`img-${i}`.includes("i===index")}
           />
         ))}
-        <button
+        {/* <button
           onClick={() => {
             setApply(true);
           }}
         >
           apply to all
-        </button>
+        </button> */}
       </ImgContainer>
     </div>
   );
