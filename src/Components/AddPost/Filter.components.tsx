@@ -9,17 +9,33 @@ import React, {
 import { filterState } from "../../Interfaces/AddPost.intrefaces";
 
 import { SketchPicker } from "react-color";
-import {DivFilter,DivFiltersGallery,DivFilterLeftItems,Canvas,DivImage,ParaText,
-DivSliderContainer,Label,InputNumber,InputScroll,ImageFilter} from './Filter.styles';
+import {
+  DivFilter,
+  DivFiltersGallery,
+  DivFilterLeftItems,
+  Canvas,
+  DivImage,
+  ParaText,
+  DivSliderContainer,
+  Label,
+  InputNumber,
+  InputScroll,
+  ImageFilter,
+} from "./Filter.styles";
 
 export interface FilterProps {
   imgs: { original: string; edited: string; currentEditing: string };
-  setImg: Dispatch<{ type: string; payLoadValue: string , index:number }>;
+  setImg: Dispatch<{ type: string; payLoadValue: string; index: number }>;
   setCurrentEditing: Dispatch<SetStateAction<string>>;
-  index:number
+  index: number;
 }
 
-const Filter: React.FC<FilterProps> = ({ imgs, setImg, setCurrentEditing ,index}) => {
+const Filter: React.FC<FilterProps> = ({
+  imgs,
+  setImg,
+  setCurrentEditing,
+  index,
+}) => {
   const canvas = useRef<HTMLCanvasElement | null>(null);
   const [sliderValue, setSliderValue] = useState(0);
   const buffer = useRef<HTMLCanvasElement | null>(null);
@@ -61,7 +77,7 @@ const Filter: React.FC<FilterProps> = ({ imgs, setImg, setCurrentEditing ,index}
         };
     }
   };
-  const onFilterValueChange = ( 
+  const onFilterValueChange = (
     value: number,
     type: string,
     filter: string
@@ -175,10 +191,9 @@ const Filter: React.FC<FilterProps> = ({ imgs, setImg, setCurrentEditing ,index}
         index,
       });
     };
-console.log(imgs)
+    console.log(imgs);
     //console.log(imgRef, canvas);
     //   asjLDJAL
-
   }, [imgs.edited, filter, tint]);
 
   return (
@@ -222,7 +237,17 @@ console.log(imgs)
                   color: `rgba(${rgb.r},${rgb.g},${rgb.b},${rgb.a})`,
                 })
               }
-              presetColors={["#D9E3F0","#F47373","#697689","#37D67A","#2CCCE4","#555555","#DCE775","#FF8A65","#BA68C8"]}
+              presetColors={[
+                "#D9E3F0",
+                "#F47373",
+                "#697689",
+                "#37D67A",
+                "#2CCCE4",
+                "#555555",
+                "#DCE775",
+                "#FF8A65",
+                "#BA68C8",
+              ]}
             />
           )}
         </DivSliderContainer>
@@ -231,7 +256,7 @@ console.log(imgs)
       <DivFiltersGallery className="filters_gallery">
         <DivImage id={filter.type === "sepia" ? "img_selected" : "none"}>
           <ImageFilter
-            style={{width: "100%", height: "100%"}}
+            style={{ width: "100%", height: "100%" }}
             src={imgs.edited}
             className="fimg img_sepia "
             alt=""
@@ -242,7 +267,7 @@ console.log(imgs)
         </DivImage>
         <DivImage id={filter.type === "blur" ? "img_selected" : "none"}>
           <ImageFilter
-             style={{width: "100%", height: "100%"}}
+            style={{ width: "100%", height: "100%" }}
             src={imgs.edited}
             className="fimg img_blur"
             alt=""
@@ -253,7 +278,7 @@ console.log(imgs)
         </DivImage>
         <DivImage id={filter.type === "invert" ? "img_selected" : "none"}>
           <ImageFilter
-            style={{width: "100%", height: "100%"}}
+            style={{ width: "100%", height: "100%" }}
             src={imgs.edited}
             className="fimg img_invert"
             alt=""
@@ -266,7 +291,7 @@ console.log(imgs)
 
         <DivImage id={filter.type === "contrast" ? "img_selected" : "none"}>
           <ImageFilter
-             style={{width: "100%", height: "100%"}}
+            style={{ width: "100%", height: "100%" }}
             src={imgs.edited}
             className="fimg img_contrast"
             alt=""
@@ -279,7 +304,7 @@ console.log(imgs)
         </DivImage>
         <DivImage id={filter.type === "saturation" ? "img_selected" : "none"}>
           <ImageFilter
-             style={{width: "100%", height: "100%"}}
+            style={{ width: "100%", height: "100%" }}
             src={imgs.edited}
             className="fimg img_saturation"
             alt=""
@@ -292,7 +317,7 @@ console.log(imgs)
         </DivImage>
         <DivImage id={filter.type === "hue rotate" ? "img_selected" : "none"}>
           <ImageFilter
-             style={{width: "100%", height: "100%"}}
+            style={{ width: "100%", height: "100%" }}
             src={imgs.edited}
             className="fimg img_hueRotate"
             alt=""
@@ -305,7 +330,7 @@ console.log(imgs)
         </DivImage>
         <DivImage id={filter.type === "grayscale" ? "img_selected" : "none"}>
           <ImageFilter
-             style={{width: "100%", height: "100%"}}
+            style={{ width: "100%", height: "100%" }}
             src={imgs.edited}
             className="fimg img_grayscale"
             alt=""
@@ -328,19 +353,13 @@ console.log(imgs)
             setFilter({ type: "TINT", payLoadValue: 0 });
           }}
         >
-<<<<<<< HEAD
-          <img src={imgs.edited} className="fimg img_tint" alt="" />
-          <p>Tint</p>
-          
-        </div>
-        <button  onClick={()=>{
-               setCurrentEditing("Form");
-              window.history.pushState({}, "Image Editor:Form", "/img/form");}}>post</button>
-      </div>
-    </div>
-=======
-          <ImageFilter  style={{width: "100%", height: "100%"}} src={imgs.edited} className="fimg img_tint" alt="" 
-          isSelected={filter.type.includes("tint")} />
+          <ImageFilter
+            style={{ width: "100%", height: "100%" }}
+            src={imgs.edited}
+            className="fimg img_tint"
+            alt=""
+            isSelected={filter.type.includes("tint")}
+          />
           <ParaText>Tint</ParaText>
           {/* <button  onClick={()=>{
         setCurrentEditing("Form");
@@ -348,7 +367,6 @@ console.log(imgs)
         </DivImage>
       </DivFiltersGallery>
     </DivFilter>
->>>>>>> b778277bb25b24769ba88c45ebea821c171e6ef9
   );
 };
 // 10px
