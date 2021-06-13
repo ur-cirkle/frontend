@@ -318,11 +318,21 @@ console.log(imgs)
           />
           <p>Gray scale</p>
         </div>
+        <div id={filter.type === "NONE" ? "img_selected" : ""}>
+          <img
+            src={imgs.edited}
+            className="fimg img_none"
+            alt=""
+            onClick={() =>
+              setFilter({ type: "TYPE", payLoadValue: "NONE" })
+            }
+          />
+          <p>none</p>
+        </div>
         <div
           id={filter.type === "tint" ? "img_selected" : ""}
           className="tint"
           onClick={() => {
-            console.log("hello");
             setTint({
               ...tint,
               opacity: 0.5,

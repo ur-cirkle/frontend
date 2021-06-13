@@ -25,7 +25,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
       fr.onerror = function () {
         reject(fr);
       };
-
+      
       fr.readAsDataURL(file);
     
     });
@@ -42,7 +42,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
     }
 
     Promise.all(readers).then((values) => {
-      console.log(values);
+      console.log(values,123);
       
       for (let j = 0; j < files.length; j++) {       
         setImg({

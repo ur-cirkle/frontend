@@ -49,6 +49,7 @@ const AddPost: React.FC = () => {
   const previewCanvas = useRef<HTMLCanvasElement | null>(null);
   const previewCanvas2 = useRef<HTMLCanvasElement | null>(null);
   const previewCanvas1 = useRef<HTMLCanvasElement | null>(null);
+  
   const imgsReducer = (
     state: state,
     action: { type: string; payLoadValue: string; index: number }
@@ -156,6 +157,34 @@ const AddPost: React.FC = () => {
     },
   ]);
 //resizing image in to the required area i.e 787*height of image takinig care that pixels does not blur out
+const cancel =()=>{
+  for(let i :any;i<file;i++){
+    setImg({
+      type: "EDITED",
+      payLoadValue: "",
+      index: i,
+    })
+    setImg({
+      type: "currentEditing",
+      payLoadValue: "",
+      index: i,
+    })
+    setImg({
+      type: "autoSave",
+      payLoadValue: "",
+      index: i,
+    })
+    setImg({
+      type: "autoRotate",
+      payLoadValue: "",
+      index: i,
+    })
+    setApply(false)
+    setCroped(false)
+    setRotated(false)
+    setCurrentEditing("Crop")
+  }
+}
 useEffect(() => {
   const image = new Image();
   if (currentEditing === "Image Upload") return;
@@ -185,7 +214,7 @@ useEffect(() => {
   }
   setCounter(counter + 1);
 }, [imgs, counter]);
-
+console.log(imgs)
 useEffect(() => {
   setCounter(counter + 1);
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -376,24 +405,14 @@ return (
     imgs={imgs}
     setImg={setImg}
     />}
-    <button
-      onClick={() => {
-        setCounter(counter + 1);
-        setImg({
-          type: "EDITED",
-          payLoadValue: imgs[index].currentEditing,
-          index: index,
-        });
-      }}
-    >
-      SAVE
-    </button>
-
+    
     <canvas ref={previewCanvas} style={{ display: "none" }}></canvas>
-    <canvas ref={previewCanvas1}></canvas>
+    <canvas ref={previewCanvas1}
+    style={{ display: "none" }}
+    ></canvas>
     <canvas
       ref={previewCanvas2}
-      // style={{ display: "none" }}
+      style={{ display: "none" }}
     ></canvas>
     <div className="crop_wrapper">
       {imgs.map((img, i) => (
@@ -411,14 +430,34 @@ return (
           
         </>
       ))}
-      <button
+      <div>
+        
+      </div>
+    </div>
+         
+              
+               { currentEditing==="Crop" && <div  >
+               <button
+      onClick={() => {
+        setCounter(counter + 1);
+        setImg({
+          type: "EDITED",
+          payLoadValue: imgs[index].currentEditing,
+          index: index,
+        });
+      }}
+    >
+      SAVE
+    </button>
+
+                 <button
         onClick={() => {
           setApply(true);
         }}
       >
         apply to all
-      </button>
-    </div>
+      </button></div>}
+      <button onClick={() => {cancel ()}}></button>
   </div>
 );
 };
