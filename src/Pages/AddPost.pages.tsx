@@ -46,6 +46,7 @@ const AddPost: React.FC = () => {
 //boolean to aplly editing
   const [apply, setApply] = useState(false);
 //canvas on which image are edited
+const [saved,setSaved]=useState(false)
   const previewCanvas = useRef<HTMLCanvasElement | null>(null);
   const previewCanvas2 = useRef<HTMLCanvasElement | null>(null);
   const previewCanvas1 = useRef<HTMLCanvasElement | null>(null);
@@ -156,9 +157,9 @@ const AddPost: React.FC = () => {
       compressed:"",
     },
   ]);
-//resizing image in to the required area i.e 787*height of image takinig care that pixels does not blur out
 const cancel =()=>{
-  for(let i :any;i<file;i++){
+  console.log("kjklj",file)
+  for(let i=0;i<file;i++){
     setImg({
       type: "EDITED",
       payLoadValue: "",
@@ -183,8 +184,68 @@ const cancel =()=>{
     setCroped(false)
     setRotated(false)
     setCurrentEditing("Crop")
+    console.log(imgs)
   }
 }
+const back= ()=>{
+if(currentEditing==="Crop"){
+  setCurrentEditing("Image Upload")
+  
+
+}
+
+if(currentEditing==="Filter"){
+  setIndex(0)
+  for(let i=0;i<file;i++){
+    setImg({
+      type: "EDITED",
+      payLoadValue: "",
+      index: i,
+    })
+    console.log("qrwefhi")
+    setImg({
+      type: "currentEditing",
+      payLoadValue: "",
+      index: i,
+    })
+    console.log("qrwefhi")
+    setImg({
+      type: "autoSave",
+      payLoadValue: "",
+      index: i,
+    })
+    console.log("qrqwef")
+    setImg({
+      type: "autoRotate",
+      payLoadValue: "",
+      index: i,
+    })
+    console.log(123)}
+    setApply(false)
+    setCroped(false)
+    setRotated(false)
+    setCurrentEditing("Crop")
+    console.log(imgs)
+  
+
+}
+
+if(currentEditing==="Form"){ 
+  setIndex(0)
+  for(let i=0;i<file;i++){
+  setImg({
+    type: "EDITED",
+    payLoadValue: imgs[i].compressed,
+    index: i,
+  })
+  setCurrentEditing("Filter")
+}
+
+}
+
+}
+//resizing image in to the required area i.e 787*height of image takinig care that pixels does not blur out
+
 useEffect(() => {
   const image = new Image();
   if (currentEditing === "Image Upload") return;
@@ -352,6 +413,11 @@ useEffect(() => {
       payLoadValue: canvas1.toDataURL(),
       index: i,
     });  
+    setImg({
+      type: "Compressed",
+      payLoadValue: canvas1.toDataURL(),
+      index: i,
+    });
         console.log(imgs);
       };
     }
@@ -391,6 +457,7 @@ return (
         setCropProp={setCropProp}
         setrotateProp={setrotateProp}
         setflipProp={setflipProp}
+        
       />
     )}
     {currentEditing === "Filter" && (
@@ -445,6 +512,9 @@ return (
           payLoadValue: imgs[index].currentEditing,
           index: index,
         });
+        setSaved(true)
+        //setcroping()
+        //
       }}
     >
       SAVE
@@ -457,7 +527,7 @@ return (
       >
         apply to all
       </button></div>}
-      <button onClick={() => {cancel ()}}></button>
+      <button onClick={back}>cancel</button>
   </div>
 );
 };

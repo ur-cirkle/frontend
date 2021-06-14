@@ -8,6 +8,7 @@ import React, {
 import { cropProp } from "../../Pages/AddPost.pages";
 import ReactCrop from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
+import { flattenDiagnosticMessageText } from "typescript";
 
 export interface CropProps {
   imgs: {
@@ -60,7 +61,9 @@ const Crop: React.FC<CropProps> = ({
   const [completedCrop, setCompletedCrop] = useState<any>(null);
   const [CompleteRotate, setCompleteRotate] = useState<any>(null);
   const [Completeflip, setCompleteflip] = useState<any>(null);
-
+  const [croping , setCroping]=useState(true);
+  const[rotating,setRotating]=useState(false);
+  const[fliping,setFliping]=useState(false);
     
   
   useEffect(() => {
@@ -210,6 +213,7 @@ const Crop: React.FC<CropProps> = ({
   }
   return (
     <>
+    { croping && <div>
       <ReactCrop
         src={imgs.edited ? imgs.edited : imgs.original}
         crop={crop as any}
@@ -223,6 +227,7 @@ const Crop: React.FC<CropProps> = ({
         style={{
           width: Math.round(completedCrop?.width ?? 0),
           height: Math.round(completedCrop?.height ?? 0),
+          display: "none"
         }}
       />
 
@@ -247,31 +252,46 @@ const Crop: React.FC<CropProps> = ({
         16:9
       </button>
 
+    </div>}
+      { rotating &&
+      <div>
+      <canvas ref={previewCanvasRefRotate} />
+  
+      </div>}
+    {fliping &&  <div>
+      <canvas ref={previewCanvasRefFlip} />
+           
+      </div>}
       <button
         onClick={() => {
+          
+          setImg({type:"Compressed", payLoadValue:imgs.edited, index:index })
           setCurrentEditing("Filter");
           window.history.pushState({}, "Image Editor:Filter", "/img/filter");
         }}
       >
         filter
       </button>
-      <canvas ref={previewCanvasRefRotate} />
-      <button
-        onClick={() => {
-          setCompleteRotate(CompleteRotate + 1);
-        }}
-      >
-        rotate
-      </button>
+      <button onClick={()=>{
+              setCroping(true)
+              setRotating(false)
+              setFliping(false)
 
-      <canvas ref={previewCanvasRefFlip} />
-      <button
-        onClick={() => {
-          setCompleteflip(Completeflip + 1);
-        }}
-      >
-        flip
-      </button>
+      }}>Crop</button>
+      <button onClick={()=>{
+              setCroping(false)
+              setRotating(true)
+              setFliping(false)
+              setCompleteRotate(CompleteRotate + 1);
+      }}>Rotate</button>
+      <button onClick={()=>{
+              setCroping(false)
+              setRotating(false)
+              setFliping(true)
+              setCompleteflip(Completeflip + 1);
+      }}>Flip</button>
+      
+
     </>
   );
 };
