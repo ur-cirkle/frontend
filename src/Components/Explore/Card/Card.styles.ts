@@ -67,7 +67,7 @@ export const SubmitButton =styled.button`
     font-style: normal;
     font-weight: normal;
     font-size:1rem;
-    line-hieght:2.4rem;
+    line-height:2.4rem;
     background:#6F1BCF;
     text-align:center;
     color: #FFFFFF;

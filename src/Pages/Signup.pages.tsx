@@ -27,7 +27,7 @@ const Signup: React.FC = () => {
   const { setJwtTokens, jwtTokens } = useContext(JwtTokens);
   const [interests, setInterests] = useState<Array<string>>([]);
   const [isCredentialsFilled, setIsCredentialsFilled] = useState(false);
-  const [currentMode, setCurrentMode] = useState("EMAIL");
+  const [currentMode, setCurrentMode] = useState("USERNAME");
   const history = useHistory();
   const [userLocation, setUserLocation]: [
     { latitude: null | number; longitude: null | number },
@@ -73,6 +73,7 @@ const Signup: React.FC = () => {
         : "";
       //- Creating username error string
       const usernameErrors = isUsernameRT(credentials.username);
+      console.log(usernameErrors);
       const usernameErrStr = Object.keys(usernameErrors).some((v) => v)
         ? "Invalid Username"
         : "";
@@ -138,7 +139,7 @@ const Signup: React.FC = () => {
   }, []);
   if (currentMode === "EMAIL") {
     return <EmailForm checkEmail={(email) => true} onEmailSignup={onEmail} />;
-  } else if (currentMode === "") {
+  } else if (currentMode === "USERNAME") {
     return (
       <FormSignUp
         onCredentialsFilled={onCredentialsFilled}
