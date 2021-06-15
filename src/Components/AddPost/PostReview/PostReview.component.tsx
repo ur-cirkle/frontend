@@ -1,4 +1,8 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect, useContext} from "react";
+
+import { UserContext } from "../../../Contexts/UserContext";
+import io from "socket.io-client";
+let socket: any;
 export interface PostReviewProps {
   post: {
     imgs: Array<string>;
@@ -8,9 +12,19 @@ export interface PostReviewProps {
     location: string;
   };
 }
-
 const PostReview: React.SFC<PostReviewProps> = ({ post }) => {
+  
   const [index, setIndex] = useState(0);
+  const { user } = useContext(UserContext);
+  useEffect(() => {
+    socket = io("127.0.0.1:3003", { transports: ["websocket"] });
+  }, []);
+  useEffect(() => {
+    socket.emit("user_connection", {
+      userid: user.userid,
+      currentPosition: "Add Blog",
+    });
+  }, [user]);
   return (
     <div className="">
       <img src={post.imgs[index]} alt="" />

@@ -5,9 +5,7 @@ import {
   PostForm,
 } from "../../../Interfaces/AddPost.interfaces";
 import PostReview from "../PostReview/PostReview.component";
-import { UserContext } from "../../../Contexts/UserContext";
-import io from "socket.io-client";
-let socket: any;
+
 export interface AddPostFormProps {
   setImg: React.Dispatch<imagesReducerAction>;
   imgs: images;
@@ -15,16 +13,7 @@ export interface AddPostFormProps {
 
 const AddPostForm: React.SFC<AddPostFormProps> = ({ imgs, setImg }) => {
   const [mode, setMode] = useState<"Form" | "Review">("Form");
-  const { user } = useContext(UserContext);
-  useEffect(() => {
-    socket = io("127.0.0.1:3003", { transports: ["websocket"] });
-  }, []);
-  useEffect(() => {
-    socket.emit("user_connection", {
-      userid: user.userid,
-      currentPosition: "Add Blog",
-    });
-  }, [user]);
+
   const postContentReducer = (
     state: PostForm,
     action: {
@@ -60,13 +49,7 @@ const AddPostForm: React.SFC<AddPostFormProps> = ({ imgs, setImg }) => {
     connections: [],
     location: "",
   });
-  const add_fields = () => {
-    var objTo = document.getElementById("intrest");
-    var divtest = document.createElement("div");
-    divtest.innerHTML = '<input type="text">';
-
-    objTo?.appendChild(divtest);
-  };
+  
   return (
     <div>
       <textarea name="" id="" placeholder="Share what’s on your mind...">
@@ -75,7 +58,6 @@ const AddPostForm: React.SFC<AddPostFormProps> = ({ imgs, setImg }) => {
       <h2>Add interest tags</h2>
 
       <div id="intrest">
-        <button onClick={add_fields}>add custom</button>
       </div>
       <h2>Tag connections</h2>
       <label htmlFor="tag_connections">
