@@ -4,9 +4,11 @@ import {CardWrapper} from './Card.styles';
 import {FirstName} from './Card.styles';
 import {SubmitButton} from './Card.styles';
 import {Description} from './Card.styles';
-import {Connections} from './Card.styles';
+import {SpanStyle2} from './Card.styles';
 import {Tags} from './Card.styles';
 import {ImgStyle} from './Card.styles';
+import {SpanStyle1} from './Card.styles';
+import {Para} from './Card.styles';
 
 const Card: React.FC<CardProps> = ({ cardRef, cardUser, index }) => {
     
@@ -22,7 +24,7 @@ const Card: React.FC<CardProps> = ({ cardRef, cardUser, index }) => {
             {cardUser.name.first}
           </FirstName>
           <Tags className="">PhotoGraphy   |   Travel   |   Dogs</Tags>
-          <Connections className="">{Math.floor(Math.random() * 500 + 1)} Connections    {Math.floor(Math.random() * 10000 + 1)}    Supporting</Connections>
+          <Para className=""><SpanStyle1>{Math.floor(Math.random() * 500 + 1)}</SpanStyle1><SpanStyle2>Connections</SpanStyle2><SpanStyle1>{Math.floor(Math.random() * 10000 + 1)}</SpanStyle1><SpanStyle2>Supporting</SpanStyle2></Para>
 
           <Description>
             Lorem ipsum dolor sit amet consectetur, adipisicing elit. Reiciendis,

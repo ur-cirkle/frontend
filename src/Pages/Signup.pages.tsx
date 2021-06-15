@@ -26,6 +26,13 @@ const Signup: React.FC = () => {
   const { setCurrentJwt } = useContext(CurrentJwtContext);
   const { setJwtTokens, jwtTokens } = useContext(JwtTokens);
   const [interests, setInterests] = useState<Array<string>>([]);
+  const [credentials, setCredentials] =
+    useState<{
+      username: string;
+      password: string;
+      type: string;
+      timezone: string;
+    }>();
   const [isCredentialsFilled, setIsCredentialsFilled] = useState(false);
   const [currentMode, setCurrentMode] = useState("USERNAME");
   const history = useHistory();
@@ -40,10 +47,11 @@ const Signup: React.FC = () => {
   });
   //* When User Submits Email Form
   const onEmail = (email: string) => {
-    //* If Email is Not Valid then return;
+    //- If Email is Not Valid then return;
     if (!isEmail(email)) return;
-    //* Else set email to email(given in param);
+    //- Else set email to email(given in param);
     setEmail(email);
+    setCurrentMode("USERNAME")
   };
   //* Checks if
   const isUsernameAvailable = async (username: string, setFunc: Function) => {
@@ -80,21 +88,16 @@ const Signup: React.FC = () => {
       //- Seting Err
       return setErrors({ username: usernameErrStr, password: passwordErrStr });
     }
-
+    //- Fetchin All Interests
     axios({
       url: "http://localhost:5000/interests",
       method: "GET",
     }).then(({ data: interests }) => {
       setInterests(interests);
-      setUser({
-        ...user,
-        username: credentials.username,
-        password: credentials.password,
-        type: credentials.type,
-        timezone: credentials.timezone,
-      });
+      setCredentials(credentials);
       setIsCredentialsFilled(true);
     });
+    setCurrentMode("INTEREST_SELECTION")
   };
   //* On SignUp
   const onSignup = (selectedInterests: Array<string>) => {
@@ -105,6 +108,7 @@ const Signup: React.FC = () => {
       data: JSON.stringify({
         ...user,
         ...userLocation,
+        email,
         interests: selectedInterests,
         device: `${browser.browser.name},${browser.os.name},${browser.platform.type}`,
       }),

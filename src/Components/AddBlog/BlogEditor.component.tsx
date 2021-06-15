@@ -2,6 +2,8 @@ import React, { Dispatch, SetStateAction } from "react";
 import Editor from "ckeditor5-custom-build/build/ckeditor";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import axios from "axios";
+import "../AddBlog/BlogEditorStyle.css";
+import {Span} from "./Blogeditor.styles"
 
 export interface BlogEditorProps {
   blog: string;
@@ -65,6 +67,7 @@ const BlogEditor: React.FC<BlogEditorProps> = ({
         "|",
         "specialCharacters",
       ],
+      
       mention: {
         user: [
           {
@@ -76,11 +79,12 @@ const BlogEditor: React.FC<BlogEditorProps> = ({
     },
     language: "en",
     licenseKey: "",
-    placeholder: "Start Typing",
+    placeholder: "Add Title",
   };
 
   return (
     <div className="">
+      <div className="Upper"><Span><p>Save Draft</p><p>Review</p></Span></div>
       <input
         type="text"
         value={heading}
@@ -96,7 +100,8 @@ const BlogEditor: React.FC<BlogEditorProps> = ({
           setBlog(data);
         }}
       />
-      <p style={{ color: wordCount > 2000 ? "red" : "black" }}>
+      
+      <p style={{ color: wordCount > 2000 ? "red" : "rgba(196,196,196,1)" }}>
         Characters : {wordCount}
       </p>
     </div>
