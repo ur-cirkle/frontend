@@ -85,6 +85,7 @@ const BlogEditor: React.FC<BlogEditorProps> = ({
         type="text"
         value={heading}
         onChange={({ target }) => setHeading(target.value)}
+        placeholder="Heading"
       />
       <CKEditor
         editor={Editor}
@@ -96,7 +97,7 @@ const BlogEditor: React.FC<BlogEditorProps> = ({
           setBlog(data);
         }}
       />
-      <p style={{ color: wordCount > 2000 ? "red" : "black" }}>
+      <p style={{ color: wordCount > 20000 ? "red" : "black" }}>
         Characters : {wordCount}
       </p>
     </div>
@@ -104,3 +105,4 @@ const BlogEditor: React.FC<BlogEditorProps> = ({
 };
 
 export default BlogEditor;
+

@@ -19,6 +19,7 @@ import Blog from "./Pages/Blog.pages";
 import AddPost from "./Pages/AddPost.pages";
 import SearchBar from "./Components/Feed/SearchBar.component";
 import UserProfile from "./Pages/UserProfile.pages";
+import Chat from "./Pages/Chat/Chat.pages";
 
 function App() {
   const [user, setUser] = useState({
@@ -62,6 +63,7 @@ function App() {
               <Route component={Map} path="/map" />
               <Route component={SearchBar} path="/search" />
               <Route component={UserProfile} path="/p/:id" />
+              <Route component={Chat} path="/chat"/>
               <Route component={PageNotFound} path="*" />
             </Switch>
           </UserContext.Provider>
