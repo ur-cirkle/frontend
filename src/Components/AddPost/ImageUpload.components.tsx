@@ -1,17 +1,17 @@
 import { count } from "console";
-import React, { Dispatch, SetStateAction,useState } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
+import { imagesReducerAction } from "../../Interfaces/AddPost.interfaces";
 // import { useHistory } from "react-router-dom";
 export interface ImageUploadProps {
-  setImg: Dispatch<{ type: string; payLoadValue: string; index: number }>;
+  setImg: Dispatch<imagesReducerAction>;
   setCurrentEditing: Dispatch<SetStateAction<string>>;
   setFile: Dispatch<SetStateAction<number>>;
-  
 }
 
 const ImageUpload: React.FC<ImageUploadProps> = ({
   setImg,
   setCurrentEditing,
-  setFile
+  setFile,
 }) => {
   // const history = useHistory();
   const a = function readFileAsText(file: any) {
@@ -25,16 +25,15 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
       fr.onerror = function () {
         reject(fr);
       };
-      
+
       fr.readAsDataURL(file);
-    
     });
   };
 
   const onSelectFile = async (e: any) => {
     let files = e.target.files;
     let readers = [];
-    console.log(files)
+    console.log(files);
     if (!files.length) return;
 
     for (let i = 0; i < files.length; i++) {
@@ -42,22 +41,19 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
     }
 
     Promise.all(readers).then((values) => {
-      console.log(values,123);
-      
-      for (let j = 0; j < files.length; j++) {       
+      console.log(values, 123);
+
+      for (let j = 0; j < files.length; j++) {
         setImg({
           type: "ORIGINAL",
           payLoadValue: values[j] as string,
           index: j,
         });
-        
       }
-
     });
-    setFile(files.length)
+    setFile(files.length);
     setCurrentEditing("Crop");
     window.history.pushState({}, "Image Editor : Crop", "/img/crop");
-
   };
 
   return (

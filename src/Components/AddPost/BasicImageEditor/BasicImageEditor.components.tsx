@@ -5,54 +5,50 @@ import React, {
   Dispatch,
   SetStateAction,
 } from "react";
-import { cropProp } from "../../Pages/AddPost.pages";
+import { cropObj, cropPropObj } from "../../../Interfaces/AddPost.interfaces";
 import ReactCrop from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
-import { flattenDiagnosticMessageText } from "typescript";
+import {
+  image,
+  imagesReducerAction,
+} from "../../../Interfaces/AddPost.interfaces";
 
-export interface CropProps {
-  imgs: {
-    original: string;
-    edited: string;
-    currentEditing: string;
-  };
-  setImg: React.Dispatch<{
-    type: string;                  
-    payLoadValue: string;
-    index: number;
-  }>;
-  index: number;
+export interface BasicImageEditorProps {
+  imgs: image;
+  setImg: React.Dispatch<imagesReducerAction>;
+  imageIndex: number;
   counter: number;
   Converted: boolean;
   setCounter: React.Dispatch<SetStateAction<number>>;
   setCurrentEditing: Dispatch<SetStateAction<string>>;
-  setCropProp: React.Dispatch<React.SetStateAction<{
-    cropX: number;
-    cropY: number;
-    scaleX: number;
-    scaleY: number;
-    width: number;
-    height: number;
-}
->>
-setrotateProp: React.Dispatch<React.SetStateAction<number>>
-setflipProp: React.Dispatch<React.SetStateAction<number>>
+  setCropProp: React.Dispatch<React.SetStateAction<cropPropObj>>;
+  setRotateProp: React.Dispatch<React.SetStateAction<number>>;
+  setFlipProp: React.Dispatch<React.SetStateAction<number>>;
+  basicEditorMode: "PREVIEW" | "CROP" | "FLIP" | "ROTATE";
+  setBasicEditorMode: Dispatch<
+    SetStateAction<"PREVIEW" | "CROP" | "FLIP" | "ROTATE">
+  >;
 }
 
-const Crop: React.FC<CropProps> = ({
+const BasicImageEditor: React.FC<BasicImageEditorProps> = ({
   imgs,
   setImg,
   setCurrentEditing,
-  index,
+  imageIndex,
   counter,
   setCounter,
   Converted,
   setCropProp,
-  setflipProp,
-  setrotateProp
+  setFlipProp,
+  setRotateProp,
+  basicEditorMode,
+  setBasicEditorMode,
 }) => {
-  const [crop, setCrop]: [cropProp, Dispatch<SetStateAction<cropProp>>] =
-    useState<cropProp>({ unit: "%", width: 30, aspect: 1 / 1 });
+  const [crop, setCrop] = useState<cropObj>({
+    unit: "%",
+    width: 30,
+    aspect: 1 / 1,
+  });
 
   const previewCanvasRef = useRef<HTMLCanvasElement | null>(null);
   const previewCanvasRefRotate = useRef<HTMLCanvasElement | null>(null);
@@ -61,16 +57,12 @@ const Crop: React.FC<CropProps> = ({
   const [completedCrop, setCompletedCrop] = useState<any>(null);
   const [CompleteRotate, setCompleteRotate] = useState<any>(null);
   const [Completeflip, setCompleteflip] = useState<any>(null);
-  const [croping , setCroping]=useState(true);
-  const[rotating,setRotating]=useState(false);
-  const[fliping,setFliping]=useState(false);
-    
-  
+
   useEffect(() => {
     if (imgs.original && Converted) return;
     setCounter(counter + 1);
   }, [counter]);
- 
+
   useEffect(() => {
     if (!completedCrop || !previewCanvasRef.current) {
       return;
@@ -104,28 +96,26 @@ const Crop: React.FC<CropProps> = ({
       crop.width,
       crop.height
     );
-    console.log(crop.x)
+    console.log(crop.x);
     setCropProp({
       cropX: crop.x,
       cropY: crop.y,
       scaleX: scaleX,
       scaleY: scaleY,
       width: crop.width,
-      height: crop.height
+      height: crop.height,
+    });
 
-
-    })
-    
     setImg({
       type: "CURRENT_EDITING",
       payLoadValue: canvas.toDataURL(),
-      index,
+      index: imageIndex,
     });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [completedCrop, imgs.edited, counter]);
-  
-   useEffect(() => {
+
+  useEffect(() => {
     if (!CompleteRotate || !previewCanvasRefRotate.current) {
       return;
     }
@@ -150,13 +140,12 @@ const Crop: React.FC<CropProps> = ({
       ctxRotate.rotate(Math.PI * (CompleteRotate / 2));
       ctxRotate.drawImage(image, -image.width / 2, -image.height / 2);
     }
-    setrotateProp(CompleteRotate)
+    setRotateProp(CompleteRotate);
     setImg({
       type: "CURRENT_EDITING",
       payLoadValue: canvasRotate.toDataURL(),
-      index,
+      index: imageIndex,
     });
-    
   }, [CompleteRotate, imgs.edited]);
 
   useEffect(() => {
@@ -170,27 +159,27 @@ const Crop: React.FC<CropProps> = ({
     const ctxFlip: any = canvasFlip.getContext("2d");
     if (Completeflip % 2 === 0) {
       canvasFlip.width = image.width;
-    canvasFlip.height = image.height;
-    
+      canvasFlip.height = image.height;
+
       ctxFlip.scale(1, 1);
       ctxFlip.drawImage(image, 0, 0, image.width, image.height);
     }
     if (Completeflip % 2 !== 0) {
       canvasFlip.width = image.width;
-    canvasFlip.height = image.height;
-    
+      canvasFlip.height = image.height;
+
       ctxFlip.scale(-1, 1);
-    
+
       ctxFlip.drawImage(image, -image.width, 0, image.width, image.height);
     }
 
     setImg({
       type: "CURRENT_EDITING",
       payLoadValue: canvasFlip.toDataURL(),
-      index,
+      index: imageIndex,
     });
-    setflipProp(Completeflip)
-    console.log(imgs)
+    setFlipProp(Completeflip);
+    console.log(imgs);
   }, [Completeflip, imgs.edited]);
 
   const onRatioChange = (ratio: number) => {
@@ -213,87 +202,98 @@ const Crop: React.FC<CropProps> = ({
   }
   return (
     <>
-    { croping && <div>
-      <ReactCrop
-        src={imgs.edited ? imgs.edited : imgs.original}
-        crop={crop as any}
-        onChange={(c) => setCrop(c)}
-        onComplete={(c) => setCompletedCrop(c)}
-      />
-      <canvas
-        ref={previewCanvasRef}
-        // Rounding is important so the canvas width and height matches/is a multiple for sharpness.
-        // style={{ display: "none" }}
-        style={{
-          width: Math.round(completedCrop?.width ?? 0),
-          height: Math.round(completedCrop?.height ?? 0),
-          display: "none"
-        }}
-      />
+      {basicEditorMode === "PREVIEW" && (
+        <img src={imgs.edited ? imgs.edited : imgs.original} alt="Preview" />
+      )}
+      {basicEditorMode === "CROP" && (
+        <div>
+          <ReactCrop
+            src={imgs.edited ? imgs.edited : imgs.original}
+            crop={crop as any}
+            onChange={(c) => setCrop(c)}
+            onComplete={(c) => setCompletedCrop(c)}
+          />
+          <canvas
+            ref={previewCanvasRef}
+            // Rounding is important so the canvas width and height matches/is a multiple for sharpness.
+            // style={{ display: "none" }}
+            style={{
+              width: Math.round(completedCrop?.width ?? 0),
+              height: Math.round(completedCrop?.height ?? 0),
+              display: "none",
+            }}
+          />
 
-      <button
-        onClick={() => onRatioChange(1 / 1)}
-        disabled={crop.aspect === 1 / 1}
-      >
-        1:1
-      </button>
+          <button
+            onClick={() => onRatioChange(1 / 1)}
+            disabled={crop.aspect === 1 / 1}
+          >
+            1:1
+          </button>
 
-      <button
-        onClick={() => onRatioChange(9 / 16)}
-        disabled={crop.aspect === 9 / 16}
-      >
-        9:16
-      </button>
+          <button
+            onClick={() => onRatioChange(9 / 16)}
+            disabled={crop.aspect === 9 / 16}
+          >
+            9:16
+          </button>
 
-      <button
-        onClick={() => onRatioChange(16 / 9)}
-        disabled={crop.aspect === 16 / 9}
-      >
-        16:9
-      </button>
-
-    </div>}
-      { rotating &&
-      <div>
-      <canvas ref={previewCanvasRefRotate} />
-  
-      </div>}
-    {fliping &&  <div>
-      <canvas ref={previewCanvasRefFlip} />
-           
-      </div>}
+          <button
+            onClick={() => onRatioChange(16 / 9)}
+            disabled={crop.aspect === 16 / 9}
+          >
+            16:9
+          </button>
+        </div>
+      )}
+      {basicEditorMode === "ROTATE" && (
+        <div>
+          <canvas ref={previewCanvasRefRotate} />
+        </div>
+      )}
+      {basicEditorMode === "FLIP" && (
+        <div>
+          <canvas ref={previewCanvasRefFlip} />
+        </div>
+      )}
       <button
         onClick={() => {
-          
-          setImg({type:"Compressed", payLoadValue:imgs.edited, index:index })
+          setImg({
+            type: "BACKUP",
+            payLoadValue: imgs.edited,
+            index: imageIndex,
+          });
           setCurrentEditing("Filter");
           window.history.pushState({}, "Image Editor:Filter", "/img/filter");
         }}
       >
         filter
       </button>
-      <button onClick={()=>{
-              setCroping(true)
-              setRotating(false)
-              setFliping(false)
-
-      }}>Crop</button>
-      <button onClick={()=>{
-              setCroping(false)
-              setRotating(true)
-              setFliping(false)
-              setCompleteRotate(CompleteRotate + 1);
-      }}>Rotate</button>
-      <button onClick={()=>{
-              setCroping(false)
-              setRotating(false)
-              setFliping(true)
-              setCompleteflip(Completeflip + 1);
-      }}>Flip</button>
-      
-
+      <button
+        onClick={() => {
+          setBasicEditorMode("CROP");
+        }}
+      >
+        Crop
+      </button>
+      <button
+        onClick={() => {
+          setBasicEditorMode("ROTATE");
+          setCompleteRotate(CompleteRotate + 1);
+        }}
+      >
+        Rotate
+      </button>
+      <button
+        onClick={() => {
+          setBasicEditorMode("FLIP");
+          setCompleteflip(Completeflip + 1);
+        }}
+      >
+        Flip
+      </button>
     </>
   );
 };
 
-export default Crop;
+export default BasicImageEditor;
