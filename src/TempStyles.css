@@ -142,6 +142,9 @@ h1 {
 .img_grayscale {
   filter: grayscale(1);
 }
+.img_none {
+  
+}
 #img_selected {
   border-color: #42cafd;
 }

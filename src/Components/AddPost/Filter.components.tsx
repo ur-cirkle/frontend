@@ -6,141 +6,80 @@ import React, {
   useReducer,
   useState,
 } from "react";
-import { filterState } from "../../Interfaces/AddPost.intrefaces";
+import {
+  currentEditingModeType,
+  filterState,
+  filterType,
+  image,
+  imagesReducerAction,
+} from "../../Interfaces/AddPost.interfaces";
 
 import { SketchPicker } from "react-color";
 
 export interface FilterProps {
-  imgs: { original: string; edited: string; currentEditing: string };
-  setImg: Dispatch<{ type: string; payLoadValue: string; index: number }>;
-  setCurrentEditing: Dispatch<SetStateAction<string>>;
-  index: number;
+  imgs: image;
+  setImg: Dispatch<imagesReducerAction>;
+  setCurrentEditing: Dispatch<SetStateAction<currentEditingModeType>>;
+  imageIndex: number;
 }
 
 const Filter: React.FC<FilterProps> = ({
   imgs,
   setImg,
   setCurrentEditing,
-  index,
+  imageIndex,
 }) => {
   const canvas = useRef<HTMLCanvasElement | null>(null);
-  const [sliderValue, setSliderValue] = useState(0);
   const buffer = useRef<HTMLCanvasElement | null>(null);
   const [tint, setTint] = useState({
     opacity: 0,
     color: "rgba(0,0,0,0.5)",
   });
-  const onFilterTypeChange = (newType: string): filterState => {
+  const onFilterTypeChange = (newType: filterType): filterState => {
     setTint({ ...tint, opacity: 0 });
     switch (newType) {
       case "SEPIA":
-        setSliderValue(100);
-        return { value: "sepia(1)", type: "sepia" };
+        return { value: "sepia(1)", type: newType };
       case "BLUR":
-        setSliderValue(16);
-        return { value: "blur(4px)", type: "blur" };
+        return { value: "blur(4px)", type: newType };
       case "INVERT":
-        setSliderValue(100);
-        return { value: "invert(1)", type: "invert" };
+        return { value: "invert(1)", type: newType };
       case "CONTRAST":
-        setSliderValue(50);
-        return { value: "contrast(200%)", type: "contrast" };
+        return { value: "contrast(200%)", type: newType };
       case "SATURATION":
-        setSliderValue(100);
-        return { value: "saturate(100)", type: "saturation" };
-      case "HUE ROTATE":
-        setSliderValue(50);
-        return { value: "hue-rotate(180deg)", type: "hue rotate" };
+        return { value: "saturate(100)", type: newType };
+      case "HUE_ROTATE":
+        return { value: "hue-rotate(180deg)", type: newType };
       case "GRAYSCALE":
-        setSliderValue(100);
-        return { value: "grayscale(1)", type: "grayscale" };
+        return { value: "grayscale(1)", type: newType };
       case "NONE":
-        setSliderValue(0);
-        return { value: "", type: "none" };
-      default:
-        return {
-          value: "",
-          type: "none",
-        };
-    }
-  };
-  const onFilterValueChange = ( 
-    value: number,
-    type: string,
-    filter: string
-  ): filterState => {
-    let calcValue = 0;
-    setSliderValue(value);
-
-    switch (type) {
-      case "0-1 NO UNIT":
-        calcValue = value * 0.01;
-        return { value: `${filter}(${calcValue})`, type: filter };
-
-      case "BLUR":
-        calcValue = value / 4;
-        return { value: `blur(${calcValue}px)`, type: "blur" };
-      case "CONTRAST":
-        calcValue = value * 4;
-        return { value: `contrast(${calcValue}%)`, type: "contrast" };
-      case "SATURATION":
-        return { value: `saturate(${value})`, type: "saturation" };
-      case "HUE ROTATE":
-        calcValue = value * 3.6;
-        return { value: `hue-rotate(${calcValue}deg)`, type: "hue rotate" };
-      case "NONE":
-        return { value: "", type: "none" };
-      default:
-        return {
-          value: "",
-          type: "none",
-        };
+        return { value: "", type: newType };
     }
   };
   const filterReducer = (
     state: filterState,
-    action: { type: string; payLoadValue: number | string }
+    action: {
+      type: "TYPE" | "TINT";
+      payLoadValue: filterType | "TINT" | number;
+    }
   ): filterState => {
     switch (action.type) {
-      case "TYPE":
-        return onFilterTypeChange(action.payLoadValue.toString());
-      case "VALUE CHANGE":
-        const type: string =
-          state.type === "sepia" ||
-          state.type === "invert" ||
-          state.type === "grayscale"
-            ? "0-1 NO UNIT"
-            : state.type;
-        return onFilterValueChange(
-          Number(action.payLoadValue),
-          type.toUpperCase(),
-          state.type
-        );
       case "TINT":
-        return { type: "tint", value: "" };
-      default:
-        return state;
+        if (action.type !== "TINT") return state;
+        return { type: "TINT", value: "" };
+      case "TYPE":
+        if (
+          action.payLoadValue === "TINT" ||
+          typeof action.payLoadValue === "number"
+        )
+          return state;
+        return onFilterTypeChange(action.payLoadValue);
     }
   };
   const [filter, setFilter] = useReducer(filterReducer, {
     value: "",
-    type: "none",
+    type: "NONE",
   });
-  const onSliderChanged = (value: string) => {
-    if (filter.type === "tint") {
-      setTint({
-        ...tint,
-        opacity: Number(value) / 100,
-      });
-      setSliderValue(Number(value));
-      return;
-    }
-    setTint({ ...tint, opacity: 0 });
-    setFilter({
-      type: "VALUE CHANGE",
-      payLoadValue: value,
-    });
-  };
   useEffect(() => {
     if (!canvas.current || !imgs.edited) return;
     const ctx: any = canvas.current.getContext("2d");
@@ -175,10 +114,10 @@ const Filter: React.FC<FilterProps> = ({
       setImg({
         type: "EDITED",
         payLoadValue: canvas.current.toDataURL(),
-        index,
+        index: imageIndex,
       });
     };
-console.log(imgs)
+    console.log(imgs);
     //console.log(imgRef, canvas);
     //   asjLDJAL
 
@@ -192,34 +131,7 @@ console.log(imgs)
       <div className="filter_left_items">
         <canvas ref={canvas} />
         <div className="slider_container">
-          {filter.type !== "tint" && (
-            <label htmlFor="" className="slider">
-              <input
-                type="number"
-                name=""
-                id=""
-                min={0}
-                max={100}
-                width="100px"
-                value={sliderValue}
-                onChange={({ target }) => {
-                  onSliderChanged(target.value);
-                }}
-              />
-              <input
-                type="range"
-                name=""
-                id=""
-                min={0}
-                max={100}
-                value={sliderValue}
-                onChange={({ target }) => {
-                  onSliderChanged(target.value);
-                }}
-              />
-            </label>
-          )}
-          {filter.type === "tint" && (
+          {filter.type === "TINT" && (
             <SketchPicker
               color={tint.color}
               onChange={({ rgb }) =>
@@ -245,7 +157,7 @@ console.log(imgs)
       </div>
 
       <div className="filters_gallery">
-        <div id={filter.type === "sepia" ? "img_selected" : ""}>
+        <div id={filter.type === "SEPIA" ? "img_selected" : ""}>
           <img
             src={imgs.edited}
             className="fimg img_sepia "
@@ -254,7 +166,7 @@ console.log(imgs)
           />
           <p>sepia</p>
         </div>
-        <div id={filter.type === "blur" ? "img_selected" : ""}>
+        <div id={filter.type === "BLUR" ? "img_selected" : ""}>
           <img
             src={imgs.edited}
             className="fimg img_blur"
@@ -263,7 +175,7 @@ console.log(imgs)
           />
           <p>blur</p>
         </div>
-        <div id={filter.type === "invert" ? "img_selected" : ""}>
+        <div id={filter.type === "INVERT" ? "img_selected" : ""}>
           <img
             src={imgs.edited}
             className="fimg img_invert"
@@ -274,7 +186,7 @@ console.log(imgs)
           <p>invert</p>
         </div>
 
-        <div id={filter.type === "contrast" ? "img_selected" : ""}>
+        <div id={filter.type === "CONTRAST" ? "img_selected" : ""}>
           <img
             src={imgs.edited}
             className="fimg img_contrast"
@@ -285,7 +197,7 @@ console.log(imgs)
           />
           <p>contrast</p>
         </div>
-        <div id={filter.type === "saturation" ? "img_selected" : ""}>
+        <div id={filter.type === "SATURATION" ? "img_selected" : ""}>
           <img
             src={imgs.edited}
             className="fimg img_saturation"
@@ -296,18 +208,18 @@ console.log(imgs)
           />
           <p>saturation</p>
         </div>
-        <div id={filter.type === "hue rotate" ? "img_selected" : ""}>
+        <div id={filter.type === "HUE_ROTATE" ? "img_selected" : ""}>
           <img
             src={imgs.edited}
             className="fimg img_hueRotate"
             alt=""
             onClick={() =>
-              setFilter({ type: "TYPE", payLoadValue: "HUE ROTATE" })
+              setFilter({ type: "TYPE", payLoadValue: "HUE_ROTATE" })
             }
           />
           <p>hue Rotate</p>
         </div>
-        <div id={filter.type === "grayscale" ? "img_selected" : ""}>
+        <div id={filter.type === "GRAYSCALE" ? "img_selected" : ""}>
           <img
             src={imgs.edited}
             className="fimg img_grayscale"
@@ -318,11 +230,19 @@ console.log(imgs)
           />
           <p>Gray scale</p>
         </div>
+        <div id={filter.type === "NONE" ? "img_selected" : ""}>
+          <img
+            src={imgs.edited}
+            className="fimg img_none"
+            alt=""
+            onClick={() => setFilter({ type: "TYPE", payLoadValue: "NONE" })}
+          />
+          <p>none</p>
+        </div>
         <div
-          id={filter.type === "tint" ? "img_selected" : ""}
+          id={filter.type === "TINT" ? "img_selected" : ""}
           className="tint"
           onClick={() => {
-            console.log("hello");
             setTint({
               ...tint,
               opacity: 0.5,
@@ -332,11 +252,15 @@ console.log(imgs)
         >
           <img src={imgs.edited} className="fimg img_tint" alt="" />
           <p>Tint</p>
-          
         </div>
-        <button  onClick={()=>{
-               setCurrentEditing("Form");
-              window.history.pushState({}, "Image Editor:Form", "/img/form");}}>post</button>
+        <button
+          onClick={() => {
+            setCurrentEditing("Form");
+            window.history.pushState({}, "Image Editor:Form", "/img/form");
+          }}
+        >
+          post
+        </button>
       </div>
     </div>
   );
