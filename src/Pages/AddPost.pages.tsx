@@ -1,10 +1,15 @@
-import React, { useEffect, useState, useReducer, useRef } from "react";
+//** Package Imports
+import React, { useEffect, useState, useReducer } from "react";
+import { camelCase } from "lodash"
+//** Component Imports
 import AddPostForm from "../Components/AddPost/AddPostForm/AddPostForm.component";
 import BasicImageEditor from "../Components/AddPost/BasicImageEditor/BasicImageEditor.components";
-import Filter from "../Components/AddPost/Filter.components";
+import Filter from "../Components/AddPost/Filter.components"
 import ImageUpload from "../Components/AddPost/ImageUpload.components";
+//** Interfaces
 import {
   cropPropObj,
+  currentEditingModeType,
   images,
   imagesReducerAction,
 } from "../Interfaces/AddPost.interfaces";
@@ -16,8 +21,8 @@ const AddPost: React.FC = () => {
   const [counter, setCounter] = useState(0);
   //boolean to cheack wether image is converted or not
   const [Converted, setConverted] = useState(false);
-  //there are four cases such as 1) image upload 2)crop 3)filter 4)post
-  const [currentEditing, setCurrentEditing] = useState("Image Upload");
+  //there are four cases such as 1) image upload 2)basicImageEditor 3)filter 4)post
+  const [currentEditing, setCurrentEditing] = useState<currentEditingModeType>("Image Upload");
   // max numer of selected out of 5
   const [file, setFile] = useState(0);
   //boolean to check wether crop is done or not in apply to all
@@ -50,57 +55,11 @@ const AddPost: React.FC = () => {
     action: imagesReducerAction
   ): images => {
     switch (action.type) {
-      case "ORIGINAL": {
+      case "ORIGINAL"|| "EDITED" || "CURRENT_EDITING" ||"AUTO_SAVE" ||"AUTO_ROTATE"||"BACKUP": {
         const tempState = state;
         tempState[action.index] = {
           ...state[action.index],
-          original: action.payLoadValue,
-        };
-        return tempState;
-      }
-      case "EDITED": {
-        const tempState = state;
-
-        tempState[action.index] = {
-          ...state[action.index],
-          edited: action.payLoadValue,
-        };
-        return tempState;
-      }
-      case "CURRENT_EDITING": {
-        const tempState = state;
-        tempState[action.index] = {
-          ...state[action.index],
-
-          currentEditing: action.payLoadValue,
-        };
-        return tempState;
-      }
-      case "AUTO_SAVE": {
-        const tempState = state;
-        tempState[action.index] = {
-          ...state[action.index],
-
-          autoSave: action.payLoadValue,
-        };
-        return tempState;
-      }
-
-      case "AUTO_ROTATE": {
-        const tempState = state;
-        tempState[action.index] = {
-          ...state[action.index],
-
-          autoRotate: action.payLoadValue,
-        };
-        return tempState;
-      }
-      case "BACKUP": {
-        const tempState = state;
-        tempState[action.index] = {
-          ...state[action.index],
-
-          backup: action.payLoadValue,
+          [camelCase(action.type)]: action.payLoadValue,
         };
         return tempState;
       }
@@ -131,15 +90,18 @@ const AddPost: React.FC = () => {
       backup: "",
     }) as images
   );
-
-  const back = () => {
-    if (currentEditing === "Crop") {
+  //* Back Funtion When User Click Back BTN
+  const onBack = () => {
+    //- If User is in BasicImageEditor
+    if (currentEditing === "Basic Image Editor") {
+      //-- Deleting All Uploaded Image and Transfering User to Image Upload
       setCurrentEditing("Image Upload");
       setConverted(false);
       setImg({ type: "RESET", payLoadValue: "", index: 8 });
     }
-
+    //- If User is in Filter
     if (currentEditing === "Filter") {
+      //-- Then Deleting all image editing is done and transfering user to BasicImageEditor
       setIndex(0);
       for (let i = 0; i < file; i++) {
         setImg({
@@ -170,11 +132,11 @@ const AddPost: React.FC = () => {
       setApply(false);
       setCroped(false);
       setRotated(false);
-      setCurrentEditing("Crop");
-      console.log(imgs);
+      setCurrentEditing("Basic Image Editor");
     }
-
+    //- If User is in Post Form
     if (currentEditing === "Form") {
+      //-- Deleting all Image Filter that user has added and Transfering user to Filter
       setIndex(0);
       for (let i = 0; i < file; i++) {
         setImg({
@@ -189,12 +151,10 @@ const AddPost: React.FC = () => {
   //resizing image in to the required area i.e 787*height of image takinig care that pixels does not blur out
   useEffect(() => {
     const image = new Image();
-    console.log("skjadsa", Converted, currentEditing);
     if (currentEditing === "Image Upload") return;
     if (Converted) {
       return;
     }
-    console.log("skjadsa1");
     if (imgs[file - 1].original.length) {
       for (let i = 0; i < file; i++) {
         image.src = imgs[i].original;
@@ -384,7 +344,7 @@ const AddPost: React.FC = () => {
           setFile={setFile}
         />
       )}
-      {currentEditing === "Crop" && Converted && (
+      {currentEditing === "Basic Image Editor" && Converted && (
         <BasicImageEditor
           imgs={imgs[index]}
           setImg={setImg}
@@ -427,7 +387,7 @@ const AddPost: React.FC = () => {
         <div></div>
       </div>
 
-      {currentEditing === "Crop" && (
+      {currentEditing === "Basic Image Editor" && (
         <div>
           <button
             onClick={() => {
@@ -453,7 +413,7 @@ const AddPost: React.FC = () => {
           </button>
         </div>
       )}
-      <button onClick={back}>cancel</button>
+      <button onClick={onBack}>{'<'}</button>
     </div>
   );
 };

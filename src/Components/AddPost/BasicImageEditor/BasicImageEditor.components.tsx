@@ -5,13 +5,9 @@ import React, {
   Dispatch,
   SetStateAction,
 } from "react";
-import { cropObj, cropPropObj } from "../../../Interfaces/AddPost.interfaces";
+import { cropObj, cropPropObj, currentEditingModeType, image,imagesReducerAction, } from "../../../Interfaces/AddPost.interfaces";
 import ReactCrop from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
-import {
-  image,
-  imagesReducerAction,
-} from "../../../Interfaces/AddPost.interfaces";
 
 export interface BasicImageEditorProps {
   imgs: image;
@@ -20,7 +16,7 @@ export interface BasicImageEditorProps {
   counter: number;
   Converted: boolean;
   setCounter: React.Dispatch<SetStateAction<number>>;
-  setCurrentEditing: Dispatch<SetStateAction<string>>;
+  setCurrentEditing: Dispatch<SetStateAction<currentEditingModeType>>;
   setCropProp: React.Dispatch<React.SetStateAction<cropPropObj>>;
   setRotateProp: React.Dispatch<React.SetStateAction<number>>;
   setFlipProp: React.Dispatch<React.SetStateAction<number>>;

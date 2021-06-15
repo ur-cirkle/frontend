@@ -1,10 +1,10 @@
-import { count } from "console";
+
 import React, { Dispatch, SetStateAction, useState } from "react";
-import { imagesReducerAction } from "../../Interfaces/AddPost.interfaces";
+import { currentEditingModeType, imagesReducerAction } from "../../Interfaces/AddPost.interfaces";
 // import { useHistory } from "react-router-dom";
 export interface ImageUploadProps {
   setImg: Dispatch<imagesReducerAction>;
-  setCurrentEditing: Dispatch<SetStateAction<string>>;
+  setCurrentEditing: Dispatch<SetStateAction<currentEditingModeType>>;
   setFile: Dispatch<SetStateAction<number>>;
 }
 
@@ -52,8 +52,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
       }
     });
     setFile(files.length);
-    setCurrentEditing("Crop");
-    window.history.pushState({}, "Image Editor : Crop", "/img/crop");
+    setCurrentEditing("Basic Image Editor");
   };
 
   return (

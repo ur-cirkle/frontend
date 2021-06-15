@@ -7,6 +7,7 @@ import React, {
   useState,
 } from "react";
 import {
+  currentEditingModeType,
   filterState,
   filterType,
   image,
@@ -18,7 +19,7 @@ import { SketchPicker } from "react-color";
 export interface FilterProps {
   imgs: image;
   setImg: Dispatch<imagesReducerAction>;
-  setCurrentEditing: Dispatch<SetStateAction<string>>;
+  setCurrentEditing: Dispatch<SetStateAction<currentEditingModeType>>;
   imageIndex: number;
 }
 

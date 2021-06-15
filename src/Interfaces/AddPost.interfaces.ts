@@ -11,7 +11,7 @@ export type filterType =
   | "SATURATION"
   | "HUE_ROTATE"
   | "GRAYSCALE"
-  | "NONE" ;
+  | "NONE";
 //* Image Object Interface
 export interface image {
   original: string;
@@ -32,10 +32,16 @@ export interface imagesReducerAction {
     | "AUTO_SAVE"
     | "AUTO_ROTATE"
     | "BACKUP"
-    | "RESET"|"CLEAR_EDITING";
+    | "RESET"
+    | "CLEAR_EDITING";
   payLoadValue: string;
   index: number;
 }
+export type currentEditingModeType =
+  | "Image Upload"
+  | "Basic Image Editor"
+  | "Filter"
+  | "Form";
 export interface PostForm {
   caption: string;
   interests: Array<string>;
