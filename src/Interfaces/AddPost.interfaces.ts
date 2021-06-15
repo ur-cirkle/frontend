@@ -11,7 +11,7 @@ export type filterType =
   | "SATURATION"
   | "HUE_ROTATE"
   | "GRAYSCALE"
-  | "NONE";
+  | "NONE" ;
 //* Image Object Interface
 export interface image {
   original: string;
@@ -32,7 +32,7 @@ export interface imagesReducerAction {
     | "AUTO_SAVE"
     | "AUTO_ROTATE"
     | "BACKUP"
-    | "RESET";
+    | "RESET"|"CLEAR_EDITING";
   payLoadValue: string;
   index: number;
 }

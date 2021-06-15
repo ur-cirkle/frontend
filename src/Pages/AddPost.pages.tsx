@@ -25,7 +25,6 @@ const AddPost: React.FC = () => {
   //boolean to check wether rotate is done or not in apply to all
   const [Rotated, setRotated] = useState(false);
   //taking crop setting and apllying to all if needed
-
   const [cropProp, setCropProp] = useState<cropPropObj>({
     cropX: 0,
     cropY: 0,
@@ -42,8 +41,10 @@ const AddPost: React.FC = () => {
   const [apply, setApply] = useState(false);
   //canvas on which image are edited
   const [saved, setSaved] = useState(false);
+  //* BasicEdited Mode
   const [basicEditorMode, setBasicEditorMode] =
-    useState<"PREVIEW" | "CROP" | "FLIP" | "ROTATE">("PREVIEW");
+    useState<"PREVIEW" | "CROP" | "FLIP" | "ROTATE">("CROP");
+  //* Image Reducer
   const imagesReducer = (
     state: images,
     action: imagesReducerAction
@@ -103,6 +104,16 @@ const AddPost: React.FC = () => {
         };
         return tempState;
       }
+      case "RESET": {
+        return new Array(5).fill({
+          original: "",
+          edited: "",
+          currentEditing: "",
+          autoSave: "",
+          autoRotate: "",
+          backup: "",
+        }) as images;
+      }
       default:
         return state;
     }
@@ -120,38 +131,12 @@ const AddPost: React.FC = () => {
       backup: "",
     }) as images
   );
-  const cancel = () => {
-    for (let i = 0; i < file; i++) {
-      setImg({
-        type: "EDITED",
-        payLoadValue: "",
-        index: i,
-      });
-      setImg({
-        type: "CURRENT_EDITING",
-        payLoadValue: "",
-        index: i,
-      });
-      setImg({
-        type: "AUTO_SAVE",
-        payLoadValue: "",
-        index: i,
-      });
-      setImg({
-        type: "AUTO_ROTATE",
-        payLoadValue: "",
-        index: i,
-      });
-      setApply(false);
-      setCroped(false);
-      setRotated(false);
-      setCurrentEditing("Crop");
-      console.log(imgs);
-    }
-  };
+
   const back = () => {
     if (currentEditing === "Crop") {
       setCurrentEditing("Image Upload");
+      setConverted(false);
+      setImg({ type: "RESET", payLoadValue: "", index: 8 });
     }
 
     if (currentEditing === "Filter") {
