@@ -17,7 +17,7 @@ const FormSignUp: React.FC<FormSignUpProps> = ({
   isUsernameAvailable,
 }) => {
   const [showPassword, setShowPassword] = useState(false);
-  const [isUNAvailable, setIsUNAvailable] = useState(false);
+  const [isUNAvailable, setIsUNAvailable] = useState(true);
   const [errors, setErrors] = useState<{username: string, password: string}>({
     username: "",
     password: ""

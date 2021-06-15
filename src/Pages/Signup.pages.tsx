@@ -8,7 +8,7 @@ import React, {
 } from "react";
 
 import * as bowser from "bowser";
-import { isUsernameRT, isPasswordRT, isEmail } from "verifierjs";
+import { isUsername, isPassword, isEmail } from "verifierjs";
 import FormSignUp from "../Components/SignUp/FormSignup/FormSignup.component";
 import { UserContext } from "../Contexts/UserContext";
 import { useHistory } from "react-router-dom";
@@ -34,7 +34,7 @@ const Signup: React.FC = () => {
       timezone: string;
     }>();
   const [isCredentialsFilled, setIsCredentialsFilled] = useState(false);
-  const [currentMode, setCurrentMode] = useState("EMAIL");
+  const [currentMode, setCurrentMode] = useState("InterestSelection");
   const history = useHistory();
   const [userLocation, setUserLocation]: [
     { latitude: null | number; longitude: null | number },
@@ -75,12 +75,12 @@ const Signup: React.FC = () => {
   ) => {
     if (!isCredentialsValid(credentials)) {
       //- Creating password error string
-      const passwordErrors = isPasswordRT(credentials.password);
+      const passwordErrors = isPassword(credentials.password);
       const passwordErrStr = Object.values(passwordErrors).some((v) => v)
         ? "Invalid Password"
         : "";
       //- Creating username error string
-      const usernameErrors = isUsernameRT(credentials.username);
+      const usernameErrors = isUsername(credentials.username);
       const usernameErrStr = Object.keys(usernameErrors).some((v) => v)
         ? "Invalid Username"
         : "";
