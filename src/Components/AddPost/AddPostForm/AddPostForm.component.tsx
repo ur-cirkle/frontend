@@ -11,6 +11,7 @@ export interface AddPostFormProps {
   imgs: images;
 }
 
+
 const AddPostForm: React.SFC<AddPostFormProps> = ({ imgs, setImg }) => {
   const [mode, setMode] = useState<"Form" | "Review">("Form");
 
@@ -49,7 +50,11 @@ const AddPostForm: React.SFC<AddPostFormProps> = ({ imgs, setImg }) => {
     connections: [],
     location: "",
   });
-  
+  const onInterestChange = (event:any) => {
+    event.target.outerHTML = `<div id="intrest" contenteditable="true">
+
+                              </div>`
+  }
   return (
     <div>
       <textarea name="" id="" placeholder="Share what’s on your mind...">
@@ -57,8 +62,10 @@ const AddPostForm: React.SFC<AddPostFormProps> = ({ imgs, setImg }) => {
       </textarea>
       <h2>Add interest tags</h2>
 
-      <div id="intrest">
+      <div id="intrest" contentEditable={true} onInput={onInterestChange} >
+        conso
       </div>
+    
       <h2>Tag connections</h2>
       <label htmlFor="tag_connections">
         Tap on the picture to tag connections
@@ -66,12 +73,14 @@ const AddPostForm: React.SFC<AddPostFormProps> = ({ imgs, setImg }) => {
       <input
         type="text"
         id="tag_connection"
-        onChange={({ target }) =>
-          setPostContent({
+        onChange={(event) =>
+          
+            setPostContent({
             type: "connections",
-            payLoadValue: "string",
+            payLoadValue: event.target.value,
             group: "STRING",
           })
+        
         }
       />
       <h2>Add Location</h2>
