@@ -22,7 +22,7 @@ export const CardWrapper =styled.div`
     left: 94.3rem;
     top: 30.8rem;
 
-    align: center;
+    align-items: center;
     vertical-align: center;
 
     border-radius: 2rem;
@@ -67,7 +67,7 @@ export const SubmitButton =styled.button`
     font-style: normal;
     font-weight: normal;
     font-size:1.6rem;
-    line-hieght:2.4rem;
+    line-height:2.4rem;
     background:#6F1BCF;
     text-align:center;
     color: #FFFFFF;
@@ -90,7 +90,7 @@ export const Description =styled.p`
     font-style: normal;
     font-weight: 300;
     font-size:1.6rem;
-    line-hieght:2rem;
+    line-height:2rem;
     text-align:center;
 
     text-align:center;

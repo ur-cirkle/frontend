@@ -34,7 +34,7 @@ const Signup: React.FC = () => {
       timezone: string;
     }>();
   const [isCredentialsFilled, setIsCredentialsFilled] = useState(false);
-  const [currentMode, setCurrentMode] = useState("InterestSelection");
+  const [currentMode, setCurrentMode] = useState("USERNAME");
   const history = useHistory();
   const [userLocation, setUserLocation]: [
     { latitude: null | number; longitude: null | number },
@@ -51,7 +51,7 @@ const Signup: React.FC = () => {
     if (!isEmail(email)) return;
     //- Else set email to email(given in param);
     setEmail(email);
-    setCurrentMode("USERNAME")
+    setCurrentMode("USERNAME");
   };
   //* Checks if
   const isUsernameAvailable = async (username: string, setFunc: Function) => {
@@ -81,6 +81,7 @@ const Signup: React.FC = () => {
         : "";
       //- Creating username error string
       const usernameErrors = isUsername(credentials.username);
+      console.log(usernameErrors);
       const usernameErrStr = Object.keys(usernameErrors).some((v) => v)
         ? "Invalid Username"
         : "";
@@ -96,7 +97,7 @@ const Signup: React.FC = () => {
       setCredentials(credentials);
       setIsCredentialsFilled(true);
     });
-    setCurrentMode("INTEREST_SELECTION")
+    setCurrentMode("INTEREST_SELECTION");
   };
   //* On SignUp
   const onSignup = (selectedInterests: Array<string>) => {
