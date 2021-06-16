@@ -5,26 +5,16 @@ import {
   PostForm,
 } from "../../../Interfaces/AddPost.interfaces";
 import PostReview from "../PostReview/PostReview.component";
-import { UserContext } from "../../../Contexts/UserContext";
-import io from "socket.io-client";
-let socket: any;
+
 export interface AddPostFormProps {
   setImg: React.Dispatch<imagesReducerAction>;
   imgs: images;
 }
 
+
 const AddPostForm: React.SFC<AddPostFormProps> = ({ imgs, setImg }) => {
   const [mode, setMode] = useState<"Form" | "Review">("Form");
-  const { user } = useContext(UserContext);
-  useEffect(() => {
-    socket = io("127.0.0.1:3003", { transports: ["websocket"] });
-  }, []);
-  useEffect(() => {
-    socket.emit("user_connection", {
-      userid: user.userid,
-      currentPosition: "Add Blog",
-    });
-  }, [user]);
+
   const postContentReducer = (
     state: PostForm,
     action: {
@@ -60,13 +50,11 @@ const AddPostForm: React.SFC<AddPostFormProps> = ({ imgs, setImg }) => {
     connections: [],
     location: "",
   });
-  const add_fields = () => {
-    var objTo = document.getElementById("intrest");
-    var divtest = document.createElement("div");
-    divtest.innerHTML = '<input type="text">';
+  const onInterestChange = (event:any) => {
+    event.target.outerHTML = `<div id="intrest" contenteditable="true">
 
-    objTo?.appendChild(divtest);
-  };
+                              </div>`
+  }
   return (
     <div>
       <textarea name="" id="" placeholder="Share what’s on your mind...">
@@ -74,9 +62,10 @@ const AddPostForm: React.SFC<AddPostFormProps> = ({ imgs, setImg }) => {
       </textarea>
       <h2>Add interest tags</h2>
 
-      <div id="intrest">
-        <button onClick={add_fields}>add custom</button>
+      <div id="intrest" contentEditable={true} onInput={onInterestChange} >
+        conso
       </div>
+    
       <h2>Tag connections</h2>
       <label htmlFor="tag_connections">
         Tap on the picture to tag connections
@@ -84,12 +73,14 @@ const AddPostForm: React.SFC<AddPostFormProps> = ({ imgs, setImg }) => {
       <input
         type="text"
         id="tag_connection"
-        onChange={({ target }) =>
-          setPostContent({
+        onChange={(event) =>
+          
+            setPostContent({
             type: "connections",
-            payLoadValue: "string",
+            payLoadValue: event.target.value,
             group: "STRING",
           })
+        
         }
       />
       <h2>Add Location</h2>
