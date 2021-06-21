@@ -8,7 +8,7 @@ import React, {
 } from "react";
 
 import * as bowser from "bowser";
-import { isUsernameRT, isPasswordRT, isEmail } from "verifierjs";
+import { isUsername, isPassword, isEmail } from "verifierjs";
 import FormSignUp from "../Components/SignUp/FormSignup/FormSignup.component";
 import { UserContext } from "../Contexts/UserContext";
 import { useHistory } from "react-router-dom";
@@ -51,7 +51,7 @@ const Signup: React.FC = () => {
     if (!isEmail(email)) return;
     //- Else set email to email(given in param);
     setEmail(email);
-    setCurrentMode("USERNAME")
+    setCurrentMode("USERNAME");
   };
   //* Checks if
   const isUsernameAvailable = async (username: string, setFunc: Function) => {
@@ -75,12 +75,12 @@ const Signup: React.FC = () => {
   ) => {
     if (!isCredentialsValid(credentials)) {
       //- Creating password error string
-      const passwordErrors = isPasswordRT(credentials.password);
+      const passwordErrors = isPassword(credentials.password);
       const passwordErrStr = Object.values(passwordErrors).some((v) => v)
         ? "Invalid Password"
         : "";
       //- Creating username error string
-      const usernameErrors = isUsernameRT(credentials.username);
+      const usernameErrors = isUsername(credentials.username);
       console.log(usernameErrors);
       const usernameErrStr = Object.keys(usernameErrors).some((v) => v)
         ? "Invalid Username"
@@ -97,7 +97,7 @@ const Signup: React.FC = () => {
       setCredentials(credentials);
       setIsCredentialsFilled(true);
     });
-    setCurrentMode("INTEREST_SELECTION")
+    setCurrentMode("INTEREST_SELECTION");
   };
   //* On SignUp
   const onSignup = (selectedInterests: Array<string>) => {

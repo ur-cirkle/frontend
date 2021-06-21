@@ -70,7 +70,7 @@ const FormLogin: React.FC<FormLoginProps> = ({ onLogin }) => {
       <Button onClick={() => onLogin(password, context, setValidCredentials)}>
         Login
       </Button>
-      <H3>Don't have an account? <A href="#">Sign Up</A></H3>
+      <H3>Don't have an account? <A to="/signup">Sign Up</A></H3>
     </LoginBox>
   );
 };
