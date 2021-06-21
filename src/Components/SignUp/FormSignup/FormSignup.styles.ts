@@ -88,7 +88,7 @@ color: ${(props) => props.type === "community"?"#7A7A7A":"#3A3A3A"};
 export const Eye1 = styled.div`
     display: flex;
     margin-left: 38.8rem;
-    margin-top: -3.7rem;
+    margin-top: -5.7rem;
     margin-bottom: 3rem;
     cursor: pointer;
     /* z-index: 2;
